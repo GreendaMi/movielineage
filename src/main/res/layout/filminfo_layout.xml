@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:focusable="true">
+
+    <RelativeLayout
+        android:id="@+id/titlebar"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_weight="0"
+        android:background="@color/MainColor">
+
+        <ui.IconFontTextView
+            android:id="@+id/back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:text="@string/返回"
+            android:textColor="@color/FontColor"
+            android:textSize="20sp"/>
+
+        <ui.EnTextView
+            android:id="@+id/New"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:text="9P"
+            android:textColor="@color/FontColor"
+            android:textSize="24sp"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/topR"
+        android:layout_width="match_parent"
+        android:layout_height="350dp"
+        android:layout_below="@+id/titlebar"
+        >
+
+        <ImageView
+            android:id="@+id/img1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            />
+
+        <!--<ui.IconFontTextView-->
+            <!--android:shadowColor="@color/DarkFontColor"-->
+            <!--android:shadowDx="5"-->
+            <!--android:shadowDy="5"-->
+            <!--android:shadowRadius="10"-->
+            <!--android:id="@+id/backBt"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginTop="15dp"-->
+            <!--android:paddingLeft="20dp"-->
+            <!--android:paddingRight="20dp"-->
+            <!--android:text="@string/返回"-->
+            <!--android:textColor="@color/FontColor"-->
+            <!--android:textSize="20sp"/>-->
+
+        <ui.IconFontTextView
+            android:id="@+id/play"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:shadowColor="@color/DarkFontColor"
+            android:shadowDx="5"
+            android:shadowDy="5"
+            android:shadowRadius="10"
+            android:text="@string/播放"
+            android:textColor="@color/FontColor"
+            android:textSize="34sp"/>
+
+    </RelativeLayout>
+
+    <ScrollView
+        android:id="@+id/img2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/topR"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"
+        >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                >
+
+                <TextView
+                    android:id="@+id/name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:paddingTop="10dp"
+                    android:shadowColor="@color/DarkFontColor"
+                    android:shadowDx="5"
+                    android:shadowDy="5"
+                    android:shadowRadius="10"
+                    android:textColor="@color/FontColor"
+                    android:textSize="16sp"
+                    android:textStyle="bold"/>
+
+                <View
+                    android:id="@+id/v"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_below="@+id/name"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/FontColor"/>
+
+                <ui.EnTextView
+                    android:id="@+id/f"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/v"
+                    android:paddingLeft="20dp"
+                    android:paddingTop="10dp"
+                    android:shadowColor="@color/DarkFontColor"
+                    android:shadowDx="5"
+                    android:shadowDy="5"
+                    android:shadowRadius="10"
+                    android:text="FROM:"
+                    android:textColor="@color/FontColor"
+                    android:textSize="18sp"
+                    />
+
+                <TextView
+                    android:id="@+id/from"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@+id/f"
+                    android:layout_toRightOf="@+id/f"
+                    android:paddingLeft="20dp"
+                    android:shadowColor="@color/DarkFontColor"
+                    android:shadowDx="5"
+                    android:shadowDy="5"
+                    android:shadowRadius="10"
+                    android:text="Mike"
+                    android:textColor="@color/FontColor"
+                    android:textSize="12sp"
+                    />
+
+                <ui.EnTextView
+                    android:id="@+id/t"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/f"
+                    android:paddingLeft="20dp"
+                    android:shadowColor="@color/DarkFontColor"
+                    android:shadowDx="5"
+                    android:shadowDy="5"
+                    android:shadowRadius="10"
+                    android:text="TAG:"
+                    android:textColor="@color/FontColor"
+                    android:textSize="18sp"
+                    />
+
+                <TextView
+                    android:id="@+id/tag"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@+id/t"
+                    android:layout_toRightOf="@+id/f"
+                    android:paddingLeft="20dp"
+                    android:shadowColor="@color/DarkFontColor"
+                    android:shadowDx="5"
+                    android:shadowDy="5"
+                    android:shadowRadius="10"
+                    android:text="Mike"
+                    android:textColor="@color/FontColor"
+                    android:textSize="12sp"/>
+
+                <ui.EnTextView
+                    android:id="@+id/d"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/t"
+                    android:paddingLeft="20dp"
+                    android:shadowColor="@color/DarkFontColor"
+                    android:shadowDx="5"
+                    android:shadowDy="5"
+                    android:shadowRadius="10"
+                    android:text="DATE:"
+                    android:textColor="@color/FontColor"
+                    android:textSize="18sp"
+                    />
+
+                <TextView
+                    android:id="@+id/date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@+id/d"
+                    android:layout_toRightOf="@+id/f"
+                    android:paddingLeft="20dp"
+                    android:shadowColor="@color/DarkFontColor"
+                    android:shadowDx="5"
+                    android:shadowDy="5"
+                    android:shadowRadius="10"
+                    android:text="Mike"
+                    android:textColor="@color/FontColor"
+                    android:textSize="12sp"/>
+
+                <TextView
+                    android:id="@+id/comment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/d"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="20dp"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:shadowColor="@color/DarkFontColor"
+                    android:shadowDx="5"
+                    android:shadowDy="5"
+                    android:shadowRadius="10"
+                    android:textColor="@color/FontColor"
+                    android:textSize="12sp"
+                    />
+            </RelativeLayout>
+
+        </RelativeLayout>
+    </ScrollView>
+
+
+</RelativeLayout>

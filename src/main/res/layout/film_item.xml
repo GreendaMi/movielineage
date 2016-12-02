@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/filmItem"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/Item_h"
+                >
+
+    <ImageView
+        android:id="@+id/bg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
+    <TextView
+        android:id="@+id/tag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:paddingBottom="10dp"
+        android:paddingLeft="10dp"
+        android:shadowColor="@color/DarkFontColor"
+        android:shadowDx="5"
+        android:shadowDy="5"
+        android:shadowRadius="10"
+        android:text="tag"
+        android:textColor="@color/FontColor"
+        android:textSize="10sp"/>
+
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/tag"
+        android:layout_alignParentStart="true"
+        android:paddingLeft="10dp"
+        android:shadowColor="@color/DarkFontColor"
+        android:shadowDx="5"
+        android:shadowDy="5"
+        android:shadowRadius="10"
+        android:text="name"
+        android:textColor="@color/FontColor"
+        android:textSize="18sp"/>
+
+    <TextView
+        android:id="@+id/from"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/tag"
+        android:layout_alignBottom="@+id/tag"
+        android:layout_toEndOf="@+id/tag"
+        android:paddingLeft="10dp"
+        android:shadowColor="@color/DarkFontColor"
+        android:shadowDx="5"
+        android:shadowDy="5"
+        android:shadowRadius="10"
+        android:text="from"
+        android:textColor="@color/FontColor"
+        android:textSize="10sp"/>
+
+</RelativeLayout>

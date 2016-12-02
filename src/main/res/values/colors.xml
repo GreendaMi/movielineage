@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="FontColor">#fdfbfb</color>
+    <color name="MainColor">#2a2a2e</color>
+    <color name="DarkFontColor">#575758</color>
+    <color name="LowFontColor">#9f9f9f</color>
+    <color name="transparent">#0000</color>
+</resources>

@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:orientation="vertical">
+
+    <io.vov.vitamio.widget.CenterLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <SurfaceView
+            android:id="@+id/surface"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center">
+        </SurfaceView>
+    </io.vov.vitamio.widget.CenterLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/playcontrol"
+        android:visibility="invisible"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/transparent">
+
+        <ui.IconFontTextView
+            android:focusable="true"
+            android:id="@+id/back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:paddingRight="25dp"
+            android:paddingTop="10dp"
+            android:text="@string/返回"
+            android:textColor="@color/FontColor"
+            android:textSize="20sp"/>
+
+        <ui.IconFontTextView
+            android:focusable="true"
+            android:id="@+id/p"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:paddingLeft="5dp"
+            android:paddingTop="5dp"
+            android:text="@string/暂停"
+            android:textColor="@color/FontColor"
+            android:textSize="50sp"/>
+
+
+
+
+        <ui.IconFontTextView
+            android:focusable="true"
+            android:id="@+id/share"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:paddingTop="10dp"
+            android:text="@string/分享"
+            android:textColor="@color/FontColor"
+            android:textSize="20sp"/>
+
+        <ui.IconFontTextView
+            android:focusable="true"
+            android:id="@+id/download"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@id/share"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:paddingTop="10dp"
+            android:text="@string/下载"
+            android:textColor="@color/FontColor"
+            android:textSize="20sp"/>
+
+
+        <ui.IconFontTextView
+            android:focusable="true"
+            android:id="@+id/like"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@id/download"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:paddingTop="10dp"
+            android:text="@string/收藏"
+            android:textColor="@color/FontColor"
+            android:textSize="20sp"/>
+
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/back"
+            android:layout_toLeftOf="@id/like"
+            android:paddingLeft="5dp"
+            android:paddingTop="10dp"
+            android:text="这里是标题"
+            android:textColor="@color/FontColor"
+            android:textSize="20sp"/>
+
+        <TextView
+            android:id="@+id/current"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:textColor="@color/FontColor"
+            android:textSize="14sp"
+            android:paddingBottom="8dp"
+            android:paddingLeft="10dp"
+            android:layout_alignParentLeft="true"
+            android:text="00:00"/>
+
+        <TextView
+
+            android:id="@+id/length"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:textColor="@color/FontColor"
+            android:textSize="14sp"
+            android:paddingBottom="8dp"
+            android:paddingRight="10dp"
+            android:layout_alignParentRight="true"
+            android:text="00:00"/>
+
+        <SeekBar
+            android:id="@+id/timeline"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_toRightOf="@id/current"
+            android:layout_toLeftOf="@id/length"
+            android:focusable="true"
+            android:maxHeight="4dp"
+            android:minHeight="4dp"
+            android:paddingBottom="5dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ui.DotsPreloader
+            android:layout_centerInParent="true"
+            android:id="@+id/dotView"
+            android:visibility="invisible"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:background="@color/transparent"/>
+    </RelativeLayout>
+</FrameLayout>

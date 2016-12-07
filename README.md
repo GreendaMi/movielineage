@@ -1,7 +1,7 @@
 # movielineage
 一款在线视频播放app，使用了Vitamio。
 
-![tu.gif](https://github.com/GreendaMi/movielineage/blob/master/mm2.gif)
+![9点片场](https://github.com/GreendaMi/movielineage/blob/master/mm2.gif)
 
 &ensp;&ensp;使用了Vitamio作为视频播放框架，实现了基本的视频**全屏**播放，进度调节。
 
@@ -11,3 +11,7 @@
 &ensp;&ensp;需要引用Vitamio的项目作为依赖，[Vitamio下载]。(http://wscdn.miaopai.com/download/vitamio20160930.zip)
 
 &ensp;&ensp;播放界面封装成了一个Activity，只需要传入视频的url，方便各位拿去使用。
+
+![影片信息界面](https://github.com/GreendaMi/movielineage/blob/master/mm4.gif?raw=true)
+
+&ensp;&ensp;重新修改了影片信息界面，使用了CoordinatorLayout的nestedscrolling特性，实现了状态栏的颜色渐变与滚动。添加了新控件FloatingActionButton。

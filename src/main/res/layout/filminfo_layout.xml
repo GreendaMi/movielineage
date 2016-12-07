@@ -40,7 +40,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:alpha="0"
-                    android:background="@color/DarkFontColor"/>
+                    android:background="@color/MainColor"/>
 
                 <ui.IconFontTextView
                     android:id="@+id/backBt"
@@ -223,7 +223,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:clickable="true"
-        app:backgroundTint="@color/MainColor"
+        app:backgroundTint="@color/DarkFontColor"
         app:elevation="6dp"
         app:layout_anchor="@id/img1"
         app:layout_anchorGravity="bottom|right"

@@ -5,12 +5,11 @@ import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import bean.filmBean;
@@ -18,7 +17,6 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import tool.BlurBitmapUtil;
 import tool.UI;
-import ui.EnTextView;
 import ui.IconFontTextView;
 
 import static top.greendami.movielineage.R.id.from;
@@ -30,14 +28,8 @@ import static top.greendami.movielineage.R.id.from;
 public class FilmInfo extends Activity implements View.OnTouchListener {
 
     filmBean mFilmBean;
-    @Bind(R.id.New)
-    EnTextView mNew;
-    @Bind(R.id.titlebar)
-    RelativeLayout mTitlebar;
     @Bind(R.id.img1)
     ImageView mImg1;
-    @Bind(R.id.topR)
-    RelativeLayout mTopR;
     @Bind(R.id.name)
     TextView mName;
     @Bind(from)
@@ -49,11 +41,11 @@ public class FilmInfo extends Activity implements View.OnTouchListener {
     @Bind(R.id.comment)
     TextView mComment;
     @Bind(R.id.img2)
-    ScrollView mImg2;
-    @Bind(R.id.back)
+    CoordinatorLayout mImg2;
+    @Bind(R.id.backBt)
     IconFontTextView mBack;
     @Bind(R.id.play)
-    IconFontTextView mPlay;
+    ImageView mPlay;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,28 +80,6 @@ public class FilmInfo extends Activity implements View.OnTouchListener {
 
 
     private void InitView() {
-//        Picasso.with(this).load(mFilmBean.getImg()).into(mImg1);
-//        Picasso.with(this)
-//                .load(mFilmBean.getImg())
-//                .into(new Target() {
-//                    @Override
-//                    public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-//                        mImg1.setImageBitmap(bitmap);
-//                        Bitmap newBitmap = BlurBitmapUtil.blurBitmap(FilmInfo.this,bitmap,25);
-//                        mImg2.setBackground(new BitmapDrawable(newBitmap));
-//                    }
-//
-//                    @Override
-//                    public void onBitmapFailed(Drawable errorDrawable) {
-//
-//                    }
-//
-//                    @Override
-//                    public void onPrepareLoad(Drawable placeHolderDrawable) {
-//
-//                    }
-//                });
-
         mImg1.setImageBitmap((Bitmap)( UI.getData(1)));
         Bitmap newBitmap = BlurBitmapUtil.blurBitmap(FilmInfo.this,(Bitmap)( UI.getData(1)),25);
         mImg2.setBackground(new BitmapDrawable(newBitmap));

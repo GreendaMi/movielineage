@@ -5,69 +5,66 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:textFloatingActionButton="http://schemas.android.com/apk/res-auto"
 
+    android:id="@+id/img2"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:id="@+id/img2">
+    android:layout_height="match_parent">
 
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="ui.FilmInfoBehavior"
         android:background="@color/transparent"
+        app:layout_behavior="ui.FilmInfoBehavior"
         >
+
         <RelativeLayout
             android:id="@+id/top"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-        <RelativeLayout
-            android:id="@+id/topR"
-            android:layout_width="match_parent"
-            android:layout_height="350dp">
-
-            <ImageView
-                android:id="@+id/img1"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/MainColor"
-                android:scaleType="centerCrop"
-                />
-            <View
-                android:id="@+id/cover"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/DarkFontColor"
-                android:visibility="invisible"/>
-
-            <ui.IconFontTextView
-                android:id="@+id/backBt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp"
-                android:shadowColor="@color/DarkFontColor"
-                android:shadowDx="5"
-                android:shadowDy="5"
-                android:shadowRadius="10"
-                android:text="@string/返回"
-                android:textColor="@color/FontColor"
-                android:textSize="20sp"/>
-        </RelativeLayout>
-
-        <android.support.v4.widget.NestedScrollView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingBottom="10dp"
-            android:paddingTop="10dp"
-            android:layout_below="@id/topR"
-            android:background="@color/transparent"
-            >
-
             <RelativeLayout
+                android:id="@+id/topR"
+                android:layout_width="match_parent"
+                android:layout_height="350dp">
+
+                <ImageView
+                    android:id="@+id/img1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/MainColor"
+                    android:scaleType="centerCrop"
+                    />
+
+                <View
+                    android:id="@+id/cover"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:alpha="0"
+                    android:background="@color/DarkFontColor"/>
+
+                <ui.IconFontTextView
+                    android:id="@+id/backBt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:shadowColor="@color/DarkFontColor"
+                    android:shadowDx="5"
+                    android:shadowDy="5"
+                    android:shadowRadius="10"
+                    android:text="@string/返回"
+                    android:textColor="@color/FontColor"
+                    android:textSize="20sp"/>
+            </RelativeLayout>
+
+            <android.support.v4.widget.NestedScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@id/topR"
+                android:background="@color/transparent"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp"
                 >
 
                 <RelativeLayout
@@ -75,145 +72,149 @@
                     android:layout_height="wrap_content"
                     >
 
-                    <TextView
-                        android:id="@+id/name"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:paddingLeft="20dp"
-                        android:paddingRight="20dp"
-                        android:paddingTop="10dp"
-                        android:shadowColor="@color/DarkFontColor"
-                        android:shadowDx="5"
-                        android:shadowDy="5"
-                        android:shadowRadius="10"
-                        android:textColor="@color/FontColor"
-                        android:textSize="16sp"
-                        android:textStyle="bold"/>
-
-                    <View
-                        android:id="@+id/v"
+                    <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_below="@+id/name"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginTop="10dp"
-                        android:background="@color/FontColor"/>
-
-                    <ui.EnTextView
-                        android:id="@+id/f"
-                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/v"
-                        android:paddingLeft="20dp"
-                        android:paddingTop="10dp"
-                        android:shadowColor="@color/DarkFontColor"
-                        android:shadowDx="5"
-                        android:shadowDy="5"
-                        android:shadowRadius="10"
-                        android:text="FROM:"
-                        android:textColor="@color/FontColor"
-                        android:textSize="18sp"
-                        />
+                        >
 
-                    <TextView
-                        android:id="@+id/from"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignBaseline="@+id/f"
-                        android:layout_toRightOf="@+id/f"
-                        android:paddingLeft="20dp"
-                        android:shadowColor="@color/DarkFontColor"
-                        android:shadowDx="5"
-                        android:shadowDy="5"
-                        android:shadowRadius="10"
-                        android:text="Mike"
-                        android:textColor="@color/FontColor"
-                        android:textSize="12sp"
-                        />
+                        <TextView
+                            android:id="@+id/name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="20dp"
+                            android:paddingRight="20dp"
+                            android:paddingTop="10dp"
+                            android:shadowColor="@color/DarkFontColor"
+                            android:shadowDx="5"
+                            android:shadowDy="5"
+                            android:shadowRadius="10"
+                            android:textColor="@color/FontColor"
+                            android:textSize="16sp"
+                            android:textStyle="bold"/>
 
-                    <ui.EnTextView
-                        android:id="@+id/t"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/f"
-                        android:paddingLeft="20dp"
-                        android:shadowColor="@color/DarkFontColor"
-                        android:shadowDx="5"
-                        android:shadowDy="5"
-                        android:shadowRadius="10"
-                        android:text="TAG:"
-                        android:textColor="@color/FontColor"
-                        android:textSize="18sp"
-                        />
+                        <View
+                            android:id="@+id/v"
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_below="@+id/name"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginTop="10dp"
+                            android:background="@color/FontColor"/>
 
-                    <TextView
-                        android:id="@+id/tag"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignBaseline="@+id/t"
-                        android:layout_toRightOf="@+id/f"
-                        android:paddingLeft="20dp"
-                        android:shadowColor="@color/DarkFontColor"
-                        android:shadowDx="5"
-                        android:shadowDy="5"
-                        android:shadowRadius="10"
-                        android:text="Mike"
-                        android:textColor="@color/FontColor"
-                        android:textSize="12sp"/>
+                        <ui.EnTextView
+                            android:id="@+id/f"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/v"
+                            android:paddingLeft="20dp"
+                            android:paddingTop="10dp"
+                            android:shadowColor="@color/DarkFontColor"
+                            android:shadowDx="5"
+                            android:shadowDy="5"
+                            android:shadowRadius="10"
+                            android:text="FROM:"
+                            android:textColor="@color/FontColor"
+                            android:textSize="18sp"
+                            />
 
-                    <ui.EnTextView
-                        android:id="@+id/d"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/t"
-                        android:paddingLeft="20dp"
-                        android:shadowColor="@color/DarkFontColor"
-                        android:shadowDx="5"
-                        android:shadowDy="5"
-                        android:shadowRadius="10"
-                        android:text="DATE:"
-                        android:textColor="@color/FontColor"
-                        android:textSize="18sp"
-                        />
+                        <TextView
+                            android:id="@+id/from"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignBaseline="@+id/f"
+                            android:layout_toRightOf="@+id/f"
+                            android:paddingLeft="20dp"
+                            android:shadowColor="@color/DarkFontColor"
+                            android:shadowDx="5"
+                            android:shadowDy="5"
+                            android:shadowRadius="10"
+                            android:text="Mike"
+                            android:textColor="@color/FontColor"
+                            android:textSize="12sp"
+                            />
 
-                    <TextView
-                        android:id="@+id/date"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignBaseline="@+id/d"
-                        android:layout_toRightOf="@+id/f"
-                        android:paddingLeft="20dp"
-                        android:shadowColor="@color/DarkFontColor"
-                        android:shadowDx="5"
-                        android:shadowDy="5"
-                        android:shadowRadius="10"
-                        android:text="Mike"
-                        android:textColor="@color/FontColor"
-                        android:textSize="12sp"/>
+                        <ui.EnTextView
+                            android:id="@+id/t"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/f"
+                            android:paddingLeft="20dp"
+                            android:shadowColor="@color/DarkFontColor"
+                            android:shadowDx="5"
+                            android:shadowDy="5"
+                            android:shadowRadius="10"
+                            android:text="TAG:"
+                            android:textColor="@color/FontColor"
+                            android:textSize="18sp"
+                            />
 
-                    <TextView
-                        android:id="@+id/comment"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/d"
-                        android:layout_marginBottom="10dp"
-                        android:layout_marginTop="20dp"
-                        android:paddingLeft="20dp"
-                        android:paddingRight="20dp"
-                        android:shadowColor="@color/DarkFontColor"
-                        android:shadowDx="5"
-                        android:shadowDy="5"
-                        android:shadowRadius="10"
-                        android:textColor="@color/FontColor"
-                        android:textSize="12sp"
-                        />
+                        <TextView
+                            android:id="@+id/tag"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignBaseline="@+id/t"
+                            android:layout_toRightOf="@+id/f"
+                            android:paddingLeft="20dp"
+                            android:shadowColor="@color/DarkFontColor"
+                            android:shadowDx="5"
+                            android:shadowDy="5"
+                            android:shadowRadius="10"
+                            android:text="Mike"
+                            android:textColor="@color/FontColor"
+                            android:textSize="12sp"/>
+
+                        <ui.EnTextView
+                            android:id="@+id/d"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/t"
+                            android:paddingLeft="20dp"
+                            android:shadowColor="@color/DarkFontColor"
+                            android:shadowDx="5"
+                            android:shadowDy="5"
+                            android:shadowRadius="10"
+                            android:text="DATE:"
+                            android:textColor="@color/FontColor"
+                            android:textSize="18sp"
+                            />
+
+                        <TextView
+                            android:id="@+id/date"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignBaseline="@+id/d"
+                            android:layout_toRightOf="@+id/f"
+                            android:paddingLeft="20dp"
+                            android:shadowColor="@color/DarkFontColor"
+                            android:shadowDx="5"
+                            android:shadowDy="5"
+                            android:shadowRadius="10"
+                            android:text="Mike"
+                            android:textColor="@color/FontColor"
+                            android:textSize="12sp"/>
+
+                        <TextView
+                            android:id="@+id/comment"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/d"
+                            android:layout_marginBottom="10dp"
+                            android:layout_marginTop="20dp"
+                            android:paddingLeft="20dp"
+                            android:paddingRight="20dp"
+                            android:shadowColor="@color/DarkFontColor"
+                            android:shadowDx="5"
+                            android:shadowDy="5"
+                            android:shadowRadius="10"
+                            android:textColor="@color/FontColor"
+                            android:textSize="12sp"
+                            />
+                    </RelativeLayout>
+
                 </RelativeLayout>
-
-            </RelativeLayout>
-        </android.support.v4.widget.NestedScrollView>
+            </android.support.v4.widget.NestedScrollView>
         </RelativeLayout>
     </android.support.design.widget.AppBarLayout>
-
 
 
     <ui.TextFloatingActionButton

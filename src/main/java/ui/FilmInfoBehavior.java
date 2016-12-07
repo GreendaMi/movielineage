@@ -35,24 +35,29 @@ public class FilmInfoBehavior extends AppBarLayout.ScrollingViewBehavior {
         View back = coordinatorLayout.findViewById(R.id.backBt);
         View top = coordinatorLayout.findViewById(R.id.top);
         final View cover = coordinatorLayout.findViewById(R.id.cover);
-        if(target.getTop() + top.getTop() - dyUnconsumed   > target.getTop() / 7 && dyUnconsumed > 0){
+        if(target.getTop() + top.getTop() - dyUnconsumed  + 1 > target.getTop() / 7 && dyUnconsumed > 0){
             top.offsetTopAndBottom(- dyUnconsumed);
             back.offsetTopAndBottom(dyUnconsumed);
 
-        }else if(dyUnconsumed > 0){
-            //change title color
-            cover.setVisibility(View.VISIBLE);
-            InAnimation.setDuration(300);
-            cover.startAnimation(InAnimation);
         }
-
-
-
         if(top.getBottom() - dyUnconsumed - 1 < child.getHeight() && dyUnconsumed < 0){
             top.offsetTopAndBottom(- dyUnconsumed);
             back.offsetTopAndBottom(dyUnconsumed);
-            cover.setVisibility(View.INVISIBLE);
+
         }
+
+        if(target.getTop() + top.getTop() - dyUnconsumed <=  target.getTop()/ 7){
+            //change title color
+            cover.setAlpha(1);
+            InAnimation.setDuration(300);
+            cover.startAnimation(InAnimation);
+        }else{
+            cover.setAlpha(0);
+        }
+
+
+
+
 
 
 

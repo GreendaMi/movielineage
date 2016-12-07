@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -56,6 +57,7 @@ public class Player extends Activity implements View.OnTouchListener,MediaPlayer
     SeekBar mTimeline;
     @butterknife.Bind(R.id.playcontrol)
     RelativeLayout mPlaycontrol;
+
     private int mVideoWidth;
     private int mVideoHeight;
     private MediaPlayer mMediaPlayer;
@@ -109,10 +111,10 @@ public class Player extends Activity implements View.OnTouchListener,MediaPlayer
         mHandler = new Handler();
         initEvent();
 
-//        /**加载透明动画**/
-//
-//        mAnimationIn = AnimationUtils.loadAnimation(this,R.anim.slide_bottom_in);
-//        mAnimationOut = AnimationUtils.loadAnimation(this,R.anim.slide_bottom_out);
+        /**加载透明动画**/
+
+        mAnimationIn = AnimationUtils.loadAnimation(this,R.anim.slide_bottom_in);
+        mAnimationOut = AnimationUtils.loadAnimation(this,R.anim.slide_bottom_out);
 
 
     }

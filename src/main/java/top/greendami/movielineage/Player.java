@@ -16,7 +16,6 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -110,10 +109,10 @@ public class Player extends Activity implements View.OnTouchListener,MediaPlayer
         mHandler = new Handler();
         initEvent();
 
-        /**加载透明动画**/
-
-        mAnimationIn = AnimationUtils.loadAnimation(this,R.anim.slide_bottom_in);
-        mAnimationOut = AnimationUtils.loadAnimation(this,R.anim.slide_bottom_out);
+//        /**加载透明动画**/
+//
+//        mAnimationIn = AnimationUtils.loadAnimation(this,R.anim.slide_bottom_in);
+//        mAnimationOut = AnimationUtils.loadAnimation(this,R.anim.slide_bottom_out);
 
 
     }
@@ -225,7 +224,7 @@ public class Player extends Activity implements View.OnTouchListener,MediaPlayer
             mMediaPlayer.setOnVideoSizeChangedListener(this);
             mMediaPlayer.setOnInfoListener(this);
             setVolumeControlStream(AudioManager.STREAM_MUSIC);
-
+            mMediaPlayer.setBufferSize(2048);
 
         } catch (Exception e) {
             Log.e(TAG, "error: " + e.getMessage(), e);
@@ -347,12 +346,7 @@ public class Player extends Activity implements View.OnTouchListener,MediaPlayer
         Log.d(TAG, "surfaceCreated called");
 
         //另起一个线程加载视频
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                playVideo(mFilmBean.getUrl());
-            }
-        }).start();
+        playVideo(mFilmBean.getUrl());
 
         mName.setText(mFilmBean.getName());
     }
@@ -374,15 +368,8 @@ public class Player extends Activity implements View.OnTouchListener,MediaPlayer
 
     private void releaseMediaPlayer() {
         if (mMediaPlayer != null) {
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    mMediaPlayer.release();
-                    mMediaPlayer = null;
-                }
-            }).start();
-
-
+            mMediaPlayer.release();
+            mMediaPlayer = null;
         }
     }
 

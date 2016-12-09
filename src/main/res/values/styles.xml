@@ -6,8 +6,8 @@
         <item name="colorPrimary">@color/MainColor</item>
         <item name="colorPrimaryDark">@color/MainColor</item>
         <item name="colorAccent">@color/MainColor</item>
-        <!--<item name="android:windowAnimationStyle">@null</item>-->
-        <!--<item name="android:windowNoTitle">true</item>-->
+        <item name="android:windowAnimationStyle">@null</item>
+        <item name="android:windowNoTitle">true</item>
     </style>
     <style name="IconFont">
         <item name="android:layout_width">wrap_content</item>

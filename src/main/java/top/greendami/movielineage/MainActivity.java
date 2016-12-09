@@ -71,7 +71,6 @@ public class MainActivity extends FragmentActivity {
         fragmentsList.add(HOT);
         fragmentsList.add(COM);
 
-
         mVpView.setAdapter(new MyFragmentPagerAdapter(getSupportFragmentManager(), fragmentsList));
         select(0);
 

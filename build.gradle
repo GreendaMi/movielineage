@@ -24,6 +24,7 @@ allprojects {
     repositories {
         mavenCentral()
         maven { url "https://jitpack.io" }
+        maven { url "https://raw.github.com/bmob/bmob-android-sdk/master" }
     }
 }
 
@@ -34,7 +35,8 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:25.0.1'
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.squareup.okhttp3:okhttp:3.4.2'
-    compile 'io.reactivex:rxandroid:1.1.0'
-    compile 'io.reactivex:rxjava:1.1.0'
+//    compile 'io.reactivex:rxandroid:1.1.0'
+//    compile 'io.reactivex:rxjava:1.1.0'
+    compile 'cn.bmob.android:bmob-sdk:3.5.0'
     compile project(':vitamio')
 }

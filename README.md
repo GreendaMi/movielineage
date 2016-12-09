@@ -12,6 +12,6 @@
 
 &ensp;&ensp;播放界面封装成了一个Activity，只需要传入视频的url，方便各位拿去使用。
 
-![影片信息界面](https://github.com/GreendaMi/movielineage/blob/master/mm4.gif?raw=true)
+![影片信息界面](https://github.com/GreendaMi/movielineage/blob/master/mm5.gif?raw=true)
 
-&ensp;&ensp;重新修改了影片信息界面，使用了CoordinatorLayout的nestedscrolling特性，实现了状态栏的颜色渐变与滚动。添加了新控件FloatingActionButton。
+&ensp;&ensp;重新修改了影片信息界面，使用了CoordinatorLayout的nestedscrolling特性，实现了状态栏的颜色渐变与滚动。添加了新控件FloatingActionButton。添加转场的过度效果。

@@ -3,8 +3,6 @@ package top.greendami.movielineage;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.view.View;
@@ -23,8 +21,6 @@ import ui.EnTextView;
 
 public class MainActivity extends FragmentActivity {
 
-    FragmentManager fManager;
-    FragmentTransaction mTransaction;
     @Bind(R.id.v1)
     View mV1;
     @Bind(R.id.v2)

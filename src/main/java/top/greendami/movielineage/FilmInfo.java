@@ -53,7 +53,7 @@ public class FilmInfo extends Activity implements View.OnTouchListener {
 //        requestWindowFeature(Window.FEATURE_NO_TITLE);//隐藏标题
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.filminfo_layout);
+        setContentView(R.layout.activity_filminfo);
         ButterKnife.bind(this);
         mFilmBean = (filmBean) UI.getData();
         InitView();
@@ -72,6 +72,18 @@ public class FilmInfo extends Activity implements View.OnTouchListener {
             @Override
             public void onClick(View view) {
                 UI.push(Player.class, mFilmBean);
+
+//                Bmob.initialize(FilmInfo.this, "e4352240f63c88f8a3a2e552a6ecfb73");
+//
+//                userbean u = new userbean();
+//                u.setIsLive("1");
+//                u.setPhone("123456");
+//                u.save(new SaveListener<String>() {
+//                    @Override
+//                    public void done(String s, BmobException e) {
+//                        Log.d("LoginActivity", s);
+//                    }
+//                });
             }
         });
         mPlay.setOnTouchListener(this);

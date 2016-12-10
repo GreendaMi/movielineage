@@ -77,7 +77,7 @@ public class FilmInfoFragment extends Fragment implements View.OnTouchListener {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.filminfo_layout, container, false);
+        View view = inflater.inflate(R.layout.activity_filminfo, container, false);
         ButterKnife.bind(this, view);
         InitView();
         InitEvent();

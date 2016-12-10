@@ -22,6 +22,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import bean.filmBean;
+import io.vov.vitamio.LibsChecker;
 import io.vov.vitamio.MediaPlayer;
 import io.vov.vitamio.Vitamio;
 import tool.UI;
@@ -100,7 +101,9 @@ public class Player extends Activity implements View.OnTouchListener,MediaPlayer
         PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
         mWakeLock = pm.newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK, "My Tag");
         mFilmBean = (filmBean) UI.getData();
+
         Vitamio.isInitialized(this);
+        LibsChecker.checkVitamioLibs(this);
 
         mPreview = (SurfaceView) findViewById(R.id.surface);
         holder = mPreview.getHolder();

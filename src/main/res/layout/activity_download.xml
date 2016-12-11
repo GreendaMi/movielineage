@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+    <RelativeLayout
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:background="@color/MainColor">
+        <ui.IconFontTextView
+            android:id="@+id/backBt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="20dp"
+            android:layout_centerVertical="true"
+            android:shadowColor="@color/DarkFontColor"
+            android:shadowDx="5"
+            android:shadowDy="5"
+            android:shadowRadius="10"
+            android:text="@string/返回"
+            android:textColor="@color/FontColor"
+            android:textSize="20sp"/>
+        <ui.EnTextView
+            android:layout_centerInParent="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/FontColor"
+            android:textSize="24sp"
+            android:text="DOWNLOAD"></ui.EnTextView>
+
+        <ui.EnTextView
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/DarkFontColor"
+            android:textSize="20sp"
+            android:text="Edit"
+            android:paddingRight="20dp"
+            android:layout_centerVertical="true"
+            ></ui.EnTextView>
+    </RelativeLayout>
+
+    <top.greendami.loadingimageview.LoadingImageView
+        android:layout_below="@+id/title"
+        android:id="@+id/img"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"/>
+
+    <Button
+        android:text="+"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/button"/>
+    <Button
+        android:text="-"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/button"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/buttonP"/>
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/buttonP"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/textView"/>
+
+
+</RelativeLayout>

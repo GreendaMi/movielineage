@@ -6,7 +6,6 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.RelativeLayout;
 
 import java.util.ArrayList;
@@ -33,6 +32,12 @@ public class MainActivity extends FragmentActivity {
     DrawerLayout mDrawerLayout;
     @Bind(R.id.Dw)
     DynamicWave mDw;
+    @Bind(R.id.like)
+    EnTextView mLike;
+    @Bind(R.id.dl)
+    EnTextView mDl;
+    @Bind(R.id.sh)
+    EnTextView mSh;
     private Fragment NEW, HOT, COM;
 
     EnTextView New, Hot, Com;
@@ -43,8 +48,8 @@ public class MainActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 //        requestWindowFeature(Window.FEATURE_NO_TITLE);//隐藏标题
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+//        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+//                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         initView();
@@ -210,14 +215,20 @@ public class MainActivity extends FragmentActivity {
             @Override
             public void onDrawerStateChanged(int newState) {
                 //抽屉打开的过程中，停止海浪的动画，否则卡顿
-                if(newState == DrawerLayout.STATE_DRAGGING ){
+                if (newState == DrawerLayout.STATE_DRAGGING) {
                     mDw.Stop();
-                }else{
+                } else {
                     mDw.Start();
                 }
             }
         });
 
+        mDl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                UI.push(DownLoadActivity.class);
+            }
+        });
     }
 
     @Override

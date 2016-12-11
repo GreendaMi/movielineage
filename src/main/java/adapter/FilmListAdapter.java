@@ -89,72 +89,6 @@ public class FilmListAdapter extends RecyclerView.Adapter {
                     @Override
                     public void onClick(final View view) {
 
-//                        //设定Z轴，防止被遮挡
-//                        final float mZ = view.getZ();
-//                        view.setZ(mZ + mDatas.size());
-//
-//
-//
-//                        AnimationSet animationSet;
-//                        animationSet = new AnimationSet(true);
-//                        TranslateAnimation translateAnimation = new TranslateAnimation(0, 0, 0  , - (view.getTop()/1.75f));
-//                        //设置动画执行的时间
-//                        translateAnimation.setDuration(400);
-//                        animationSet.addAnimation(translateAnimation);
-//
-//
-//                        ScaleAnimation animation =new ScaleAnimation(1.0f, 1.75f, 1.0f, 1.75f,
-//                                Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.0f);
-//                        animation.setDuration(400);//设置动画持续时间
-//                        animationSet.addAnimation(animation);
-//
-//
-//                        view.startAnimation(animationSet);
-//                        animationSet.setAnimationListener(new Animation.AnimationListener() {
-//                            @Override
-//                            public void onAnimationStart(Animation animation) {
-//
-//                                //隐藏文字
-//                                mFilmViewHolder.from.setAlpha(0);
-//                                mFilmViewHolder.name.setAlpha(0);
-//                                mFilmViewHolder.tag.setAlpha(0);
-//
-//                                mHandler.postDelayed(new Runnable() {
-//                                    @Override
-//                                    public void run() {
-//
-//                                        mFilmViewHolder.bg.setDrawingCacheEnabled(true);
-//                                        Bitmap bitmap = Bitmap.createBitmap(mFilmViewHolder.bg.getDrawingCache());
-//                                        mFilmViewHolder.bg.setDrawingCacheEnabled(false);
-//                                        if(UI.getData(1) != null){
-//                                            ((Bitmap)(UI.getData(1))).recycle();
-//                                        }
-//                                        UI.push(FilmInfo.class, mData ,bitmap);
-//                                        view.setZ(mZ);
-//
-//                                    }
-//                                }, 300);
-//                            }
-//
-//                            @Override
-//                            public void onAnimationEnd(Animation animation) {
-//                                mHandler.postDelayed(new Runnable() {
-//                                    @Override
-//                                    public void run() {
-//
-//                                        mFilmViewHolder.from.setAlpha(1);
-//                                        mFilmViewHolder.name.setAlpha(1);
-//                                        mFilmViewHolder.tag.setAlpha(1);
-//
-//                                    }
-//                                }, 300);
-//                            }
-//
-//                            @Override
-//                            public void onAnimationRepeat(Animation animation) {
-//
-//                            }
-//                        });
                         //隐藏文字
                         mFilmViewHolder.from.setAlpha(0);
                         mFilmViewHolder.name.setAlpha(0);
@@ -166,12 +100,11 @@ public class FilmListAdapter extends RecyclerView.Adapter {
                         if(tool.UI.getData(1) != null){
                             ((Bitmap)(tool.UI.getData(1))).recycle();
                         }
-                        tool.UI.push(FilmInfo.class, mData ,bitmap);
+                        tool.UI.push(FilmInfo.class, mData ,bitmap,view.getTop());
 
                         mHandler.postDelayed(new Runnable() {
                                     @Override
                                     public void run() {
-
                                         mFilmViewHolder.from.setAlpha(1);
                                         mFilmViewHolder.name.setAlpha(1);
                                         mFilmViewHolder.tag.setAlpha(1);

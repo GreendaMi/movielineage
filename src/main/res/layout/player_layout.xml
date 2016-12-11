@@ -88,7 +88,7 @@
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
             android:paddingTop="10dp"
-            android:text="@string/收藏"
+            android:text="@string/收藏1"
             android:textColor="@color/FontColor"
             android:textSize="20sp"/>
 

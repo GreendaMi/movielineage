@@ -15,6 +15,7 @@ import android.view.animation.AnimationSet;
 import android.view.animation.ScaleAnimation;
 import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import bean.filmBean;
@@ -25,6 +26,7 @@ import tool.DensityUtil;
 import tool.UI;
 import ui.IconFontTextView;
 
+import static tool.UI.getData;
 import static top.greendami.movielineage.R.id.from;
 
 /**
@@ -56,6 +58,10 @@ public class FilmInfo extends Activity implements View.OnTouchListener {
     ImageView mLay1;
     @Bind(R.id.lay2)
     AppBarLayout mLay2;
+    @Bind(R.id.top)
+    RelativeLayout mTop;
+
+    int topPo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +69,8 @@ public class FilmInfo extends Activity implements View.OnTouchListener {
 //        requestWindowFeature(Window.FEATURE_NO_TITLE);//隐藏标题
         setContentView(R.layout.activity_filminfo);
         ButterKnife.bind(this);
-        mFilmBean = (filmBean) UI.getData();
+        mFilmBean = (filmBean) getData();
+        topPo = (int)UI.getData(2);
         InitView();
         InitEvent();
     }
@@ -72,8 +79,11 @@ public class FilmInfo extends Activity implements View.OnTouchListener {
         mBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                UI.pop();
-                endAnim();
+                if(mTop.getTop() == 0){
+                    endAnim();
+                }else{
+                    moveTop();
+                }
             }
         });
         mBack.setOnTouchListener(this);
@@ -89,15 +99,14 @@ public class FilmInfo extends Activity implements View.OnTouchListener {
 
 
     private void InitView() {
-        mLay1.setImageBitmap((Bitmap) (UI.getData(1)));
-        mImg1.setImageBitmap((Bitmap) (UI.getData(1)));
+        mLay1.setImageBitmap((Bitmap) (getData(1)));
+        mImg1.setImageBitmap((Bitmap) (getData(1)));
 
         mName.setText(mFilmBean.getName());
         mComment.setText(mFilmBean.getComment());
         mTag.setText(mFilmBean.getTag());
         mFrom.setText(mFilmBean.getFrom());
         mDate.setText(mFilmBean.getDate());
-
 
 
         starAnim();
@@ -109,14 +118,14 @@ public class FilmInfo extends Activity implements View.OnTouchListener {
         AnimationSet animationSet;
         animationSet = new AnimationSet(true);
         //加上一个55，标题栏的高度
-        TranslateAnimation translateAnimation = new TranslateAnimation(0, 0, (int) (UI.getData(2)) + DensityUtil.dip2px(FilmInfo.this,55),0);
+        TranslateAnimation translateAnimation = new TranslateAnimation(0, 0, (int) (getData(2)) + DensityUtil.dip2px(FilmInfo.this, 55), 0);
         //设置动画执行的时间
         translateAnimation.setDuration(400);
         animationSet.addAnimation(translateAnimation);
 
 
-        ScaleAnimation animation =new ScaleAnimation(1.0f, 1.75f, 1.0f, 1.75f,
-                    Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.0f);
+        ScaleAnimation animation = new ScaleAnimation(1.0f, 1.75f, 1.0f, 1.75f,
+                Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.0f);
         animation.setDuration(400);//设置动画持续时间
         animationSet.addAnimation(animation);
 
@@ -127,7 +136,7 @@ public class FilmInfo extends Activity implements View.OnTouchListener {
         animationSet.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
-                Bitmap newBitmap = BlurBitmapUtil.blurBitmap(FilmInfo.this, (Bitmap) (UI.getData(1)), 25);
+                Bitmap newBitmap = BlurBitmapUtil.blurBitmap(FilmInfo.this, (Bitmap) (getData(1)), 25);
                 mImg2.setBackground(new BitmapDrawable(newBitmap));
             }
 
@@ -135,7 +144,7 @@ public class FilmInfo extends Activity implements View.OnTouchListener {
             public void onAnimationEnd(Animation animation) {
                 mLay2.setVisibility(View.VISIBLE);
                 mPlay.setVisibility(View.VISIBLE);
-                mLay1.setVisibility(View.INVISIBLE);
+                mLay1.setAlpha(0);
 
             }
 
@@ -147,25 +156,35 @@ public class FilmInfo extends Activity implements View.OnTouchListener {
 
     }
 
+    private void moveTop(){
+        finish();
+        overridePendingTransition(R.anim.slide_left_in,R.anim.slide_right_out);
+    }
+
     private void endAnim() {
+
+
+
         mLay2.setVisibility(View.INVISIBLE);
         mPlay.setVisibility(View.INVISIBLE);
-        mLay1.setVisibility(View.VISIBLE);
+        mLay1.setAlpha(255);
         AnimationSet animationSet;
         animationSet = new AnimationSet(true);
         //加上一个55，标题栏的高度
-        TranslateAnimation translateAnimation = new TranslateAnimation(0, 0, 0,(int) (UI.getData(2)) + DensityUtil.dip2px(FilmInfo.this,55));
+        TranslateAnimation translateAnimation = new TranslateAnimation(0, 0, 0, (int) (topPo) + DensityUtil.dip2px(FilmInfo.this, 55));
         //设置动画执行的时间
         translateAnimation.setDuration(400);
         animationSet.addAnimation(translateAnimation);
 
 
-        ScaleAnimation animation =new ScaleAnimation(1.75f, 1.0f, 1.75f, 1.0f,
+        ScaleAnimation animation = new ScaleAnimation(1.75f, 1.0f, 1.75f, 1.0f,
                 Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.0f);
         animation.setDuration(400);//设置动画持续时间
         animationSet.addAnimation(animation);
 
         animationSet.setFillAfter(true);
+
+
 
         mLay1.startAnimation(animationSet);
 
@@ -194,9 +213,13 @@ public class FilmInfo extends Activity implements View.OnTouchListener {
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if(keyCode == KeyEvent.KEYCODE_BACK)
-        {
-            endAnim();
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if(mTop.getTop() == 0){
+                endAnim();
+            }else{
+                moveTop();
+            }
+
         }
         return true;
     }

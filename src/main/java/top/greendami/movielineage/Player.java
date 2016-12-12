@@ -25,6 +25,7 @@ import bean.filmBean;
 import io.vov.vitamio.LibsChecker;
 import io.vov.vitamio.MediaPlayer;
 import io.vov.vitamio.Vitamio;
+import model.DownLoadManager;
 import tool.UI;
 import tool.formatTime;
 import ui.DotsPreloader;
@@ -151,6 +152,14 @@ public class Player extends Activity implements View.OnTouchListener,MediaPlayer
                 controlPanel();
             }
         });
+
+        mDownload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DownLoadManager.startDownLoad(mFilmBean);
+            }
+        });
+        mDownload.setOnTouchListener(this);
     }
 
     public void  controlPanel(){

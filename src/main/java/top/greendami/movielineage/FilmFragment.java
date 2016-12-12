@@ -98,6 +98,7 @@ public class FilmFragment extends Fragment {
                 super.onScrollStateChanged(recyclerView, newState);
                 if (newState == RecyclerView.SCROLL_STATE_IDLE
                         && lastVisibleItem + 1 == mAdapter.getItemCount()) {
+                    SystemDialog.showLoadingDialog(getActivity(),false);
                     LoadData(++PAGE);
                 }
             }

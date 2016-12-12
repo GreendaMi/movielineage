@@ -4,7 +4,6 @@ import android.content.Context;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 
@@ -26,7 +25,6 @@ public class FilmInfoBehavior extends AppBarLayout.ScrollingViewBehavior {
     @Override
     public boolean onStartNestedScroll(CoordinatorLayout coordinatorLayout, View child, View directTargetChild, View target, int nestedScrollAxes) {
         totle = target.getTop() * 6 / 7;
-        Log.d("FilmInfoBehavior", "target.getTop()/7:" + (target.getTop() * 6 / 7));
         return true;
     }
 
@@ -52,35 +50,7 @@ public class FilmInfoBehavior extends AppBarLayout.ScrollingViewBehavior {
             top.offsetTopAndBottom(- dyUnconsumed);
             back.offsetTopAndBottom(dyUnconsumed);
         }
-//        if(dyUnconsumed < 0 && sum - dyUnconsumed <totle){
-//            top.offsetTopAndBottom(- dyUnconsumed);
-//            back.offsetTopAndBottom(dyUnconsumed);
-//        }
-//        if(target.getTop() + top.getTop() - dyUnconsumed  + 1 > target.getTop() / 7 && dyUnconsumed > 0){
-//            top.offsetTopAndBottom(- dyUnconsumed);
-//            back.offsetTopAndBottom(dyUnconsumed);
-//
-//        }
-//        if(top.getBottom() - dyUnconsumed - 1 < child.getHeight() && dyUnconsumed < 0){
-//            top.offsetTopAndBottom(- dyUnconsumed);
-//            back.offsetTopAndBottom(dyUnconsumed);
-//
-//        }
-
-//        if(target.getTop() + top.getTop() - dyUnconsumed <=  target.getTop()/ 7){
-//            //change title color
-//            cover.setAlpha(1);
-//            InAnimation.setDuration(300);
-//            cover.startAnimation(InAnimation);
-//        }else{
-//            cover.setAlpha(0);
-//        }
         cover.setAlpha(((float)(sum)/totle));
-
-
-
-
-
 
     }
 

@@ -12,6 +12,15 @@
         <item name="android:windowAnimationStyle">@null</item>
 
     </style>
+    <style name="AppThemeWithAnim" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/MainColor</item>
+        <item name="colorPrimaryDark">@color/MainColor</item>
+        <item name="colorAccent">@color/MainColor</item>
+        <!--背景透明-->
+        <item name="android:windowBackground">@android:color/transparent</item>
+
+    </style>
     <style name="IconFont">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>

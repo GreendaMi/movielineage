@@ -1,6 +1,7 @@
 package top.greendami.movielineage;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
@@ -43,6 +44,7 @@ public class MainActivity extends FragmentActivity {
     EnTextView New, Hot, Com;
 
     ArrayList<Fragment> fragmentsList = new ArrayList<>();
+    Handler mHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +58,7 @@ public class MainActivity extends FragmentActivity {
         initEvent();
         UI.enter(this);
         New.callOnClick();
+        mHandler = new Handler();
     }
 
     private void initView() {
@@ -125,31 +128,6 @@ public class MainActivity extends FragmentActivity {
         mV2.setAlpha(0.2f);
 
     }
-
-//    public void FilmSelect(filmBean f , ImageView v){
-//
-//        fManager = getSupportFragmentManager();
-//        mTransaction = fManager.beginTransaction();
-//        hideFragment(mTransaction);
-//        if(mFilmInfo == null){
-//            mFilmInfo = new FilmInfoFragment();
-//            mTransaction.add(R.id.content, mFilmInfo);
-//        }
-//
-//        v.setDrawingCacheEnabled(true);
-//        Bitmap bitmap = Bitmap.createBitmap(v.getDrawingCache());
-//        v.setDrawingCacheEnabled(false);
-//
-//        mFilmInfo.setFilmBean(f , bitmap);
-//        mTransaction.show(mFilmInfo);
-//        mTransaction.commit();
-//
-//    }
-//
-//    public void CloseFilmInfo(){
-//        Log.d("MainActivity", "CloseFilmInfo");
-//        select(select);
-//    }
 
     private void initEvent() {
 
@@ -226,7 +204,15 @@ public class MainActivity extends FragmentActivity {
         mDl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                UI.push(DownLoadActivity.class);
+                mDrawerLayout.closeDrawers();
+
+                //加载一个延迟，当侧边栏关闭后，再跳转
+                mHandler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        UI.push(DownLoadActivity.class);
+                    }
+                },150);
             }
         });
     }

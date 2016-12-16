@@ -13,6 +13,7 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
+import android.view.ViewConfiguration;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.Animation;
@@ -28,6 +29,7 @@ import io.vov.vitamio.LibsChecker;
 import io.vov.vitamio.MediaPlayer;
 import io.vov.vitamio.Vitamio;
 import model.DownLoadManager;
+import tool.ScreenInfo;
 import tool.UI;
 import tool.formatTime;
 import ui.DotsPreloader;
@@ -37,7 +39,7 @@ import ui.IconFontTextView;
  * Created by GreendaMi on 2016/11/29.
  */
 
-public class Player extends Activity implements View.OnTouchListener,MediaPlayer.OnSeekCompleteListener,MediaPlayer.OnInfoListener, MediaPlayer.OnBufferingUpdateListener, MediaPlayer.OnCompletionListener, MediaPlayer.OnPreparedListener, MediaPlayer.OnVideoSizeChangedListener, SurfaceHolder.Callback {
+public class Player extends Activity implements View.OnTouchListener, MediaPlayer.OnSeekCompleteListener, MediaPlayer.OnInfoListener, MediaPlayer.OnBufferingUpdateListener, MediaPlayer.OnCompletionListener, MediaPlayer.OnPreparedListener, MediaPlayer.OnVideoSizeChangedListener, SurfaceHolder.Callback {
     private static final String TAG = "Player";
     @butterknife.Bind(R.id.dotView)
     DotsPreloader mDotView;
@@ -78,11 +80,17 @@ public class Player extends Activity implements View.OnTouchListener,MediaPlayer
     private boolean mIsVideoSizeKnown = false;
     private boolean mIsVideoReadyToBePlayed = false;
 
-    /**动画**/
-    Animation mAnimationIn = null ,mAnimationOut = null;
-    /**控制界面是否显示**/
+    /**
+     * 动画
+     **/
+    Animation mAnimationIn = null, mAnimationOut = null;
+    /**
+     * 控制界面是否显示
+     **/
     boolean isControlling = false;
-    /**控制界面显示时长,10s,超过就隐藏**/
+    /**
+     * 控制界面显示时长,10s,超过就隐藏
+     **/
     public static final int CONTROLPANEL_KEEPTIME = 10;
 
     filmBean mFilmBean;
@@ -91,6 +99,7 @@ public class Player extends Activity implements View.OnTouchListener,MediaPlayer
     PowerManager.WakeLock mWakeLock;
 
     int isControllingTime = 0;
+    int x, y;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,10 +126,11 @@ public class Player extends Activity implements View.OnTouchListener,MediaPlayer
         mHandler = new Handler();
         initEvent();
 
+
         /**加载透明动画**/
 
-        mAnimationIn = AnimationUtils.loadAnimation(this,R.anim.slide_bottom_in);
-        mAnimationOut = AnimationUtils.loadAnimation(this,R.anim.slide_bottom_out);
+        mAnimationIn = AnimationUtils.loadAnimation(this, R.anim.slide_bottom_in);
+        mAnimationOut = AnimationUtils.loadAnimation(this, R.anim.slide_bottom_out);
 
 
     }
@@ -136,10 +146,10 @@ public class Player extends Activity implements View.OnTouchListener,MediaPlayer
         mP.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(mMediaPlayer.isPlaying()){
+                if (mMediaPlayer.isPlaying()) {
                     mMediaPlayer.pause();
                     mP.setText(getResources().getText(R.string.播放));
-                }else{
+                } else {
                     mMediaPlayer.start();
                     mP.setText(getResources().getText(R.string.暂停));
                 }
@@ -154,7 +164,33 @@ public class Player extends Activity implements View.OnTouchListener,MediaPlayer
                 controlPanel();
             }
         });
-        if(FileDownloader.getDownloadFile(mFilmBean.getUrl()) == null){
+        mPreview.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+
+                    case MotionEvent.ACTION_DOWN:
+                        //手指按下的时候：初始化 x,y 值
+                        x = (int) event.getX();
+                        y = (int) event.getY();
+                        break;
+
+                    case MotionEvent.ACTION_UP:
+                /*
+                 * 手指抬起来触发 ，所以判断在这里进行
+                 * 1.获得结束的x,y
+                 * 2.进行判断
+                 */
+                        int upx = (int) event.getX();
+                        int upy = (int) event.getY();
+                        return drawTouch(upx, upy);
+
+                }
+
+                return false;
+            }
+        });
+        if (FileDownloader.getDownloadFile(mFilmBean.getUrl()) == null) {
             mDownload.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -163,16 +199,15 @@ public class Player extends Activity implements View.OnTouchListener,MediaPlayer
                     UI.Toast("下载中");
                 }
             });
-        }else{
+        } else {
             mDownload.setTextColor(getResources().getColor(R.color.DarkFontColor));
         }
 
         mDownload.setOnTouchListener(this);
     }
 
-    public void  controlPanel(){
-        Log.d(TAG, "11");
-        if(isControlling){
+    public void controlPanel() {
+        if (isControlling) {
             Log.d(TAG, "隐藏");
             mPlaycontrol.startAnimation(mAnimationOut);
 
@@ -194,7 +229,7 @@ public class Player extends Activity implements View.OnTouchListener,MediaPlayer
                 }
             });
 
-        }else{
+        } else {
             Log.d(TAG, "显示");
 
             mPlaycontrol.startAnimation(mAnimationIn);
@@ -211,7 +246,7 @@ public class Player extends Activity implements View.OnTouchListener,MediaPlayer
                     isControlling = true;
                     isControllingTime = 0;
                     //如果正在缓冲，则不显示播放键
-                    if(needResume){
+                    if (needResume) {
                         mP.setVisibility(View.INVISIBLE);
                     }
                 }
@@ -310,11 +345,11 @@ public class Player extends Activity implements View.OnTouchListener,MediaPlayer
         new Thread(new Runnable() {
             @Override
             public void run() {
-                while(mMediaPlayer != null ){
+                while (mMediaPlayer != null) {
                     mHandler.post(new Runnable() {
                         @Override
                         public void run() {
-                            if(mMediaPlayer != null && mMediaPlayer.isPlaying()){
+                            if (mMediaPlayer != null && mMediaPlayer.isPlaying()) {
                                 mCurrent.setText(formatTime.formatTime(mMediaPlayer.getCurrentPosition()));
                                 mTimeline.setProgress(new Long(mMediaPlayer.getCurrentPosition()).intValue());
                             }
@@ -334,11 +369,11 @@ public class Player extends Activity implements View.OnTouchListener,MediaPlayer
         new Thread(new Runnable() {
             @Override
             public void run() {
-                while(mMediaPlayer != null){
+                while (mMediaPlayer != null) {
                     mHandler.post(new Runnable() {
                         @Override
                         public void run() {
-                            if(isControlling && isControllingTime > CONTROLPANEL_KEEPTIME){
+                            if (isControlling && isControllingTime > CONTROLPANEL_KEEPTIME) {
                                 controlPanel();
                             }
                         }
@@ -368,9 +403,9 @@ public class Player extends Activity implements View.OnTouchListener,MediaPlayer
         Log.d(TAG, "surfaceCreated called");
 
         //判断视频是否下载
-        if(FileDownloader.getDownloadFile(mFilmBean.getUrl()) == null){
+        if (FileDownloader.getDownloadFile(mFilmBean.getUrl()) == null) {
             playVideo(mFilmBean.getUrl());
-        }else{
+        } else {
             //播放本地视频文件
             playVideo(FileDownloader.getDownloadFile(mFilmBean.getUrl()).getFilePath());
         }
@@ -429,24 +464,24 @@ public class Player extends Activity implements View.OnTouchListener,MediaPlayer
                     arg0.pause();
                     needResume = true;
                     //如果是显示控制界面的时候,把播放键换成等待条
-                    if(isControlling){
+                    if (isControlling) {
                         mP.setVisibility(View.INVISIBLE);
                     }
-                        mDotView.setVisibility(View.VISIBLE);
+                    mDotView.setVisibility(View.VISIBLE);
 
                 }
                 break;
             case MediaPlayer.MEDIA_INFO_BUFFERING_END:
                 //缓存完成，继续播放
-                if (needResume){
+                if (needResume) {
                     mDotView.setVisibility(View.INVISIBLE);
-                    if(isControlling){
-                        if(mP.getText().equals(getResources().getText(R.string.暂停))){
+                    if (isControlling) {
+                        if (mP.getText().equals(getResources().getText(R.string.暂停))) {
                             mP.setVisibility(View.VISIBLE);
                             arg0.start();
                             needResume = false;
                         }
-                    }else{
+                    } else {
                         arg0.start();
                         needResume = false;
                     }
@@ -465,11 +500,11 @@ public class Player extends Activity implements View.OnTouchListener,MediaPlayer
 
     @Override
     public boolean onTouch(View view, MotionEvent motionEvent) {
-        if(motionEvent.getAction() == MotionEvent.ACTION_DOWN){
+        if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
             view.setScaleX(0.95f);
             view.setScaleY(0.95f);
         }
-        if(motionEvent.getAction() == MotionEvent.ACTION_UP){
+        if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
             view.setScaleX(1f);
             view.setScaleY(1f);
         }
@@ -480,8 +515,62 @@ public class Player extends Activity implements View.OnTouchListener,MediaPlayer
     public void onSeekComplete(MediaPlayer mp) {
         mP.setVisibility(View.VISIBLE);
         mDotView.setVisibility(View.INVISIBLE);
-        if(mP.getText().equals(getResources().getString(R.string.暂停))){
+        if (mP.getText().equals(getResources().getString(R.string.暂停))) {
             mp.start();
         }
+    }
+
+    //手势控制
+    private boolean drawTouch(int upx, int upy) {
+        boolean flg = false;
+        int MoveDistance = ViewConfiguration.get(Player.this).getScaledDoubleTapSlop() / 2;
+        Log.d(TAG, "MoveDistance:" + MoveDistance);
+        //水平滑动
+        if (upx - x > MoveDistance) {
+            long moveto = mMediaPlayer.getCurrentPosition() + 1000 * (upx - x) / MoveDistance;
+            moveto = moveto > mMediaPlayer.getDuration() ? mMediaPlayer.getDuration() - 5000 : mMediaPlayer.getCurrentPosition() + 1000 * (upx - x) / MoveDistance;
+            UI.Toast(formatTime.formatTime(moveto));
+            mMediaPlayer.seekTo(moveto);
+            flg = true;
+        } else if (x - upx > MoveDistance) {
+            long moveto = mMediaPlayer.getCurrentPosition() - 1000 * (x - upx) / MoveDistance;
+            moveto = moveto < 0 ? 0 : mMediaPlayer.getCurrentPosition() - 1000 * (x - upx) / MoveDistance;
+            UI.Toast(formatTime.formatTime(moveto));
+            mMediaPlayer.seekTo(moveto);
+            flg = true;
+        } else if (upy - y > MoveDistance) {
+            int light = 255;
+            if (upy < ScreenInfo.get().heightPixel * 0.2) {
+                light = 0;
+            } else if (upy >= ScreenInfo.get().heightPixel * 0.2 && upy <= ScreenInfo.get().heightPixel * 0.8) {
+
+                light = (int) ((upy - ScreenInfo.get().heightPixel * 0.2) / (ScreenInfo.get().heightPixel * 0.6) * 255);
+            }
+            Log.d(TAG, "light:" + light);
+            setLight(light);
+            UI.Toast("亮度调节：" + light * 100 / 255 + "%");
+            flg = true;
+        } else if (y - upy > MoveDistance) {
+            int light = 255;
+            if (upy < ScreenInfo.get().heightPixel * 0.2) {
+                light = 0;
+            } else if (upy >= ScreenInfo.get().heightPixel * 0.2 && upy <= ScreenInfo.get().heightPixel * 0.8) {
+
+                light = (int) ((upy - ScreenInfo.get().heightPixel * 0.2) / (ScreenInfo.get().heightPixel * 0.6) * 255);
+            }
+            Log.d(TAG, "light:" + light);
+            setLight(light);
+            UI.Toast("亮度调节：" + light * 100 / 255 + "%");
+            flg = true;
+        }
+        return flg;
+    }
+
+    //屏幕亮度调节
+    private void setLight(int brightness) {
+        WindowManager.LayoutParams lp = getWindow().getAttributes();
+        lp.screenBrightness = Float.valueOf(brightness) * (1f / 255f);
+        getWindow().setAttributes(lp);
+
     }
 }

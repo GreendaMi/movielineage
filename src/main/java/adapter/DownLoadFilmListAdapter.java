@@ -79,7 +79,7 @@ public class DownLoadFilmListAdapter extends RecyclerView.Adapter implements OnR
         DownloadFileInfo mDownloadFileInfo = FileDownloader.getDownloadFile(mData.getUrl());
         //下载完成
         final boolean isComplete = mDownloadFileInfo != null && mDownloadFileInfo.getDownloadedSizeLong() == mDownloadFileInfo.getFileSizeLong();
-
+        mHolder.view.setTag(position);
         //控制初始时候的背景
         if (isComplete) {
             mHolder.text.setVisibility(View.GONE);
@@ -266,6 +266,8 @@ public class DownLoadFilmListAdapter extends RecyclerView.Adapter implements OnR
         mHolder.icon.setVisibility(View.GONE);
         mHolder.bg.setProgress(100);
         mHolder.speed.setText("");
+
+        this.notifyItemChanged((int)(mHolder.view.getTag()));
     }
 
     @Override

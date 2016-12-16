@@ -155,6 +155,7 @@ public class DownLoadActivity extends Activity implements View.OnTouchListener {
             public void onClick(View v) {
                 for (localfilmBean lfb : mAdapter.deleteList) {
                     FileDownloader.delete(lfb.getUrl(), true, null);
+                    FileDownloader.delete(lfb.getImg(), true, null);
                     localfilmList.remove(lfb);
                     DAOManager.getInstance(DownLoadActivity.this).deleteFilm(lfb);
                 }

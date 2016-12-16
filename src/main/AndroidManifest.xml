@@ -43,7 +43,7 @@
         </activity>
 
         <activity android:name=".DownLoadActivity"
-            android:theme="@style/AppThemeWithAnim">
+            android:theme="@style/AppTheme">
         </activity>
     </application>
 

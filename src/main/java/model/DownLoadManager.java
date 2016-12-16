@@ -2,9 +2,7 @@ package model;
 
 import android.content.Context;
 import android.os.Environment;
-
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
+import android.util.Log;
 
 import org.wlf.filedownloader.FileDownloadConfiguration;
 import org.wlf.filedownloader.FileDownloader;
@@ -15,11 +13,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import bean.daoBean.localfilmBean;
 import bean.filmBean;
-import bean.localfilmBean;
-import tool.ACache;
 import tool.MD5;
-import tool.UI;
 
 /**
  * 视频下载
@@ -27,11 +23,16 @@ import tool.UI;
  */
 
 public class DownLoadManager {
+    static final List<String> isDownLoading = new ArrayList<>();
 
     static String DIR = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator +
             "NinePoint";
 
+    static Context mContext;
+
     public static void initDownLoadManager(Context context){
+        mContext = context;
+
         // 1、创建Builder
         FileDownloadConfiguration.Builder builder = new FileDownloadConfiguration.Builder(context);
 
@@ -65,36 +66,20 @@ public class DownLoadManager {
         lf.setIntroduce(f.getIntroduce());
 
         //转换成本低保存模型
-        lf.setId(MD5.compute(f.getUrl()));
+        lf.setID(MD5.compute(f.getUrl()));
         lf.setBuildDate(new Date().toString());
         lf.setIsNew("1");
-        lf.setPath(DIR + "/" + lf.getId());
+        lf.setPath(DIR + "/" + lf.getID());
 
-        //保存本地视频信息
-        ACache mCache = ACache.get(UI.TopActivity);
-        List<localfilmBean> localfilmList;
-        if(mCache.getAsString("films") != null){
-            localfilmList = new Gson().fromJson(mCache.getAsString("films"), new TypeToken<List<localfilmBean>>(){}.getType());
-            for (localfilmBean lfb:localfilmList) {
-                if(lfb.getId().equals(lf.getId())){
-                    localfilmList.remove(lfb);
-                    break;
-                }
-            }
-            localfilmList.add(lf);
-            mCache.put("films",new Gson().toJson(localfilmList));
-        }else{
-            localfilmList = new ArrayList<>();
-            localfilmList.add(lf);
-            mCache.put("films",new Gson().toJson(localfilmList));
-        }
 
-        //开始缓存
-        FileDownloader.detect(f.getUrl(), new OnDetectBigUrlFileListener() {
+        //开始缓存封面
+        FileDownloader.detect(f.getImg(), new OnDetectBigUrlFileListener() {
             @Override
             public void onDetectNewDownloadFile(String url, String fileName, String saveDir, long fileSize) {
                 // 如果有必要，可以改变文件名称fileName和下载保存的目录saveDir
-                FileDownloader.createAndStart(url, DIR , lf.getId());
+                FileDownloader.createAndStart(url, DIR + File.separatorChar + "IMG" , lf.getID());
+                lf.setImg(DIR + File.separatorChar + "IMG" + File.separatorChar + lf.getID());
+                Log.d("DownLoadManager", (DIR + File.separatorChar + "IMG" + File.separatorChar + lf.getID()));
             }
             @Override
             public void onDetectUrlFileExist(String url) {
@@ -106,6 +91,66 @@ public class DownLoadManager {
                 // 探测一个网络文件失败了，具体查看failReason
             }
         });
+
+        //开始缓存视频
+        FileDownloader.detect(f.getUrl(), new OnDetectBigUrlFileListener() {
+            @Override
+            public void onDetectNewDownloadFile(String url, String fileName, String saveDir, long fileSize) {
+                // 如果有必要，可以改变文件名称fileName和下载保存的目录saveDir
+                FileDownloader.createAndStart(url, DIR , lf.getID().toString());
+                isDownLoading.add(url);
+            }
+            @Override
+            public void onDetectUrlFileExist(String url) {
+                // 继续下载，自动会断点续传（如果服务器无法支持断点续传将从头开始下载）
+                FileDownloader.start(url);
+                isDownLoading.add(url);
+            }
+            @Override
+            public void onDetectUrlFileFailed(String url, DetectBigUrlFileFailReason failReason) {
+                // 探测一个网络文件失败了，具体查看failReason
+            }
+        });
+
+        if(DAOManager.getInstance(mContext).queryFilmList(lf.getID()).size() == 0){
+            DAOManager.getInstance(mContext).insertFilm(lf);
+        }
+
+    }
+
+
+    //下载状态转换
+    public static void toggle(filmBean f){
+        if(isDownLoading.contains(f.getUrl())){
+            FileDownloader.pause(f.getUrl());
+            isDownLoading.remove(f.getUrl());
+        }else{
+            FileDownloader.start(f.getUrl());
+            isDownLoading.add(f.getUrl());
+        }
+    }
+
+    public static void pause(String s){
+        FileDownloader.pause(s);
+        isDownLoading.remove(s);
+    }
+
+    //文件大小显示方式转换
+    public static String convertFileSize(long size) {
+        long kb = 1024;
+        long mb = kb * 1024;
+        long gb = mb * 1024;
+
+        if (size >= gb) {
+            return String.format("%.1f GB", (float) size / gb);
+        } else if (size >= mb) {
+            float f = (float) size / mb;
+            return String.format(f > 100 ? "%.0f MB" : "%.1f MB", f);
+        } else if (size >= kb) {
+            float f = (float) size / kb;
+            return String.format(f > 100 ? "%.0f KB" : "%.1f KB", f);
+        } else
+            return String.format("%d B", size);
     }
 
 }

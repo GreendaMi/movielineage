@@ -21,6 +21,8 @@ import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import org.wlf.filedownloader.FileDownloader;
+
 import bean.filmBean;
 import io.vov.vitamio.LibsChecker;
 import io.vov.vitamio.MediaPlayer;
@@ -152,13 +154,19 @@ public class Player extends Activity implements View.OnTouchListener,MediaPlayer
                 controlPanel();
             }
         });
+        if(FileDownloader.getDownloadFile(mFilmBean.getUrl()) == null){
+            mDownload.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    DownLoadManager.startDownLoad(mFilmBean);
+                    mDownload.setTextColor(getResources().getColor(R.color.DarkFontColor));
+                    UI.Toast("下载中");
+                }
+            });
+        }else{
+            mDownload.setTextColor(getResources().getColor(R.color.DarkFontColor));
+        }
 
-        mDownload.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                DownLoadManager.startDownLoad(mFilmBean);
-            }
-        });
         mDownload.setOnTouchListener(this);
     }
 
@@ -359,8 +367,14 @@ public class Player extends Activity implements View.OnTouchListener,MediaPlayer
     public void surfaceCreated(SurfaceHolder holder) {
         Log.d(TAG, "surfaceCreated called");
 
-        //另起一个线程加载视频
-        playVideo(mFilmBean.getUrl());
+        //判断视频是否下载
+        if(FileDownloader.getDownloadFile(mFilmBean.getUrl()) == null){
+            playVideo(mFilmBean.getUrl());
+        }else{
+            //播放本地视频文件
+            playVideo(FileDownloader.getDownloadFile(mFilmBean.getUrl()).getFilePath());
+        }
+
 
         mName.setText(mFilmBean.getName());
     }

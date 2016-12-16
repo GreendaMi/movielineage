@@ -35,7 +35,7 @@
             android:paddingTop="10dp"
             android:text="@string/返回"
             android:textColor="@color/FontColor"
-            android:textSize="20sp"/>
+            android:textSize="20dp"/>
 
         <ui.IconFontTextView
             android:focusable="true"
@@ -47,7 +47,7 @@
             android:paddingTop="5dp"
             android:text="@string/暂停"
             android:textColor="@color/FontColor"
-            android:textSize="50sp"/>
+            android:textSize="50dp"/>
 
 
 
@@ -63,7 +63,7 @@
             android:paddingTop="10dp"
             android:text="@string/分享"
             android:textColor="@color/FontColor"
-            android:textSize="20sp"/>
+            android:textSize="20dp"/>
 
         <ui.IconFontTextView
             android:focusable="true"
@@ -76,7 +76,7 @@
             android:paddingTop="10dp"
             android:text="@string/下载"
             android:textColor="@color/FontColor"
-            android:textSize="20sp"/>
+            android:textSize="20dp"/>
 
 
         <ui.IconFontTextView
@@ -90,7 +90,7 @@
             android:paddingTop="10dp"
             android:text="@string/收藏1"
             android:textColor="@color/FontColor"
-            android:textSize="20sp"/>
+            android:textSize="20dp"/>
 
         <TextView
             android:id="@+id/name"

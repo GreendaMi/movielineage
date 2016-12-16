@@ -2,7 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
               android:layout_width="match_parent"
-              android:layout_height="match_parent">
+              android:layout_height="match_parent"
+    android:background="@color/FontColor">
     <RelativeLayout
         android:id="@+id/title"
         android:layout_width="match_parent"
@@ -20,16 +21,18 @@
             android:shadowRadius="10"
             android:text="@string/返回"
             android:textColor="@color/FontColor"
-            android:textSize="20sp"/>
+            android:textSize="20dp"/>
         <ui.EnTextView
+            android:id="@+id/DOWN"
             android:layout_centerInParent="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/FontColor"
-            android:textSize="24sp"
+            android:textSize="24dp"
             android:text="DOWNLOAD"></ui.EnTextView>
 
         <ui.EnTextView
+            android:id="@+id/edit"
             android:layout_alignParentRight="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -46,5 +49,41 @@
         android:id="@+id/content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
+
+    <LinearLayout
+        android:visibility="gone"
+        android:id="@+id/delete_view"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:background="@color/MainColor"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal">
+        <ui.EnTextView
+            android:id="@+id/delete_bt"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="DELETE"
+            android:layout_gravity="center"
+            android:textColor="#a33a3a"
+            android:textSize="16dp"/>
+        <View
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/FontColor"/>
+        <ui.EnTextView
+            android:id="@+id/cancel_bt"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="CANCEL"
+            android:layout_gravity="center"
+            android:textColor="@color/FontColor"
+            android:textSize="16dp"/>
+    </LinearLayout>
 
 </RelativeLayout>

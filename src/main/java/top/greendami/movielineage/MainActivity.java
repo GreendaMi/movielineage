@@ -211,6 +211,7 @@ public class MainActivity extends FragmentActivity {
                     @Override
                     public void run() {
                         UI.push(DownLoadActivity.class);
+                        overridePendingTransition(R.anim.slide_right_in,R.anim.slide_left_out);
                     }
                 },150);
             }

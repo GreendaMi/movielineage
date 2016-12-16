@@ -29,7 +29,6 @@ public class FilmListAdapter extends RecyclerView.Adapter {
     protected List<filmBean> mDatas;
     protected LayoutInflater mInflater;
 
-    final int DATE = 1 ,FILM = 2;
     Handler mHandler;
 
     public FilmListAdapter(Context context,  List<filmBean> datas)
@@ -48,19 +47,10 @@ public class FilmListAdapter extends RecyclerView.Adapter {
      */
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        switch (viewType) {
-            case DATE:
-                View v1 = LayoutInflater
-                        .from(parent.getContext())
-                        .inflate(R.layout.date_item, parent, false);
-                return new DateViewHolder(v1);
-            case FILM:
-                View v2 = LayoutInflater
-                        .from(parent.getContext())
-                        .inflate(R.layout.film_item, parent, false);
-                return new FilmViewHolder(v2);
-        }
-        return null;
+        View v2 = LayoutInflater
+                .from(parent.getContext())
+                .inflate(R.layout.film_item, parent, false);
+        return new FilmViewHolder(v2);
 
     }
 
@@ -73,51 +63,41 @@ public class FilmListAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         final filmBean mData = mDatas.get(position);
         RecyclerView.ViewHolder mHolder;
-        switch (mData.getType()){
-            case DATE:
-                DateViewHolder mDateViewHolder = (DateViewHolder)holder;
-                mDateViewHolder.date.setText(mData.getName());
-                break;
-            case FILM:
-                final FilmViewHolder mFilmViewHolder = (FilmViewHolder)holder;
-                Glide.with(mContext).load(mData.getImg()).diskCacheStrategy(DiskCacheStrategy.RESULT).into(mFilmViewHolder.bg);
-                mFilmViewHolder.from.setText(mData.getFrom());
-                mFilmViewHolder.name.setText(mData.getName());
-                mFilmViewHolder.tag.setText(mData.getTag());
+        final FilmViewHolder mFilmViewHolder = (FilmViewHolder)holder;
+        Glide.with(mContext).load(mData.getImg()).diskCacheStrategy(DiskCacheStrategy.RESULT).into(mFilmViewHolder.bg);
+        mFilmViewHolder.from.setText(mData.getFrom());
+        mFilmViewHolder.name.setText(mData.getName());
+        mFilmViewHolder.tag.setText(mData.getTag());
 
-                mFilmViewHolder.view.setOnClickListener(new View.OnClickListener() {
+        mFilmViewHolder.view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(final View view) {
+
+                //隐藏文字
+                mFilmViewHolder.from.setAlpha(0);
+                mFilmViewHolder.name.setAlpha(0);
+                mFilmViewHolder.tag.setAlpha(0);
+
+                mFilmViewHolder.bg.setDrawingCacheEnabled(true);
+                Bitmap bitmap = Bitmap.createBitmap(mFilmViewHolder.bg.getDrawingCache());
+                mFilmViewHolder.bg.setDrawingCacheEnabled(false);
+                if(tool.UI.getData(1) != null){
+                    ((Bitmap)(tool.UI.getData(1))).recycle();
+                }
+                tool.UI.push(FilmInfo.class, mData ,bitmap,view.getTop());
+
+                mHandler.postDelayed(new Runnable() {
                     @Override
-                    public void onClick(final View view) {
-
-                        //隐藏文字
-                        mFilmViewHolder.from.setAlpha(0);
-                        mFilmViewHolder.name.setAlpha(0);
-                        mFilmViewHolder.tag.setAlpha(0);
-
-                        mFilmViewHolder.bg.setDrawingCacheEnabled(true);
-                        Bitmap bitmap = Bitmap.createBitmap(mFilmViewHolder.bg.getDrawingCache());
-                        mFilmViewHolder.bg.setDrawingCacheEnabled(false);
-                        if(tool.UI.getData(1) != null){
-                            ((Bitmap)(tool.UI.getData(1))).recycle();
-                        }
-                        tool.UI.push(FilmInfo.class, mData ,bitmap,view.getTop());
-
-                        mHandler.postDelayed(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        mFilmViewHolder.from.setAlpha(1);
-                                        mFilmViewHolder.name.setAlpha(1);
-                                        mFilmViewHolder.tag.setAlpha(1);
-
-                                    }
-                                }, 300);
+                    public void run() {
+                        mFilmViewHolder.from.setAlpha(1);
+                        mFilmViewHolder.name.setAlpha(1);
+                        mFilmViewHolder.tag.setAlpha(1);
 
                     }
-                });
+                }, 300);
 
-
-                break;
-        }
+            }
+        });
 
     }
 
@@ -131,16 +111,6 @@ public class FilmListAdapter extends RecyclerView.Adapter {
         return mDatas.size();
     }
 
-
-    public class DateViewHolder extends RecyclerView.ViewHolder {
-        public TextView date;
-
-        public DateViewHolder(View itemView) {
-            super(itemView);
-
-            date = (TextView) itemView.findViewById(R.id.date);
-        }
-    }
 
     public class FilmViewHolder extends RecyclerView.ViewHolder {
         public TextView name;

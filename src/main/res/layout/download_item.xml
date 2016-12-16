@@ -70,5 +70,20 @@
         android:textColor="@color/FontColor"
         android:textSize="12sp"
         />
+    <ui.IconFontTextView
+        android:id="@+id/delete_select"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:padding="10dp"
+        android:textSize="20dp"
+        android:text="@string/选择1"
+        android:textColor="@color/FontColor"
+        android:shadowColor="@color/DarkFontColor"
+        android:shadowDx="5"
+        android:shadowDy="5"
+        android:shadowRadius="10"
+        />
 
 </RelativeLayout>

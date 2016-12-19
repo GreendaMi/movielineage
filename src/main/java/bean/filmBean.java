@@ -14,6 +14,16 @@ public class filmBean extends baseBean {
     String tag;
     String comment;
 
+    public String getNum() {
+        return num;
+    }
+
+    public void setNum(String num) {
+        this.num = num;
+    }
+
+    String num ;
+
     public String getComment() {
         return comment;
     }

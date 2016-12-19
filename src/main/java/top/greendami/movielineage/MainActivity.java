@@ -57,7 +57,7 @@ public class MainActivity extends FragmentActivity {
         initView();
         initEvent();
         UI.enter(this);
-        New.callOnClick();
+        Hot.callOnClick();
         mHandler = new Handler();
     }
 
@@ -76,7 +76,6 @@ public class MainActivity extends FragmentActivity {
         fragmentsList.add(COM);
 
         mVpView.setAdapter(new MyFragmentPagerAdapter(getSupportFragmentManager(), fragmentsList));
-        select(0);
 
     }
 
@@ -211,6 +210,22 @@ public class MainActivity extends FragmentActivity {
                     @Override
                     public void run() {
                         UI.push(DownLoadActivity.class);
+                        overridePendingTransition(R.anim.slide_right_in,R.anim.slide_left_out);
+                    }
+                },150);
+            }
+        });
+
+        mLike.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mDrawerLayout.closeDrawers();
+
+                //加载一个延迟，当侧边栏关闭后，再跳转
+                mHandler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        UI.push(LikeActivity.class);
                         overridePendingTransition(R.anim.slide_right_in,R.anim.slide_left_out);
                     }
                 },150);

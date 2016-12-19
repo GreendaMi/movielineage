@@ -9,10 +9,13 @@ import java.util.List;
 
 import bean.daoBean.DaoMaster;
 import bean.daoBean.DaoSession;
+import bean.daoBean.likefilmbean;
+import bean.daoBean.likefilmbeanDao;
 import bean.daoBean.localfilmBean;
 import bean.daoBean.localfilmBeanDao;
 
 /**
+ * 数据库操作的对外接口
  * Created by GreendaMi on 2016/12/14.
  */
 
@@ -72,7 +75,7 @@ public class DAOManager {
      *
      * @param localfilmBean
      */
-    public void insertFilm(localfilmBean localfilmBean) {
+    public void insertDownLoadFilm(localfilmBean localfilmBean) {
         DaoMaster daoMaster = new DaoMaster(getWritableDatabase());
         DaoSession daoSession = daoMaster.newSession();
         localfilmBeanDao localfilmBeanDao = daoSession.getLocalfilmBeanDao();
@@ -80,11 +83,23 @@ public class DAOManager {
     }
 
     /**
+     * 插入一条记录
+     *
+     * @param likefilmbean
+     */
+    public void insertLikeFilm(likefilmbean likefilmbean) {
+        DaoMaster daoMaster = new DaoMaster(getWritableDatabase());
+        DaoSession daoSession = daoMaster.newSession();
+        likefilmbeanDao likefilmbeanDao = daoSession.getLikefilmbeanDao();
+        likefilmbeanDao.insert(likefilmbean);
+    }
+
+    /**
      * 插入集合
      *
      * @param localfilmBeans
      */
-    public void insertFilmList(List<localfilmBean> localfilmBeans) {
+    public void insertDownLoadFilmList(List<localfilmBean> localfilmBeans) {
         if (localfilmBeans == null || localfilmBeans.isEmpty()) {
             return;
         }
@@ -99,7 +114,7 @@ public class DAOManager {
      *
      * @param localfilmBean
      */
-    public void deleteFilm(localfilmBean localfilmBean) {
+    public void deleteDownLoadFilm(localfilmBean localfilmBean) {
         DaoMaster daoMaster = new DaoMaster(getWritableDatabase());
         DaoSession daoSession = daoMaster.newSession();
         localfilmBeanDao localfilmBeanDao = daoSession.getLocalfilmBeanDao();
@@ -107,11 +122,23 @@ public class DAOManager {
     }
 
     /**
+     * 删除一条记录
+     *
+     * @param likefilmbean
+     */
+    public void deleteLikeFilm(likefilmbean likefilmbean) {
+        DaoMaster daoMaster = new DaoMaster(getWritableDatabase());
+        DaoSession daoSession = daoMaster.newSession();
+        likefilmbeanDao likefilmbeanDao = daoSession.getLikefilmbeanDao();
+        likefilmbeanDao.delete(likefilmbean);
+    }
+
+    /**
      * 更新一条记录
      *
      * @param localfilmBean
      */
-    public void updateFilm(localfilmBean localfilmBean) {
+    public void updateDownLoadFilm(localfilmBean localfilmBean) {
         DaoMaster daoMaster = new DaoMaster(getWritableDatabase());
         DaoSession daoSession = daoMaster.newSession();
         localfilmBeanDao localfilmBeanDao = daoSession.getLocalfilmBeanDao();
@@ -119,7 +146,7 @@ public class DAOManager {
     }
 
     /**
-     * 查询用户列表
+     * 查询所有下载列表
      */
     public List<localfilmBean> queryFilmList() {
         DaoMaster daoMaster = new DaoMaster(getReadableDatabase());
@@ -131,15 +158,40 @@ public class DAOManager {
     }
 
     /**
-     * 查询用户列表
+     * 查询下载
      */
-    public List<localfilmBean> queryFilmList(String id) {
+    public List<localfilmBean> queryDownLoadFilmList(String id) {
         DaoMaster daoMaster = new DaoMaster(getReadableDatabase());
         DaoSession daoSession = daoMaster.newSession();
         localfilmBeanDao mLocalfilmBeanDao = daoSession.getLocalfilmBeanDao();
         QueryBuilder<localfilmBean> qb = mLocalfilmBeanDao.queryBuilder();
         qb.where(localfilmBeanDao.Properties.ID.eq(id));
         List<localfilmBean> list = qb.list();
+        return list;
+    }
+
+    /**
+     * 查询收藏
+     */
+    public List<likefilmbean> queryLikeFilmList(String url) {
+        DaoMaster daoMaster = new DaoMaster(getReadableDatabase());
+        DaoSession daoSession = daoMaster.newSession();
+        likefilmbeanDao mlikefilmbeanDao = daoSession.getLikefilmbeanDao();
+        QueryBuilder<likefilmbean> qb = mlikefilmbeanDao.queryBuilder();
+        qb.where(likefilmbeanDao.Properties.Url.eq(url));
+        List<likefilmbean> list = qb.list();
+        return list;
+    }
+
+    /**
+     * 查询收藏列表
+     */
+    public List<likefilmbean> queryLikeFilmList() {
+        DaoMaster daoMaster = new DaoMaster(getReadableDatabase());
+        DaoSession daoSession = daoMaster.newSession();
+        likefilmbeanDao likefilmbeanDao = daoSession.getLikefilmbeanDao();
+        QueryBuilder<likefilmbean> qb = likefilmbeanDao.queryBuilder();
+        List<likefilmbean> list = qb.list();
         return list;
     }
 }

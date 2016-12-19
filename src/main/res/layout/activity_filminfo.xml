@@ -8,7 +8,8 @@
     android:id="@+id/img2"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/transparent">
+    android:background="@color/transparent"
+    >
 
     <ImageView
         android:id="@+id/lay1"
@@ -22,8 +23,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/transparent"
-        app:layout_behavior="ui.FilmInfoBehavior"
-        >
+        app:layout_behavior="ui.FilmInfoBehavior">
+
 
         <RelativeLayout
             android:id="@+id/top"
@@ -54,7 +55,7 @@
                     android:id="@+id/backBt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
+                    android:layout_marginTop="30dp"
                     android:paddingLeft="20dp"
                     android:paddingRight="20dp"
                     android:shadowColor="@color/DarkFontColor"
@@ -71,8 +72,8 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/topR"
                 android:background="@color/transparent"
-                android:paddingBottom="10dp"
                 android:paddingTop="10dp"
+                android:layout_marginBottom="40dp"
                 >
 
                 <RelativeLayout
@@ -220,11 +221,77 @@
                     </RelativeLayout>
 
                 </RelativeLayout>
-            </android.support.v4.widget.NestedScrollView>
+            </android.support.v4.widget.NestedScrollView >
+
         </RelativeLayout>
     </android.support.design.widget.AppBarLayout>
+    <RelativeLayout
+        android:id="@+id/bottom"
+        android:layout_gravity="bottom"
+        android:layout_alignParentBottom="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="5dp"
+        >
+        <ui.IconFontTextView
+            android:id="@+id/bf_icon"
+            android:shadowColor="@color/DarkFontColor"
+            android:shadowDx="5"
+            android:shadowDy="5"
+            android:textSize="20sp"
+            android:paddingTop="10dp"
+            android:paddingBottom="5dp"
+            android:paddingRight="2dp"
+            android:layout_toLeftOf="@+id/bf"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/FontColor"
+            android:text="@string/播放"/>
+        <ui.IconFontTextView
+            android:paddingTop="10dp"
+            android:paddingBottom="5dp"
+            android:paddingLeft="2dp"
+            android:paddingRight="2dp"
+            android:shadowColor="@color/DarkFontColor"
+            android:shadowDx="5"
+            android:shadowDy="5"
+            android:layout_toLeftOf="@+id/sc"
+            android:id="@+id/bf"
+            android:textColor="@color/FontColor"
+            android:textSize="20sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="134"/>
 
-
+        <ui.IconFontTextView
+            android:shadowColor="@color/DarkFontColor"
+            android:shadowDx="5"
+            android:shadowDy="5"
+            android:textSize="20sp"
+            android:layout_toLeftOf="@+id/xz"
+            android:id="@+id/sc"
+            android:padding="10dp"
+            android:paddingBottom="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/FontColor"
+            android:text="@string/收藏1"/>
+        <ui.IconFontTextView
+            android:shadowColor="@color/DarkFontColor"
+            android:shadowDx="5"
+            android:shadowDy="5"
+            android:textSize="20sp"
+            android:layout_alignParentRight="true"
+            android:id="@+id/xz"
+            android:layout_marginRight="15dp"
+            android:padding="10dp"
+            android:paddingBottom="5dp"
+            android:paddingRight="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/FontColor"
+            android:text="@string/下载"/>
+    </RelativeLayout>
     <ui.TextFloatingActionButton
         android:id="@+id/play"
         android:layout_width="wrap_content"

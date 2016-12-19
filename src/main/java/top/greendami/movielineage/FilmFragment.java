@@ -2,7 +2,6 @@ package top.greendami.movielineage;
 
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -47,7 +46,6 @@ public class FilmFragment extends Fragment {
 
     int type = 0;
 
-    @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.new_fragment, container, false);
@@ -65,8 +63,6 @@ public class FilmFragment extends Fragment {
             @Override
             public void onRefresh() {
 
-                //Toast.makeText(getActivity(), "refresh", Toast.LENGTH_SHORT).show();
-
                 mRefreshLayout.postDelayed(new Runnable() {
 
                     @Override
@@ -75,8 +71,6 @@ public class FilmFragment extends Fragment {
                         mDatas.clear();
                         mAdapter.notifyDataSetChanged();
                         SystemDialog.showLoadingDialog(getActivity(),false);
-                        // 更新数据
-                        LoadData(PAGE);
                         mRefreshLayout.setRefreshing(false);
                     }
                 }, 1000);
@@ -117,7 +111,6 @@ public class FilmFragment extends Fragment {
     }
 
     public void LoadData(final int page){
-
 
         new Thread(new Runnable() {
             @Override

@@ -46,6 +46,7 @@ public class getFilm {
             String introduce = doc.getElementsByClass("clearfix film_intro").first().select("a").get(1).text();
 
             String comment = doc.getElementsByClass("intro_119 clearfix").select("p").text();
+
             f.setImg(img.replace("@960w.jpg",""));
             f.setName(name);
             f.setFrom(from);
@@ -54,7 +55,8 @@ public class getFilm {
             f.setDate(date);
             f.setIntroduce(introduce);
             f.setComment(comment);
-            Log.d("getFilm", img.replace("@960w.jpg",""));
+            f.setNum(new getFilmViewsNumber().Doget(url));
+            Log.d("getFilm", f.getNum());
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -109,6 +109,7 @@ public class Player extends Activity implements View.OnTouchListener, MediaPlaye
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.player_layout);
         butterknife.ButterKnife.bind(this);
+        mDotView.setVisibility(View.VISIBLE);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
         mWakeLock = pm.newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK, "My Tag");
@@ -282,6 +283,7 @@ public class Player extends Activity implements View.OnTouchListener, MediaPlaye
             mMediaPlayer.setOnInfoListener(this);
             setVolumeControlStream(AudioManager.STREAM_MUSIC);
             mMediaPlayer.setBufferSize(2048);
+            mDotView.setVisibility(View.INVISIBLE);
 
         } catch (Exception e) {
             Log.e(TAG, "error: " + e.getMessage(), e);

@@ -27,11 +27,6 @@
         <activity android:name=".MainActivity"
                   android:theme="@style/AppTheme">
             android:screenOrientation="landscape"
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
         </activity>
         <activity android:name=".Player">
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
@@ -45,6 +40,17 @@
 
         <activity android:name=".DownLoadActivity"
             android:theme="@style/AppTheme">
+        </activity>
+        <activity android:name=".WelcomeActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+        <activity android:name=".LikeActivity"
+                  android:theme="@style/AppTheme">
+            android:screenOrientation="landscape"
         </activity>
     </application>
 

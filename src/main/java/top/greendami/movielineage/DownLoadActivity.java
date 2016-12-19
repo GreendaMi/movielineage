@@ -54,13 +54,14 @@ public class DownLoadActivity extends Activity implements View.OnTouchListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_download);
+        setContentView(R.layout.activity_download_like);
         ButterKnife.bind(this);
         initViews();
         initEvent();
     }
 
     private void initViews() {
+        mDOWN.setText("DOWNLOAD");
         localfilmList = DAOManager.getInstance(this).queryFilmList();
 
         mAdapter = new DownLoadFilmListAdapter(this, localfilmList);
@@ -157,7 +158,7 @@ public class DownLoadActivity extends Activity implements View.OnTouchListener {
                     FileDownloader.delete(lfb.getUrl(), true, null);
                     FileDownloader.delete(lfb.getImg(), true, null);
                     localfilmList.remove(lfb);
-                    DAOManager.getInstance(DownLoadActivity.this).deleteFilm(lfb);
+                    DAOManager.getInstance(DownLoadActivity.this).deleteDownLoadFilm(lfb);
                 }
                 mCancelBt.callOnClick();
             }

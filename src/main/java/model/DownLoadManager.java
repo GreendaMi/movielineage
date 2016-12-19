@@ -112,8 +112,8 @@ public class DownLoadManager {
             }
         });
 
-        if(DAOManager.getInstance(mContext).queryFilmList(lf.getID()).size() == 0){
-            DAOManager.getInstance(mContext).insertFilm(lf);
+        if(DAOManager.getInstance(mContext).queryDownLoadFilmList(lf.getID()).size() == 0){
+            DAOManager.getInstance(mContext).insertDownLoadFilm(lf);
         }
 
     }

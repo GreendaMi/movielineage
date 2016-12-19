@@ -3,6 +3,7 @@
                 android:id="@+id/filmItem"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/Item_h"
+                android:background="@color/DarkFontColor"
                 >
 
     <ImageView

@@ -7,8 +7,6 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 
-import top.greendami.movielineage.R;
-
 /**
  * Created by GreendaMi on 2016/12/7.
  */
@@ -35,22 +33,22 @@ public class FilmInfoBehavior extends AppBarLayout.ScrollingViewBehavior {
 
     @Override
     public void onNestedScroll(CoordinatorLayout coordinatorLayout, View child, View target, int dxConsumed, int dyConsumed, int dxUnconsumed, int dyUnconsumed) {
-        View back = coordinatorLayout.findViewById(R.id.backBt);
-        View top = coordinatorLayout.findViewById(R.id.top);
-        View cover = coordinatorLayout.findViewById(R.id.cover);
-
-        if(dyUnconsumed > 0 && sum + dyUnconsumed < totle ){
-            top.offsetTopAndBottom(- dyUnconsumed);
-            back.offsetTopAndBottom(dyUnconsumed);
-            sum = sum + dyUnconsumed;
-        }
-
-        if(dyUnconsumed < 0 && sum + dyUnconsumed > 0 ){
-            sum = sum + dyUnconsumed;
-            top.offsetTopAndBottom(- dyUnconsumed);
-            back.offsetTopAndBottom(dyUnconsumed);
-        }
-        cover.setAlpha(((float)(sum)/totle));
+//        View back = coordinatorLayout.findViewById(R.id.backBt);
+//        View top = coordinatorLayout.findViewById(R.id.top);
+//        View cover = coordinatorLayout.findViewById(R.id.cover);
+//
+//        if(dyUnconsumed > 0 && sum + dyUnconsumed < totle ){
+//            top.offsetTopAndBottom(- dyUnconsumed);
+//            back.offsetTopAndBottom(dyUnconsumed);
+//            sum = sum + dyUnconsumed;
+//        }
+//
+//        if(dyUnconsumed < 0 && sum + dyUnconsumed > 0 ){
+//            sum = sum + dyUnconsumed;
+//            top.offsetTopAndBottom(- dyUnconsumed);
+//            back.offsetTopAndBottom(dyUnconsumed);
+//        }
+//        cover.setAlpha(((float)(sum)/totle));
 
     }
 

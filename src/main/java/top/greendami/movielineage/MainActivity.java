@@ -17,6 +17,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import tool.UI;
 import ui.ChTextView;
+import ui.DotsPreloader;
 import ui.DynamicWave;
 import ui.RoundLayout;
 
@@ -45,6 +46,8 @@ public class MainActivity extends FragmentActivity {
     RoundLayout mLeftDrawer;
     @Bind(R.id.id)
     ChTextView mId;
+    @Bind(R.id.DotsPreloader)
+    DotsPreloader mDotsPreloader;
     private Fragment NEW, HOT, COM;
 
     TextView New, Hot, Com;
@@ -241,11 +244,11 @@ public class MainActivity extends FragmentActivity {
         mSh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(mSh.getText().equals("注销")){
+                if (mSh.getText().equals("注销")) {
                     UI.Save("Me", "");
                     mId.setText("");
                     mSh.setText("登录");
-                }else{
+                } else {
                     UI.push(LoginActivity.class);
                 }
             }
@@ -259,10 +262,10 @@ public class MainActivity extends FragmentActivity {
 
         if (UI.get("Me") != null && !UI.get("Me").toString().isEmpty()) {
             mSh.setText("注销");
-            mId.setText(UI.get("Me").toString().substring(0,3) + "****" + UI.get("Me").toString().substring(7) );
+            mId.setText(UI.get("Me").toString().substring(0, 3) + "****" + UI.get("Me").toString().substring(7));
 
 
-        }else{
+        } else {
             mSh.setText("登录");
             mId.setText("");
         }
@@ -270,5 +273,10 @@ public class MainActivity extends FragmentActivity {
 
     }
 
-
+    public void showLoadingBar(){
+        mDotsPreloader.setVisibility(View.VISIBLE);
+    }
+    public void dismissLoadingBar(){
+        mDotsPreloader.setVisibility(View.INVISIBLE);
+    }
 }

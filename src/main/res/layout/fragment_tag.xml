@@ -18,7 +18,7 @@
             android:background="@color/DarkFontColor">
             <RelativeLayout
                 android:layout_margin="2dp"
-                android:layout_above="@+id/ad_t"
+                android:layout_above="@+id/ida1"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/FontColor">
@@ -32,7 +32,7 @@
             </RelativeLayout>
 
             <ui.ChTextView
-                android:id="@+id/ad_t"
+                android:id="@+id/ida1"
                 android:paddingBottom="5dp"
                 android:paddingTop="5dp"
                 android:layout_alignParentBottom="true"
@@ -51,7 +51,7 @@
             android:background="@color/DarkFontColor">
             <RelativeLayout
                 android:layout_margin="2dp"
-                android:layout_above="@+id/ad_t"
+                android:layout_above="@+id/ida2"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/FontColor">
@@ -65,7 +65,7 @@
             </RelativeLayout>
 
             <ui.ChTextView
-                android:id="@+id/ad_t"
+                android:id="@+id/ida2"
                 android:paddingBottom="5dp"
                 android:paddingTop="5dp"
                 android:layout_alignParentBottom="true"
@@ -84,7 +84,7 @@
             android:background="@color/DarkFontColor">
             <RelativeLayout
                 android:layout_margin="2dp"
-                android:layout_above="@+id/ad_t"
+                android:layout_above="@+id/ida3"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/FontColor">
@@ -98,7 +98,7 @@
             </RelativeLayout>
 
             <ui.ChTextView
-                android:id="@+id/ad_t"
+                android:id="@+id/ida3"
                 android:paddingBottom="5dp"
                 android:paddingTop="5dp"
                 android:layout_alignParentBottom="true"
@@ -124,7 +124,7 @@
             android:background="@color/DarkFontColor">
             <RelativeLayout
                 android:layout_margin="2dp"
-                android:layout_above="@+id/ad_t"
+                android:layout_above="@+id/idb1"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/FontColor">
@@ -138,7 +138,7 @@
             </RelativeLayout>
 
             <ui.ChTextView
-                android:id="@+id/ad_t"
+                android:id="@+id/idb1"
                 android:paddingBottom="5dp"
                 android:paddingTop="5dp"
                 android:layout_alignParentBottom="true"
@@ -157,7 +157,7 @@
             android:background="@color/DarkFontColor">
             <RelativeLayout
                 android:layout_margin="2dp"
-                android:layout_above="@+id/ad_t"
+                android:layout_above="@+id/idb2"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/FontColor">
@@ -171,7 +171,7 @@
             </RelativeLayout>
 
             <ui.ChTextView
-                android:id="@+id/ad_t"
+                android:id="@+id/idb2"
                 android:paddingBottom="5dp"
                 android:paddingTop="5dp"
                 android:layout_alignParentBottom="true"
@@ -190,7 +190,7 @@
             android:background="@color/DarkFontColor">
             <RelativeLayout
                 android:layout_margin="2dp"
-                android:layout_above="@+id/ad_t"
+                android:layout_above="@+id/idb3"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/FontColor">
@@ -204,7 +204,7 @@
             </RelativeLayout>
 
             <ui.ChTextView
-                android:id="@+id/ad_t"
+                android:id="@+id/idb3"
                 android:paddingBottom="5dp"
                 android:paddingTop="5dp"
                 android:layout_alignParentBottom="true"
@@ -230,7 +230,7 @@
             android:background="@color/DarkFontColor">
             <RelativeLayout
                 android:layout_margin="2dp"
-                android:layout_above="@+id/ad_t"
+                android:layout_above="@+id/idc1"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/FontColor">
@@ -244,7 +244,7 @@
             </RelativeLayout>
 
             <ui.ChTextView
-                android:id="@+id/ad_t"
+                android:id="@+id/idc1"
                 android:paddingBottom="5dp"
                 android:paddingTop="5dp"
                 android:layout_alignParentBottom="true"
@@ -263,7 +263,7 @@
             android:background="@color/DarkFontColor">
             <RelativeLayout
                 android:layout_margin="2dp"
-                android:layout_above="@+id/ad_t"
+                android:layout_above="@+id/idc2"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/FontColor">
@@ -277,7 +277,7 @@
             </RelativeLayout>
 
             <ui.ChTextView
-                android:id="@+id/ad_t"
+                android:id="@+id/idc2"
                 android:paddingBottom="5dp"
                 android:paddingTop="5dp"
                 android:layout_alignParentBottom="true"
@@ -296,7 +296,7 @@
             android:background="@color/DarkFontColor">
             <RelativeLayout
                 android:layout_margin="2dp"
-                android:layout_above="@+id/ad_t"
+                android:layout_above="@+id/idc3"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/FontColor">
@@ -310,7 +310,7 @@
             </RelativeLayout>
 
             <ui.ChTextView
-                android:id="@+id/ad_t"
+                android:id="@+id/idc3"
                 android:paddingBottom="5dp"
                 android:paddingTop="5dp"
                 android:layout_alignParentBottom="true"
@@ -336,7 +336,7 @@
             android:background="@color/DarkFontColor">
             <RelativeLayout
                 android:layout_margin="2dp"
-                android:layout_above="@+id/ad_t"
+                android:layout_above="@+id/idd1"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/FontColor">
@@ -350,7 +350,7 @@
             </RelativeLayout>
 
             <ui.ChTextView
-                android:id="@+id/ad_t"
+                android:id="@+id/idd1"
                 android:paddingBottom="5dp"
                 android:paddingTop="5dp"
                 android:layout_alignParentBottom="true"
@@ -369,7 +369,7 @@
             android:background="@color/DarkFontColor">
             <RelativeLayout
                 android:layout_margin="2dp"
-                android:layout_above="@+id/ad_t"
+                android:layout_above="@+id/idd2"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/FontColor">
@@ -383,7 +383,7 @@
             </RelativeLayout>
 
             <ui.ChTextView
-                android:id="@+id/ad_t"
+                android:id="@+id/idd2"
                 android:paddingBottom="5dp"
                 android:paddingTop="5dp"
                 android:layout_alignParentBottom="true"
@@ -402,7 +402,7 @@
             android:background="@color/DarkFontColor">
             <RelativeLayout
                 android:layout_margin="2dp"
-                android:layout_above="@+id/ad_t"
+                android:layout_above="@+id/idd3"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/FontColor">
@@ -416,7 +416,7 @@
             </RelativeLayout>
 
             <ui.ChTextView
-                android:id="@+id/ad_t"
+                android:id="@+id/idd3"
                 android:paddingBottom="5dp"
                 android:paddingTop="5dp"
                 android:layout_alignParentBottom="true"

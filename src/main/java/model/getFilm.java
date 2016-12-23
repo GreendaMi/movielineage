@@ -1,7 +1,5 @@
 package model;
 
-import android.util.Log;
-
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
@@ -56,7 +54,7 @@ public class getFilm {
             f.setIntroduce(introduce);
             f.setComment(comment);
             f.setNum(new getFilmViewsNumber().Doget(url));
-            Log.d("getFilm", f.getNum());
+//            Log.d("getFilm", name + "," + filmurl+ "," + img.replace("@960w.jpg",""));
         } catch (IOException e) {
             e.printStackTrace();
         }

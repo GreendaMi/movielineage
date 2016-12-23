@@ -20,10 +20,6 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import model.getFilm;
 import model.getPageList;
-import rx.Observable;
-import rx.Observer;
-import rx.functions.Func1;
-import rx.schedulers.Schedulers;
 import ui.RefreshLayout;
 import ui.SystemDialog;
 
@@ -102,7 +98,8 @@ public class FilmFragment extends Fragment {
                 super.onScrollStateChanged(recyclerView, newState);
                 if (newState == RecyclerView.SCROLL_STATE_IDLE
                         && lastVisibleItem + 1 == mAdapter.getItemCount()) {
-                    //SystemDialog.showLoadingDialog(getActivity(),false);
+//                    SystemDialog.showLoadingDialog(getActivity(),false);
+                    ((MainActivity)getActivity()).showLoadingBar();
                     LoadData(++PAGE);
                 }
             }
@@ -125,46 +122,71 @@ public class FilmFragment extends Fragment {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                Observable.from(new getPageList().Doget(type , page+""))
-                        .observeOn(Schedulers.io())
-                        .map(new Func1<String, filmBean>() {
+                List<String> urls = new getPageList().Doget(type , page+"");
 
-                            @Override
-                            public filmBean call(String s) {
-                                return new getFilm().Doget(s);
-                            }
-                        })
-                        .filter(new Func1<filmBean, Boolean>() {
-                            @Override
-                            public Boolean call(filmBean filmBean) {
-                                return (null != filmBean.getUrl() && null != filmBean.getImg() && !filmBean.getUrl().isEmpty() && !filmBean.getImg().isEmpty());
-                            }
-                        })
-                        .subscribe(new Observer<filmBean>() {
-                            @Override
-                            public void onCompleted() {
-
-                            }
-
-                            @Override
-                            public void onError(Throwable e) {
-
-                            }
-
-                            @Override
-                            public void onNext(filmBean filmBean) {
-                                filmBean.setType(2);
-                                mDatas.add(filmBean);
+                for (final String url :urls) {
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            filmBean f = new getFilm().Doget(url);
+                            if(f.getImg()!=null && !f.getImg().isEmpty() && f.getUrl()!=null && !f.getUrl().isEmpty()){
+                                mDatas.add(new getFilm().Doget(url));
 
                                 mHandler.post(new Runnable() {
                                     @Override
                                     public void run() {
                                         mAdapter.notifyDataSetChanged();
                                         SystemDialog.dismissLoadingDialog();
+                                        ((MainActivity)getActivity()).dismissLoadingBar();
                                     }
                                 });
                             }
-                        });
+
+                        }
+                    }).start();
+
+                }
+
+
+//                Observable.from(new getPageList().Doget(type , page+""))
+//                        .map(new Func1<String, filmBean>() {
+//
+//                            @Override
+//                            public filmBean call(String s) {
+//                                return new getFilm().Doget(s);
+//                            }
+//                        })
+//                        .filter(new Func1<filmBean, Boolean>() {
+//                            @Override
+//                            public Boolean call(filmBean filmBean) {
+//                                return (null != filmBean.getUrl() && null != filmBean.getImg() && !filmBean.getUrl().isEmpty() && !filmBean.getImg().isEmpty());
+//                            }
+//                        })
+//                        .subscribe(new Observer<filmBean>() {
+//                            @Override
+//                            public void onCompleted() {
+//
+//                            }
+//
+//                            @Override
+//                            public void onError(Throwable e) {
+//
+//                            }
+//
+//                            @Override
+//                            public void onNext(filmBean filmBean) {
+//                                filmBean.setType(2);
+//                                mDatas.add(filmBean);
+//
+//                                mHandler.post(new Runnable() {
+//                                    @Override
+//                                    public void run() {
+//                                        mAdapter.notifyDataSetChanged();
+//                                        SystemDialog.dismissLoadingDialog();
+//                                    }
+//                                });
+//                            }
+//                        });
 
             }
         }).start();

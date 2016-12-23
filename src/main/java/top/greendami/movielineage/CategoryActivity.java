@@ -20,12 +20,9 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import model.getFilm;
 import model.getPageList;
-import rx.Observable;
-import rx.Observer;
-import rx.functions.Func1;
-import rx.schedulers.Schedulers;
 import tool.UI;
 import ui.ChTextView;
+import ui.DotsPreloader;
 import ui.IconFontTextView;
 import ui.RefreshLayout;
 import ui.SystemDialog;
@@ -50,6 +47,8 @@ public class CategoryActivity extends Activity {
     int PAGE = 1;
     Handler mHandler;
     LinearLayoutManager layoutManager;
+    @Bind(R.id.DotsPreloader)
+    DotsPreloader mDotsPreloader;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,7 +95,8 @@ public class CategoryActivity extends Activity {
                 super.onScrollStateChanged(recyclerView, newState);
                 if (newState == RecyclerView.SCROLL_STATE_IDLE
                         && lastVisibleItem + 1 == mAdapter.getItemCount()) {
-                    //SystemDialog.showLoadingDialog(getActivity(),false);
+//                    SystemDialog.showLoadingDialog(CategoryActivity.this, false);
+                    mDotsPreloader.setVisibility(View.VISIBLE);
                     LoadData(++PAGE);
                 }
             }
@@ -146,46 +146,76 @@ public class CategoryActivity extends Activity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                Observable.from(new getPageList().DogetByurl((String)(UI.getData(1)), page + ""))
-                        .observeOn(Schedulers.io())
-                        .map(new Func1<String, filmBean>() {
+                if (UI.getData(1) instanceof String) {
 
-                            @Override
-                            public filmBean call(String s) {
-                                return new getFilm().Doget(s);
-                            }
-                        })
-                        .filter(new Func1<filmBean, Boolean>() {
-                            @Override
-                            public Boolean call(filmBean filmBean) {
-                                return (null != filmBean.getUrl() && null != filmBean.getImg() && !filmBean.getUrl().isEmpty() && !filmBean.getImg().isEmpty());
-                            }
-                        })
-                        .subscribe(new Observer<filmBean>() {
-                            @Override
-                            public void onCompleted() {
+                } else {
+                    return;
+                }
+                String baseurl = (String) (UI.getData(1));
+                List<String> urls = new getPageList().DogetByurl(baseurl, page + "");
 
-                            }
-
-                            @Override
-                            public void onError(Throwable e) {
-
-                            }
-
-                            @Override
-                            public void onNext(filmBean filmBean) {
-                                filmBean.setType(2);
-                                mDatas.add(filmBean);
+                for (final String url : urls) {
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            filmBean f = new getFilm().Doget(url);
+                            if (f.getImg() != null && !f.getImg().isEmpty() && f.getUrl() != null && !f.getUrl().isEmpty()) {
+                                mDatas.add(new getFilm().Doget(url));
 
                                 mHandler.post(new Runnable() {
                                     @Override
                                     public void run() {
                                         mAdapter.notifyDataSetChanged();
                                         SystemDialog.dismissLoadingDialog();
+                                        mDotsPreloader.setVisibility(View.INVISIBLE);
                                     }
                                 });
                             }
-                        });
+                        }
+                    }).start();
+
+                }
+
+
+//                Observable.from(new getPageList().DogetByurl((String)(UI.getData(1)), page + ""))
+//                        .map(new Func1<String, filmBean>() {
+//
+//                            @Override
+//                            public filmBean call(String s) {
+//                                return new getFilm().Doget(s);
+//                            }
+//                        })
+//                        .filter(new Func1<filmBean, Boolean>() {
+//                            @Override
+//                            public Boolean call(filmBean filmBean) {
+//                                return (null != filmBean.getUrl() && null != filmBean.getImg() && !filmBean.getUrl().isEmpty() && !filmBean.getImg().isEmpty());
+//                            }
+//                        })
+//                        .subscribe(new Observer<filmBean>() {
+//                            @Override
+//                            public void onCompleted() {
+//
+//                            }
+//
+//                            @Override
+//                            public void onError(Throwable e) {
+//
+//                            }
+//
+//                            @Override
+//                            public void onNext(final filmBean filmBean) {
+//
+//                                mHandler.post(new Runnable() {
+//                                    @Override
+//                                    public void run() {
+//                                        Log.d("CategoryActivity", "System.currentTimeMillis(next):" + System.currentTimeMillis());
+//                                        mDatas.add(filmBean);
+//                                        mAdapter.notifyItemChanged(mDatas.size() - 1);
+//                                        SystemDialog.dismissLoadingDialog();
+//                                    }
+//                                });
+//                            }
+//                        });
 
             }
         }).start();
@@ -200,9 +230,10 @@ public class CategoryActivity extends Activity {
     }
 
     private void back() {
-        finish();
+        UI.pop();
         overridePendingTransition(R.anim.slide_left_in, R.anim.slide_right_out);
     }
+
     @Override
     protected void onResume() {
         super.onResume();

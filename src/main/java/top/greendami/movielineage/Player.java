@@ -24,10 +24,12 @@ import android.widget.TextView;
 
 import org.wlf.filedownloader.FileDownloader;
 
+import bean.daoBean.likefilmbean;
 import bean.filmBean;
 import io.vov.vitamio.LibsChecker;
 import io.vov.vitamio.MediaPlayer;
 import io.vov.vitamio.Vitamio;
+import model.DAOManager;
 import model.DownLoadManager;
 import tool.ScreenInfo;
 import tool.UI;
@@ -126,13 +128,22 @@ public class Player extends Activity implements View.OnTouchListener, MediaPlaye
 
         mHandler = new Handler();
         initEvent();
-
+        initView();
 
         /**加载透明动画**/
 
         mAnimationIn = AnimationUtils.loadAnimation(this, R.anim.slide_bottom_in);
         mAnimationOut = AnimationUtils.loadAnimation(this, R.anim.slide_bottom_out);
 
+
+    }
+
+    private void initView() {
+        if(DAOManager.getInstance(Player.this).queryLikeFilmList(mFilmBean.getUrl()).size() != 0){
+            mLike.setText(getResources().getString(R.string.收藏2));
+        }else{
+            mLike.setText(getResources().getString(R.string.收藏1));
+        }
 
     }
 
@@ -205,6 +216,35 @@ public class Player extends Activity implements View.OnTouchListener, MediaPlaye
         }
 
         mDownload.setOnTouchListener(this);
+
+        mLike.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (UI.get("Me") != null && !UI.get("Me").toString().isEmpty()) {
+                    likefilmbean lfb = new likefilmbean();
+                    lfb.setName(mFilmBean.getName());
+                    lfb.setFrom(mFilmBean.getFrom());
+                    lfb.setUrl(mFilmBean.getUrl());
+                    lfb.setIntroduce(mFilmBean.getIntroduce());
+                    lfb.setImg(mFilmBean.getImg());
+                    lfb.setDate(mFilmBean.getDate());
+                    lfb.setTag(mFilmBean.getTag());
+                    lfb.setComment(mFilmBean.getComment());
+
+                    if (DAOManager.getInstance(Player.this).queryLikeFilmList(mFilmBean.getUrl()).size() == 0) {
+
+                        DAOManager.getInstance(Player.this).insertLikeFilm(lfb);
+                        mLike.setText(getResources().getString(R.string.收藏2));
+                    } else {
+                        lfb = DAOManager.getInstance(Player.this).queryLikeFilmList(mFilmBean.getUrl()).get(0);
+                        DAOManager.getInstance(Player.this).deleteLikeFilm(lfb);
+                        mLike.setText(getResources().getString(R.string.收藏1));
+                    }
+                }else{
+                    UI.push(LoginActivity.class);
+                }
+            }
+        });
     }
 
     public void controlPanel() {
@@ -529,14 +569,14 @@ public class Player extends Activity implements View.OnTouchListener, MediaPlaye
         Log.d(TAG, "MoveDistance:" + MoveDistance);
         //水平滑动
         if (upx - x > MoveDistance) {
-            long moveto = mMediaPlayer.getCurrentPosition() + 1000 * (upx - x) / MoveDistance;
-            moveto = moveto > mMediaPlayer.getDuration() ? mMediaPlayer.getDuration() - 5000 : mMediaPlayer.getCurrentPosition() + 1000 * (upx - x) / MoveDistance;
+            long moveto = mMediaPlayer.getCurrentPosition() + (mMediaPlayer.getDuration()/100) * (upx - x) / (MoveDistance/2);
+            moveto = moveto > mMediaPlayer.getDuration() ? mMediaPlayer.getDuration() - 5000 : mMediaPlayer.getCurrentPosition() + (mMediaPlayer.getDuration()/100) * (upx - x) / (MoveDistance/2);
             UI.Toast(formatTime.formatTime(moveto));
             mMediaPlayer.seekTo(moveto);
             flg = true;
         } else if (x - upx > MoveDistance) {
-            long moveto = mMediaPlayer.getCurrentPosition() - 1000 * (x - upx) / MoveDistance;
-            moveto = moveto < 0 ? 0 : mMediaPlayer.getCurrentPosition() - 1000 * (x - upx) / MoveDistance;
+            long moveto = mMediaPlayer.getCurrentPosition() - (mMediaPlayer.getDuration()/100) * (x - upx) / (MoveDistance/2);
+            moveto = moveto < 0 ? 0 : mMediaPlayer.getCurrentPosition() - (mMediaPlayer.getDuration()/100) * (x - upx) / (MoveDistance/2);
             UI.Toast(formatTime.formatTime(moveto));
             mMediaPlayer.seekTo(moveto);
             flg = true;

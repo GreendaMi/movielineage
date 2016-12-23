@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:fitsSystemWindows="true">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#F8F8F8"
+        android:orientation="vertical">
+        <RelativeLayout
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:background="@color/MainColor">
+            <ui.IconFontTextView
+                android:id="@+id/backBt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="20dp"
+                android:layout_centerVertical="true"
+                android:shadowColor="@color/DarkFontColor"
+                android:shadowDx="5"
+                android:shadowDy="5"
+                android:shadowRadius="10"
+                android:text="@string/返回"
+                android:textColor="@color/FontColor"
+                android:textSize="20dp"/>
+            <ui.ChTextView
+                android:layout_centerInParent="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/FontColor"
+                android:textSize="24dp"
+                android:text="登  录"></ui.ChTextView>
+
+        </RelativeLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="15dp"
+            android:orientation="vertical">
+            <LinearLayout
+                android:id="@+id/linearLayout1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/border"
+                android:orientation="horizontal"
+                android:padding="15dp">
+
+                <EditText
+                    android:id="@+id/phone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:ems="10"
+                    android:hint="请输入手机号码"
+                    android:textColorHint="#A9A9A9"
+                    android:paddingLeft="15dp"
+                    android:inputType="phone" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayout1_5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:id="@+id/linearLayout2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginTop="20dp"
+                    android:layout_weight="2"
+                    android:background="@drawable/border"
+                    android:orientation="horizontal"
+                    android:padding="15dp">
+
+                    <EditText
+                        android:id="@+id/yzm"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:ems="10"
+                        android:hint="请输入验证码"
+                        android:textColorHint="#A9A9A9"
+                        android:paddingLeft="15dp"
+                        android:inputType="number"
+                        android:maxLength="6" />
+                </LinearLayout>
+
+                <ui.ChButton
+                    android:clickable="true"
+                    android:background="@drawable/botton_bg"
+                    android:id="@+id/yzm_button"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_weight="1.2"
+                    android:padding="10dp"
+                    android:text="获取验证码"
+                    android:textSize="15dp"
+                    android:textColor="@color/FontColor"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ui.ChButton
+                android:clickable="true"
+                android:background="@drawable/botton_bg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/ok"
+                android:text="确 定"
+                android:textColor="@color/FontColor"
+                android:textSize="20sp"
+                android:layout_margin="25dp" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

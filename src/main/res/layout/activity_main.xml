@@ -3,6 +3,7 @@
 
 <android.support.v4.widget.DrawerLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -30,14 +31,14 @@
                 android:layout_centerInParent="true"
                 android:orientation="horizontal">
 
-                <ui.EnTextView
+                <ui.ChTextView
                     android:id="@+id/New"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:paddingLeft="15dp"
                     android:paddingRight="15dp"
-                    android:text="NEW"
+                    android:text="最新"
                     android:textColor="@color/FontColor"
                     android:textSize="20dp"/>
 
@@ -48,14 +49,14 @@
                     android:layout_centerVertical="true"
                     android:background="@color/FontColor"/>
 
-                <ui.EnTextView
+                <ui.ChTextView
                     android:id="@+id/hot"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:paddingLeft="15dp"
                     android:paddingRight="15dp"
-                    android:text="HOT"
+                    android:text="热门"
                     android:textColor="@color/DarkFontColor"
                     android:textSize="20dp"/>
 
@@ -66,14 +67,14 @@
                     android:layout_centerVertical="true"
                     android:background="@color/FontColor"/>
 
-                <ui.EnTextView
+                <ui.ChTextView
                     android:id="@+id/comment"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:paddingLeft="15dp"
                     android:paddingRight="15dp"
-                    android:text="TOP"
+                    android:text="类别"
                     android:textColor="@color/DarkFontColor"
                     android:textSize="20dp"/>
 
@@ -105,14 +106,15 @@
          the container. A solid background is used for contrast
          with the content view. -->
 
-    <RelativeLayout
+    <ui.RoundLayout
         android:id="@+id/left_drawer"
         android:layout_width="240dp"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:background="@color/FontColor"
+        android:background="@color/transparent"
         android:choiceMode="singleChoice"
         android:clickable="true"
+        app:boder="60dp"
         >
 
         <RelativeLayout
@@ -125,7 +127,7 @@
                 android:id="@+id/logo"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:layout_centerHorizontal="true"
+                android:layout_marginLeft="65dp"
                 android:layout_marginTop="50dp"
                 android:src="@drawable/logo"/>
 
@@ -133,7 +135,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/logo"
-                android:layout_centerHorizontal="true"
+                android:layout_marginLeft="40dp"
                 android:paddingTop="3dp"
                 android:text="9P Film factory"
                 android:textColor="@color/DarkFontColor"
@@ -149,12 +151,15 @@
                 android:background="@color/transparent"/>
         </RelativeLayout>
         <RelativeLayout
+            android:id="@+id/buttonViews"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@id/lefttop"
-            android:background="@color/FontColor">
+            android:background="@color/FontColor"
+            android:paddingRight="30dp">
 
-            <ui.EnTextView
+            <ui.ChTextView
+                android:paddingRight="30dp"
                 android:background="@drawable/rippledrawable"
                 android:clickable="true"
                 android:paddingTop="10dp"
@@ -162,7 +167,7 @@
                 android:id="@+id/like"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Like"
+                android:text="收藏"
                 android:textColor="@color/LowFontColor"
                 android:layout_centerInParent="true"
                 android:textSize="24sp"
@@ -183,7 +188,8 @@
                 android:layout_height="1dp"
                 android:background="@color/LowFontColor"
                 android:layout_alignBottom="@+id/like"/>
-            <ui.EnTextView
+            <ui.ChTextView
+                android:paddingRight="30dp"
                 android:background="@drawable/rippledrawable"
                 android:clickable="true"
                 android:paddingTop="10dp"
@@ -191,14 +197,15 @@
                 android:id="@+id/dl"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="DownLoad"
+                android:text="下载"
                 android:textColor="@color/LowFontColor"
                 android:layout_centerHorizontal="true"
                 android:textSize="24sp"
                 android:layout_marginLeft="35dp"
                 android:layout_below="@+id/l2"/>
 
-            <ui.EnTextView
+            <ui.ChTextView
+                android:paddingRight="30dp"
                 android:background="@drawable/rippledrawable"
                 android:clickable="true"
                 android:paddingTop="10dp"
@@ -206,13 +213,23 @@
                 android:id="@+id/sh"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Share"
+                android:text="注销"
                 android:textColor="@color/LowFontColor"
                 android:layout_centerHorizontal="true"
                 android:textSize="24sp"
                 android:layout_marginLeft="35dp"
                 android:layout_above="@+id/l1"/>
+            <ui.ChTextView
+                android:id="@+id/id"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="177****1828"
+                android:textColor="@color/LowFontColor"
+                android:textSize="10sp"
+                android:layout_marginLeft="5dp"/>
         </RelativeLayout>
-    </RelativeLayout>
+    </ui.RoundLayout>
 </android.support.v4.widget.DrawerLayout>
 

@@ -21,9 +21,11 @@ public class likefilmbean {
     String date;
     String tag;
     String comment;
-    @Generated(hash = 1745410524)
+    String bmobID;
+    @Generated(hash = 563947787)
     public likefilmbean(Long id, String name, String from, @NotNull String url,
-            String introduce, String img, String date, String tag, String comment) {
+            String introduce, String img, String date, String tag, String comment,
+            String bmobID) {
         this.id = id;
         this.name = name;
         this.from = from;
@@ -33,6 +35,7 @@ public class likefilmbean {
         this.date = date;
         this.tag = tag;
         this.comment = comment;
+        this.bmobID = bmobID;
     }
     @Generated(hash = 847582815)
     public likefilmbean() {
@@ -90,5 +93,11 @@ public class likefilmbean {
     }
     public void setComment(String comment) {
         this.comment = comment;
+    }
+    public String getBmobID() {
+        return this.bmobID;
+    }
+    public void setBmobID(String bmobID) {
+        this.bmobID = bmobID;
     }
 }

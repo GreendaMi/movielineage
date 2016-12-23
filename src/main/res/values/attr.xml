@@ -4,4 +4,8 @@
         <attr name="textFloatingActionButtonText" format="string"></attr>
         <attr name="textFloatingActionButtonTextColor" format="color"></attr>
     </declare-styleable>
+
+    <declare-styleable name="RoundLayout">
+        <attr name="boder" format="dimension"/>
+    </declare-styleable>
 </resources>

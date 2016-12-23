@@ -31,6 +31,7 @@ public class likefilmbeanDao extends AbstractDao<likefilmbean, Long> {
         public final static Property Date = new Property(6, String.class, "date", false, "DATE");
         public final static Property Tag = new Property(7, String.class, "tag", false, "TAG");
         public final static Property Comment = new Property(8, String.class, "comment", false, "COMMENT");
+        public final static Property BmobID = new Property(9, String.class, "bmobID", false, "BMOB_ID");
     }
 
 
@@ -54,7 +55,8 @@ public class likefilmbeanDao extends AbstractDao<likefilmbean, Long> {
                 "\"IMG\" TEXT," + // 5: img
                 "\"DATE\" TEXT," + // 6: date
                 "\"TAG\" TEXT," + // 7: tag
-                "\"COMMENT\" TEXT);"); // 8: comment
+                "\"COMMENT\" TEXT," + // 8: comment
+                "\"BMOB_ID\" TEXT);"); // 9: bmobID
     }
 
     /** Drops the underlying database table. */
@@ -107,6 +109,11 @@ public class likefilmbeanDao extends AbstractDao<likefilmbean, Long> {
         if (comment != null) {
             stmt.bindString(9, comment);
         }
+ 
+        String bmobID = entity.getBmobID();
+        if (bmobID != null) {
+            stmt.bindString(10, bmobID);
+        }
     }
 
     @Override
@@ -153,6 +160,11 @@ public class likefilmbeanDao extends AbstractDao<likefilmbean, Long> {
         if (comment != null) {
             stmt.bindString(9, comment);
         }
+ 
+        String bmobID = entity.getBmobID();
+        if (bmobID != null) {
+            stmt.bindString(10, bmobID);
+        }
     }
 
     @Override
@@ -171,7 +183,8 @@ public class likefilmbeanDao extends AbstractDao<likefilmbean, Long> {
             cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5), // img
             cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6), // date
             cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7), // tag
-            cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8) // comment
+            cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8), // comment
+            cursor.isNull(offset + 9) ? null : cursor.getString(offset + 9) // bmobID
         );
         return entity;
     }
@@ -187,6 +200,7 @@ public class likefilmbeanDao extends AbstractDao<likefilmbean, Long> {
         entity.setDate(cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6));
         entity.setTag(cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7));
         entity.setComment(cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8));
+        entity.setBmobID(cursor.isNull(offset + 9) ? null : cursor.getString(offset + 9));
      }
     
     @Override

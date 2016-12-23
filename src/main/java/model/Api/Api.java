@@ -10,16 +10,17 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public class Api {
     public static Retrofit retrofit = new Retrofit.Builder()
-            .baseUrl("http://203:8081/keyword/services/userinfoService/")
+            .baseUrl("https://api.bmob.cn/1/classes/")
             .addConverterFactory(GsonConverterFactory.create())
             .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
 //            .client(new OkHttpClient.Builder().addInterceptor(new Interceptor() {
 //                @Override
-//                public okhttp3.Response intercept(Chain chain) throws IOException {
+//                public Response intercept(Chain chain) throws IOException {
 //                    Request request = chain.request();
 //                    Log.i("zzz", "request====111111111111111111111111111111");
+//                    Log.d("Api", request.url().encodedQuery());
 //                    Log.i("zzz", "request====" + request.headers().toString());
-//                    okhttp3.Response proceed = chain.proceed(request);
+//                    Response proceed = chain.proceed(request);
 //                    Log.i("zzz", "proceed====" + new String(proceed.body().bytes()));
 //                    return proceed;
 //                }

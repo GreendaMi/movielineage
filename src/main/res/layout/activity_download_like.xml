@@ -22,26 +22,28 @@
             android:text="@string/返回"
             android:textColor="@color/FontColor"
             android:textSize="20dp"/>
-        <ui.EnTextView
+        <ui.ChTextView
             android:id="@+id/DOWN"
             android:layout_centerInParent="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/FontColor"
             android:textSize="24dp"
-            android:text="DOWNLOAD"></ui.EnTextView>
+            android:textStyle="italic"
+            android:text="DOWNLOAD"></ui.ChTextView>
 
-        <ui.EnTextView
+        <ui.ChTextView
             android:id="@+id/edit"
             android:layout_alignParentRight="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/DarkFontColor"
             android:textSize="20sp"
-            android:text="Edit"
+            android:text="编辑"
+            android:textStyle="italic"
             android:paddingRight="20dp"
             android:layout_centerVertical="true"
-            ></ui.EnTextView>
+            ></ui.ChTextView>
     </RelativeLayout>
 
     <android.support.v7.widget.RecyclerView
@@ -57,14 +59,15 @@
         android:layout_height="55dp"
         android:background="@color/MainColor"
         android:layout_alignParentBottom="true"
-        android:orientation="horizontal">
-        <ui.EnTextView
+        android:orientation="horizontal"
+        android:clickable="true">
+        <ui.ChTextView
             android:id="@+id/delete_bt"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="DELETE"
+            android:text="删除"
             android:layout_gravity="center"
             android:textColor="#a33a3a"
             android:textSize="16dp"/>
@@ -74,13 +77,13 @@
             android:layout_width="1dp"
             android:layout_height="match_parent"
             android:background="@color/FontColor"/>
-        <ui.EnTextView
+        <ui.ChTextView
             android:id="@+id/cancel_bt"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="CANCEL"
+            android:text="取消"
             android:layout_gravity="center"
             android:textColor="@color/FontColor"
             android:textSize="16dp"/>

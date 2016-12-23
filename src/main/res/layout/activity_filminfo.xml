@@ -233,12 +233,13 @@
         android:layout_height="wrap_content"
         android:paddingTop="5dp"
         >
+        <requestFocus/>
         <ui.IconFontTextView
             android:id="@+id/bf_icon"
             android:shadowColor="@color/DarkFontColor"
             android:shadowDx="5"
             android:shadowDy="5"
-            android:textSize="20sp"
+            android:textSize="16sp"
             android:paddingTop="10dp"
             android:paddingBottom="5dp"
             android:paddingRight="2dp"
@@ -248,8 +249,8 @@
             android:textColor="@color/FontColor"
             android:text="@string/播放"/>
         <ui.IconFontTextView
-            android:paddingTop="10dp"
-            android:paddingBottom="5dp"
+            android:paddingTop="11dp"
+            android:paddingBottom="6dp"
             android:paddingLeft="2dp"
             android:paddingRight="2dp"
             android:shadowColor="@color/DarkFontColor"
@@ -258,16 +259,18 @@
             android:layout_toLeftOf="@+id/sc"
             android:id="@+id/bf"
             android:textColor="@color/FontColor"
-            android:textSize="20sp"
+            android:textSize="14sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="134"/>
 
         <ui.IconFontTextView
+            android:clickable="true"
+            android:focusable="true"
             android:shadowColor="@color/DarkFontColor"
             android:shadowDx="5"
             android:shadowDy="5"
-            android:textSize="20sp"
+            android:textSize="16sp"
             android:layout_toLeftOf="@+id/xz"
             android:id="@+id/sc"
             android:padding="10dp"
@@ -277,10 +280,12 @@
             android:textColor="@color/FontColor"
             android:text="@string/收藏1"/>
         <ui.IconFontTextView
+            android:clickable="true"
+            android:focusable="true"
             android:shadowColor="@color/DarkFontColor"
             android:shadowDx="5"
             android:shadowDy="5"
-            android:textSize="20sp"
+            android:textSize="16sp"
             android:layout_alignParentRight="true"
             android:id="@+id/xz"
             android:layout_marginRight="15dp"

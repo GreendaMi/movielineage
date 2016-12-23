@@ -87,10 +87,10 @@ public class FilmInfo extends Activity implements View.OnTouchListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 //        requestWindowFeature(Window.FEATURE_NO_TITLE);//隐藏标题
-        if(Build.VERSION.SDK_INT >= 21) {
+        if (Build.VERSION.SDK_INT >= 21) {
             View decorView = getWindow().getDecorView();
             //设置让应用主题内容占据状态栏和导航栏
-            int option = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN|View.SYSTEM_UI_FLAG_HIDE_NAVIGATION|View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
+            int option = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
             decorView.setSystemUiVisibility(option);
             //设置状态栏和导航栏颜色为透明
             getWindow().setStatusBarColor(Color.TRANSPARENT);
@@ -126,40 +126,31 @@ public class FilmInfo extends Activity implements View.OnTouchListener {
         });
         mPlay.setOnTouchListener(this);
 
-        if (FileDownloader.getDownloadFile(mFilmBean.getUrl()) == null) {
-            mXz.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    DownLoadManager.startDownLoad(mFilmBean);
-                    mXz.setTextColor(getResources().getColor(R.color.DarkFontColor));
-                    UI.Toast("下载中");
-                }
-            });
-        } else {
-            mXz.setTextColor(getResources().getColor(R.color.DarkFontColor));
-        }
-
         mSc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                likefilmbean lfb = new likefilmbean();
-                lfb.setName(mFilmBean.getName());
-                lfb.setFrom(mFilmBean.getFrom());
-                lfb.setUrl(mFilmBean.getUrl());
-                lfb.setIntroduce(mFilmBean.getIntroduce());
-                lfb.setImg(mFilmBean.getImg());
-                lfb.setDate(mFilmBean.getDate());
-                lfb.setTag(mFilmBean.getTag());
-                lfb.setComment(mFilmBean.getComment());
+                if (UI.get("Me") != null && !UI.get("Me").toString().isEmpty()) {
+                    likefilmbean lfb = new likefilmbean();
+                    lfb.setName(mFilmBean.getName());
+                    lfb.setFrom(mFilmBean.getFrom());
+                    lfb.setUrl(mFilmBean.getUrl());
+                    lfb.setIntroduce(mFilmBean.getIntroduce());
+                    lfb.setImg(mFilmBean.getImg());
+                    lfb.setDate(mFilmBean.getDate());
+                    lfb.setTag(mFilmBean.getTag());
+                    lfb.setComment(mFilmBean.getComment());
 
-                if(DAOManager.getInstance(FilmInfo.this).queryLikeFilmList(mFilmBean.getUrl()).size() == 0){
+                    if (DAOManager.getInstance(FilmInfo.this).queryLikeFilmList(mFilmBean.getUrl()).size() == 0) {
 
-                    DAOManager.getInstance(FilmInfo.this).insertLikeFilm(lfb);
-                    mSc.setText(getResources().getString(R.string.收藏2));
+                        DAOManager.getInstance(FilmInfo.this).insertLikeFilm(lfb);
+                        mSc.setText(getResources().getString(R.string.收藏2));
+                    } else {
+                        lfb = DAOManager.getInstance(FilmInfo.this).queryLikeFilmList(mFilmBean.getUrl()).get(0);
+                        DAOManager.getInstance(FilmInfo.this).deleteLikeFilm(lfb);
+                        mSc.setText(getResources().getString(R.string.收藏1));
+                    }
                 }else{
-                    lfb = DAOManager.getInstance(FilmInfo.this).queryLikeFilmList(mFilmBean.getUrl()).get(0);
-                    DAOManager.getInstance(FilmInfo.this).deleteLikeFilm(lfb);
-                    mSc.setText(getResources().getString(R.string.收藏1));
+                    UI.push(LoginActivity.class);
                 }
             }
         });
@@ -190,14 +181,10 @@ public class FilmInfo extends Activity implements View.OnTouchListener {
             mBf.setText("");
             mBfIcon.setText("");
         }
-        if(DAOManager.getInstance(FilmInfo.this).queryLikeFilmList(mFilmBean.getUrl()).size() == 0){
-            mSc.setText(getResources().getString(R.string.收藏1));
-        }else{
-            mSc.setText(getResources().getString(R.string.收藏2));
-        }
 
         starAnim();
     }
+
 
     private void starAnim() {
         mLay2.setVisibility(View.INVISIBLE);
@@ -326,5 +313,22 @@ public class FilmInfo extends Activity implements View.OnTouchListener {
     protected void onResume() {
         super.onResume();
         UI.enter(this);
+        if (DAOManager.getInstance(FilmInfo.this).queryLikeFilmList(mFilmBean.getUrl()).size() == 0) {
+            mSc.setText(getResources().getString(R.string.收藏1));
+        } else {
+            mSc.setText(getResources().getString(R.string.收藏2));
+        }
+        if (FileDownloader.getDownloadFile(mFilmBean.getUrl()) == null) {
+            mXz.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    DownLoadManager.startDownLoad(mFilmBean);
+                    mXz.setTextColor(getResources().getColor(R.color.DarkFontColor));
+                    UI.Toast("下载中");
+                }
+            });
+        } else {
+            mXz.setTextColor(getResources().getColor(R.color.DarkFontColor));
+        }
     }
 }

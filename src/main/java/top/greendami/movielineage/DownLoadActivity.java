@@ -10,6 +10,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import org.wlf.filedownloader.DownloadFileInfo;
 import org.wlf.filedownloader.FileDownloader;
@@ -24,7 +25,6 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import model.DAOManager;
 import tool.UI;
-import ui.EnTextView;
 import ui.IconFontTextView;
 
 /**
@@ -41,13 +41,13 @@ public class DownLoadActivity extends Activity implements View.OnTouchListener {
     RecyclerView mContent;
     LinearLayoutManager layoutManager;
     @Bind(R.id.edit)
-    EnTextView mEdit;
+    TextView mEdit;
     @Bind(R.id.DOWN)
-    EnTextView mDOWN;
+    TextView mDOWN;
     @Bind(R.id.delete_bt)
-    EnTextView mDeleteBt;
+    TextView mDeleteBt;
     @Bind(R.id.cancel_bt)
-    EnTextView mCancelBt;
+    TextView mCancelBt;
     @Bind(R.id.delete_view)
     LinearLayout mDeleteView;
 
@@ -61,7 +61,7 @@ public class DownLoadActivity extends Activity implements View.OnTouchListener {
     }
 
     private void initViews() {
-        mDOWN.setText("DOWNLOAD");
+        mDOWN.setText("下载");
         localfilmList = DAOManager.getInstance(this).queryFilmList();
 
         mAdapter = new DownLoadFilmListAdapter(this, localfilmList);
@@ -159,6 +159,7 @@ public class DownLoadActivity extends Activity implements View.OnTouchListener {
                     FileDownloader.delete(lfb.getImg(), true, null);
                     localfilmList.remove(lfb);
                     DAOManager.getInstance(DownLoadActivity.this).deleteDownLoadFilm(lfb);
+                    mAdapter.notifyDataSetChanged();
                 }
                 mCancelBt.callOnClick();
             }
@@ -169,6 +170,9 @@ public class DownLoadActivity extends Activity implements View.OnTouchListener {
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             back();
+        }
+        if (keyCode == KeyEvent.KEYCODE_MENU) {
+            mEdit.callOnClick();
         }
         return true;
     }

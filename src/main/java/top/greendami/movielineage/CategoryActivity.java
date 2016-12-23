@@ -1,14 +1,14 @@
 package top.greendami.movielineage;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
+import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
 import java.util.ArrayList;
@@ -24,14 +24,22 @@ import rx.Observable;
 import rx.Observer;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
+import tool.UI;
+import ui.ChTextView;
+import ui.IconFontTextView;
 import ui.RefreshLayout;
 import ui.SystemDialog;
 
 /**
- * Created by GreendaMi on 2016/12/1.
+ * Created by GreendaMi on 2016/12/23.
  */
 
-public class FilmFragment extends Fragment {
+public class CategoryActivity extends Activity {
+
+    @Bind(R.id.backBt)
+    IconFontTextView mBackBt;
+    @Bind(R.id.title_text)
+    ChTextView mTitleText;
     @Bind(R.id.rc)
     RecyclerView mRc;
     @Bind(R.id.Refresh_layout)
@@ -43,25 +51,13 @@ public class FilmFragment extends Fragment {
     Handler mHandler;
     LinearLayoutManager layoutManager;
 
-    boolean isHidden = true;
-
-
-    int type = 0;
-
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.new_fragment, container, false);
-        ButterKnife.bind(this, view);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_category);
+        ButterKnife.bind(this);
         InitView();
         InitEvent();
-        mHandler = new Handler();
-        return view;
-    }
-
-    @Override
-    public void onHiddenChanged(boolean hidden) {
-        super.onHiddenChanged(hidden);
-        isHidden = hidden;
     }
 
     private void InitEvent() {
@@ -78,9 +74,7 @@ public class FilmFragment extends Fragment {
                         PAGE = 1;
                         mDatas.clear();
                         mAdapter.notifyDataSetChanged();
-                        if(!isHidden){
-                            SystemDialog.showLoadingDialog(getActivity(),false);
-                        }
+                        SystemDialog.showLoadingDialog(CategoryActivity.this, false);
                         mRefreshLayout.setRefreshing(false);
                     }
                 }, 1000);
@@ -107,25 +101,52 @@ public class FilmFragment extends Fragment {
                 }
             }
         });
+
+        mBackBt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                back();
+            }
+        });
+
+        mBackBt.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    v.setScaleX(0.95f);
+                    v.setScaleY(0.95f);
+                }
+                if (event.getAction() == MotionEvent.ACTION_UP) {
+                    v.setScaleX(1f);
+                    v.setScaleY(1f);
+                }
+                return false;
+            }
+        });
     }
 
     private void InitView() {
-        initData();
-        mAdapter = new FilmListAdapter(getActivity(),mDatas);
-        layoutManager = new LinearLayoutManager(getContext());
+        mHandler = new Handler();
+        mTitleText.setText(UI.getData(0).toString());
+        mDatas = new ArrayList<>();
+        SystemDialog.showLoadingDialog(CategoryActivity.this, false);
+        mAdapter = new FilmListAdapter(this, mDatas);
+        layoutManager = new LinearLayoutManager(CategoryActivity.this);
         layoutManager.generateLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
         mRc.setLayoutManager(layoutManager);
         mRc.setItemAnimator(new DefaultItemAnimator());
         mRc.setAdapter(mAdapter);
         mRefreshLayout.setClickable(false);
+        LoadData(PAGE);
     }
 
-    public void LoadData(final int page){
+
+    public void LoadData(final int page) {
 
         new Thread(new Runnable() {
             @Override
             public void run() {
-                Observable.from(new getPageList().Doget(type , page+""))
+                Observable.from(new getPageList().DogetByurl((String)(UI.getData(1)), page + ""))
                         .observeOn(Schedulers.io())
                         .map(new Func1<String, filmBean>() {
 
@@ -170,18 +191,21 @@ public class FilmFragment extends Fragment {
         }).start();
     }
 
-    private void initData() {
-        mDatas = new ArrayList<>();
-        SystemDialog.showLoadingDialog(getActivity(),false);
-        LoadData(PAGE);
-    }
-
-
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        ButterKnife.unbind(this);
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            back();
+        }
+        return true;
     }
 
+    private void back() {
+        finish();
+        overridePendingTransition(R.anim.slide_left_in, R.anim.slide_right_out);
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        UI.enter(this);
+    }
 }
-

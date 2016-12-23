@@ -12,6 +12,9 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.GlideDrawableImageViewTarget;
 
 import java.util.List;
 
@@ -64,40 +67,44 @@ public class FilmListAdapter extends RecyclerView.Adapter {
         final filmBean mData = mDatas.get(position);
         RecyclerView.ViewHolder mHolder;
         final FilmViewHolder mFilmViewHolder = (FilmViewHolder)holder;
-        Glide.with(mContext).load(mData.getImg()).diskCacheStrategy(DiskCacheStrategy.RESULT).into(mFilmViewHolder.bg);
+        Glide.with(mContext).load(mData.getImg()).diskCacheStrategy(DiskCacheStrategy.RESULT).into(new GlideDrawableImageViewTarget(mFilmViewHolder.bg){
+            @Override
+            public void onResourceReady(GlideDrawable resource, GlideAnimation<? super GlideDrawable> animation) {
+                super.onResourceReady(resource, animation);
+                mFilmViewHolder.view.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(final View view) {
+
+                        //隐藏文字
+                        mFilmViewHolder.from.setAlpha(0);
+                        mFilmViewHolder.name.setAlpha(0);
+                        mFilmViewHolder.tag.setAlpha(0);
+
+                        mFilmViewHolder.bg.setDrawingCacheEnabled(true);
+                        Bitmap bitmap = Bitmap.createBitmap(mFilmViewHolder.bg.getDrawingCache());
+                        mFilmViewHolder.bg.setDrawingCacheEnabled(false);
+                        if(tool.UI.getData(1) != null && tool.UI.getData(1) instanceof Bitmap){
+                            ((Bitmap)(tool.UI.getData(1))).recycle();
+                        }
+                        tool.UI.push(FilmInfo.class, mData ,bitmap,view.getTop());
+
+                        mHandler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                mFilmViewHolder.from.setAlpha(1);
+                                mFilmViewHolder.name.setAlpha(1);
+                                mFilmViewHolder.tag.setAlpha(1);
+
+                            }
+                        }, 300);
+
+                    }
+                });
+            }
+        });
         mFilmViewHolder.from.setText(mData.getFrom());
         mFilmViewHolder.name.setText(mData.getName());
         mFilmViewHolder.tag.setText(mData.getTag());
-
-        mFilmViewHolder.view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(final View view) {
-
-                //隐藏文字
-                mFilmViewHolder.from.setAlpha(0);
-                mFilmViewHolder.name.setAlpha(0);
-                mFilmViewHolder.tag.setAlpha(0);
-
-                mFilmViewHolder.bg.setDrawingCacheEnabled(true);
-                Bitmap bitmap = Bitmap.createBitmap(mFilmViewHolder.bg.getDrawingCache());
-                mFilmViewHolder.bg.setDrawingCacheEnabled(false);
-                if(tool.UI.getData(1) != null){
-                    ((Bitmap)(tool.UI.getData(1))).recycle();
-                }
-                tool.UI.push(FilmInfo.class, mData ,bitmap,view.getTop());
-
-                mHandler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        mFilmViewHolder.from.setAlpha(1);
-                        mFilmViewHolder.name.setAlpha(1);
-                        mFilmViewHolder.tag.setAlpha(1);
-
-                    }
-                }, 300);
-
-            }
-        });
 
     }
 

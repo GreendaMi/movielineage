@@ -10,6 +10,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import org.wlf.filedownloader.FileDownloader;
 
@@ -22,7 +23,6 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import model.DAOManager;
 import tool.UI;
-import ui.EnTextView;
 import ui.IconFontTextView;
 
 /**
@@ -33,17 +33,17 @@ public class LikeActivity extends Activity implements View.OnTouchListener{
     @Bind(R.id.backBt)
     IconFontTextView mBackBt;
     @Bind(R.id.DOWN)
-    EnTextView mDOWN;
+    TextView mDOWN;
     @Bind(R.id.edit)
-    EnTextView mEdit;
+    TextView mEdit;
     @Bind(R.id.title)
     RelativeLayout mTitle;
     @Bind(R.id.content)
     RecyclerView mContent;
     @Bind(R.id.delete_bt)
-    EnTextView mDeleteBt;
+    TextView mDeleteBt;
     @Bind(R.id.cancel_bt)
-    EnTextView mCancelBt;
+    TextView mCancelBt;
     @Bind(R.id.delete_view)
     LinearLayout mDeleteView;
 
@@ -103,10 +103,37 @@ public class LikeActivity extends Activity implements View.OnTouchListener{
                 }
             }
         });
+
+        mDeleteBt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                for (likefilmbean lfb : mAdapter.deleteList) {
+                    DAOManager.getInstance(LikeActivity.this).deleteLikeFilm(lfb);
+                    likefilmList.remove(lfb);
+                    mAdapter.notifyDataSetChanged();
+                }
+                mCancelBt.callOnClick();
+            }
+        });
+        mDeleteBt.setOnTouchListener(this);
+        mCancelBt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mEdit.setTag(0);
+                mEdit.setTextColor(getResources().getColor(R.color.DarkFontColor));
+                mEdit.setTextSize(20);
+                mDOWN.setTextSize(24);
+                mDOWN.setTextColor(getResources().getColor(R.color.FontColor));
+                mAdapter.Type = 0;
+                mAdapter.notifyItemRangeChanged(0, likefilmList.size());
+                mDeleteView.setVisibility(View.GONE);
+            }
+        });
+        mCancelBt.setOnTouchListener(this);
     }
 
     private void initViews() {
-        mDOWN.setText("LIKE");
+        mDOWN.setText("收藏");
         likefilmList = DAOManager.getInstance(this).queryLikeFilmList();
 
         mAdapter = new LikeFilmListAdapter(this,likefilmList);
@@ -125,6 +152,9 @@ public class LikeActivity extends Activity implements View.OnTouchListener{
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             back();
+        }
+        if (keyCode == KeyEvent.KEYCODE_MENU) {
+            mEdit.callOnClick();
         }
         return true;
     }

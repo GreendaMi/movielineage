@@ -53,4 +53,31 @@ public class getPageList {
         }
         return result;
     }
+
+    public List<String> DogetByurl(String baseUrl , String page){
+        final List<String> result = new ArrayList<>();
+        OkHttpClient mOkHttpClient = new OkHttpClient();
+
+
+//创建一个Request
+        final Request request = new Request.Builder()
+                .url( baseUrl + page)
+                .build();
+
+        try {
+            Response response = mOkHttpClient.newCall(request).execute();
+
+            Document doc = Jsoup.parse(new String( response.body().bytes()));
+
+            Elements master = doc.select("div.master-type-intro");
+            for(Element e : master){
+//                Log.d("getPageList", e.attr("onclick").replace("window.open('","").replace("','_blank')",""));
+                String s = e.attr("onclick").replace("window.open('","").replace("','_blank')","");
+                result.add(s);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
 }

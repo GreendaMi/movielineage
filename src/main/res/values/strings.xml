@@ -17,5 +17,18 @@
     <string name="收藏2">&#xe600;</string>;
     <string name="最新">&#xe618;</string>;
 
+    <string name="广告">&#xe665;</string>;
+    <string name="剧情">&#xe602;</string>;
+    <string name="网络">&#xe614;</string>;
+    <string name="创意">&#xe637;</string>;
+    <string name="纪录片">&#xe642;</string>;
+    <string name="MV">&#xe833;</string>;
+    <string name="混剪">&#xe60c;</string>;
+    <string name="特殊">&#xe633;</string>;
+    <string name="栏目">&#xe696;</string>;
+    <string name="预告">&#xe609;</string>;
+    <string name="VR">&#xe601;</string>;
+    <string name="动画">&#xe718;</string>;
+
 
 </resources>

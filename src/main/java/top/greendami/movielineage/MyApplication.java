@@ -2,6 +2,7 @@ package top.greendami.movielineage;
 
 import android.app.Application;
 
+import cn.smssdk.SMSSDK;
 import model.DownLoadManager;
 
 /**
@@ -13,5 +14,6 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
         DownLoadManager.initDownLoadManager(this);
+        SMSSDK.initSDK(this, "1a0dd72bac150", "ab46d9ecc832e63195ea777215136989");
     }
 }

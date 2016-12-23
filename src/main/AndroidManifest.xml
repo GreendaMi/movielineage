@@ -3,18 +3,18 @@
           package="top.greendami.movielineage">
 
     <!--允许联网 -->
-    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.INTERNET"/>
     <!--获取GSM（2g）、WCDMA（联通3g）等网络状态的信息  -->
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <!--获取wifi网络状态的信息 -->
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
     <!--保持CPU 运转，屏幕和键盘灯有可能是关闭的,用于文件上传和下载 -->
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
     <!--获取sd卡写的权限，用于文件上传和下载-->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <!--允许读取手机状态 用于创建BmobInstallation-->
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
 
     <application
         android:name=".MyApplication"
@@ -24,23 +24,22 @@
         android:supportsRtl="true"
         >
 
-        <activity android:name=".MainActivity"
-                  android:theme="@style/AppTheme">
-            android:screenOrientation="landscape"
-        </activity>
-        <activity android:name=".Player">
-            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
-            android:screenOrientation="landscape"
+        <activity
+            android:name=".MainActivity"
+            android:theme="@style/AppTheme"/>
+        <activity
+            android:name=".Player"
             android:keepScreenOn="true"
-        </activity>
+            android:screenOrientation="landscape"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"/>
 
-        <activity android:name=".FilmInfo"
-                  android:theme="@style/AppTheme">
-        </activity>
+        <activity
+            android:name=".FilmInfo"
+            android:theme="@style/AppTheme"/>
 
-        <activity android:name=".DownLoadActivity"
-            android:theme="@style/AppTheme">
-        </activity>
+        <activity
+            android:name=".DownLoadActivity"
+            android:theme="@style/AppTheme"/>
         <activity android:name=".WelcomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -48,10 +47,15 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".LikeActivity"
-                  android:theme="@style/AppTheme">
-            android:screenOrientation="landscape"
-        </activity>
+        <activity
+            android:name=".LikeActivity"
+            android:theme="@style/AppTheme"/>
+        <activity
+            android:name=".LoginActivity"
+            android:theme="@style/AppThemeWithAnim"/>
+        <activity
+            android:theme="@style/AppTheme"
+            android:name=".CategoryActivity"/>
     </application>
 
 </manifest>

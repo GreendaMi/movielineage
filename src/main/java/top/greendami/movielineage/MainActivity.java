@@ -8,6 +8,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.view.View;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -15,8 +16,9 @@ import adapter.MyFragmentPagerAdapter;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import tool.UI;
+import ui.ChTextView;
 import ui.DynamicWave;
-import ui.EnTextView;
+import ui.RoundLayout;
 
 
 public class MainActivity extends FragmentActivity {
@@ -34,14 +36,18 @@ public class MainActivity extends FragmentActivity {
     @Bind(R.id.Dw)
     DynamicWave mDw;
     @Bind(R.id.like)
-    EnTextView mLike;
+    TextView mLike;
     @Bind(R.id.dl)
-    EnTextView mDl;
+    TextView mDl;
     @Bind(R.id.sh)
-    EnTextView mSh;
+    TextView mSh;
+    @Bind(R.id.left_drawer)
+    RoundLayout mLeftDrawer;
+    @Bind(R.id.id)
+    ChTextView mId;
     private Fragment NEW, HOT, COM;
 
-    EnTextView New, Hot, Com;
+    TextView New, Hot, Com;
 
     ArrayList<Fragment> fragmentsList = new ArrayList<>();
     Handler mHandler;
@@ -63,13 +69,13 @@ public class MainActivity extends FragmentActivity {
 
     private void initView() {
 
-        New = (EnTextView) findViewById(R.id.New);
-        Hot = (EnTextView) findViewById(R.id.hot);
-        Com = (EnTextView) findViewById(R.id.comment);
+        New = (TextView) findViewById(R.id.New);
+        Hot = (TextView) findViewById(R.id.hot);
+        Com = (TextView) findViewById(R.id.comment);
 
         NEW = new NewFragment();
         HOT = new HotFragment();
-        COM = new CommentFragment();
+        COM = new CategoryFragment();
 
         fragmentsList.add(NEW);
         fragmentsList.add(HOT);
@@ -92,12 +98,15 @@ public class MainActivity extends FragmentActivity {
                 New.setScaleX(1.2f);
                 New.setScaleY(1.2f);
                 New.setTextColor(getResources().getColor(R.color.FontColor));
+                mV1.setAlpha(1f);
                 break;
             case 1:
                 mVpView.setCurrentItem(1);
                 Hot.setScaleX(1.2f);
                 Hot.setScaleY(1.2f);
                 Hot.setTextColor(getResources().getColor(R.color.FontColor));
+                mV1.setAlpha(1f);
+                mV2.setAlpha(1f);
                 break;
 
             case 2:
@@ -105,6 +114,7 @@ public class MainActivity extends FragmentActivity {
                 Com.setScaleX(1.2f);
                 Com.setScaleY(1.2f);
                 Com.setTextColor(getResources().getColor(R.color.FontColor));
+                mV2.setAlpha(1f);
                 break;
 
         }
@@ -134,7 +144,6 @@ public class MainActivity extends FragmentActivity {
             @Override
             public void onClick(View view) {
                 select(0);
-                mV1.setAlpha(1f);
             }
         });
 
@@ -142,14 +151,11 @@ public class MainActivity extends FragmentActivity {
             @Override
             public void onClick(View view) {
                 select(1);
-                mV1.setAlpha(1f);
-                mV2.setAlpha(1f);
             }
         });
         Com.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mV2.setAlpha(1f);
                 select(2);
             }
         });
@@ -210,9 +216,9 @@ public class MainActivity extends FragmentActivity {
                     @Override
                     public void run() {
                         UI.push(DownLoadActivity.class);
-                        overridePendingTransition(R.anim.slide_right_in,R.anim.slide_left_out);
+                        overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
                     }
-                },150);
+                }, 150);
             }
         });
 
@@ -226,9 +232,22 @@ public class MainActivity extends FragmentActivity {
                     @Override
                     public void run() {
                         UI.push(LikeActivity.class);
-                        overridePendingTransition(R.anim.slide_right_in,R.anim.slide_left_out);
+                        overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
                     }
-                },150);
+                }, 150);
+            }
+        });
+
+        mSh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(mSh.getText().equals("注销")){
+                    UI.Save("Me", "");
+                    mId.setText("");
+                    mSh.setText("登录");
+                }else{
+                    UI.push(LoginActivity.class);
+                }
             }
         });
     }
@@ -237,6 +256,18 @@ public class MainActivity extends FragmentActivity {
     protected void onResume() {
         super.onResume();
         UI.enter(this);
+
+        if (UI.get("Me") != null && !UI.get("Me").toString().isEmpty()) {
+            mSh.setText("注销");
+            mId.setText(UI.get("Me").toString().substring(0,3) + "****" + UI.get("Me").toString().substring(7) );
+
+
+        }else{
+            mSh.setText("登录");
+            mId.setText("");
+        }
+
+
     }
 
 

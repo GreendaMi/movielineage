@@ -20,6 +20,8 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import model.getFilm;
 import model.getPageList;
+import tool.NetworkType;
+import tool.NetworkTypeInfo;
 import tool.UI;
 import ui.ChTextView;
 import ui.DotsPreloader;
@@ -49,6 +51,7 @@ public class CategoryActivity extends Activity {
     LinearLayoutManager layoutManager;
     @Bind(R.id.DotsPreloader)
     DotsPreloader mDotsPreloader;
+    boolean isLoading = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,8 +78,9 @@ public class CategoryActivity extends Activity {
                         mAdapter.notifyDataSetChanged();
                         SystemDialog.showLoadingDialog(CategoryActivity.this, false);
                         mRefreshLayout.setRefreshing(false);
+                        LoadData(PAGE);
                     }
-                }, 1000);
+                }, 0);
             }
         });
 
@@ -96,7 +100,9 @@ public class CategoryActivity extends Activity {
                 if (newState == RecyclerView.SCROLL_STATE_IDLE
                         && lastVisibleItem + 1 == mAdapter.getItemCount()) {
 //                    SystemDialog.showLoadingDialog(CategoryActivity.this, false);
-                    mDotsPreloader.setVisibility(View.VISIBLE);
+                    if(mDotsPreloader.getVisibility() == View.INVISIBLE){
+                        mDotsPreloader.setVisibility(View.VISIBLE);
+                    }
                     LoadData(++PAGE);
                 }
             }
@@ -142,7 +148,15 @@ public class CategoryActivity extends Activity {
 
 
     public void LoadData(final int page) {
-
+        if(isLoading){
+            //如果正在加载，那么这次加载不响应
+            PAGE--;
+            return;
+        }
+        if(NetworkTypeInfo.getNetworkType(CategoryActivity.this) == NetworkType.NoNetwork){
+            UI.Toast("请链接网络！");
+            return;
+        }
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -152,6 +166,7 @@ public class CategoryActivity extends Activity {
                     return;
                 }
                 String baseurl = (String) (UI.getData(1));
+                isLoading = true;
                 List<String> urls = new getPageList().DogetByurl(baseurl, page + "");
 
                 for (final String url : urls) {
@@ -167,7 +182,10 @@ public class CategoryActivity extends Activity {
                                     public void run() {
                                         mAdapter.notifyDataSetChanged();
                                         SystemDialog.dismissLoadingDialog();
-                                        mDotsPreloader.setVisibility(View.INVISIBLE);
+                                        if(mDotsPreloader.getVisibility() == View.VISIBLE){
+                                            mDotsPreloader.setVisibility(View.INVISIBLE);
+                                        }
+                                        isLoading = false;
                                     }
                                 });
                             }

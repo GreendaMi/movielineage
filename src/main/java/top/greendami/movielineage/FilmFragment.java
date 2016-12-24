@@ -20,6 +20,9 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import model.getFilm;
 import model.getPageList;
+import tool.NetworkType;
+import tool.NetworkTypeInfo;
+import tool.UI;
 import ui.RefreshLayout;
 import ui.SystemDialog;
 
@@ -40,7 +43,7 @@ public class FilmFragment extends Fragment {
     LinearLayoutManager layoutManager;
 
     boolean isHidden = true;
-
+    boolean isLoading = false;
 
     int type = 0;
 
@@ -74,12 +77,11 @@ public class FilmFragment extends Fragment {
                         PAGE = 1;
                         mDatas.clear();
                         mAdapter.notifyDataSetChanged();
-                        if(!isHidden){
-                            SystemDialog.showLoadingDialog(getActivity(),false);
-                        }
+                        SystemDialog.showLoadingDialog(getActivity(),false);
+                        LoadData(PAGE);
                         mRefreshLayout.setRefreshing(false);
                     }
-                }, 1000);
+                }, 0);
             }
         });
 
@@ -118,10 +120,20 @@ public class FilmFragment extends Fragment {
     }
 
     public void LoadData(final int page){
+        if(isLoading){
+            //如果正在加载，那么这次加载不响应
+            PAGE--;
+            return;
+        }
+        if(NetworkTypeInfo.getNetworkType(getActivity()) == NetworkType.NoNetwork){
+            UI.Toast("请链接网络！");
+            return;
+        }
 
         new Thread(new Runnable() {
             @Override
             public void run() {
+                isLoading = true;
                 List<String> urls = new getPageList().Doget(type , page+"");
 
                 for (final String url :urls) {
@@ -138,6 +150,7 @@ public class FilmFragment extends Fragment {
                                         mAdapter.notifyDataSetChanged();
                                         SystemDialog.dismissLoadingDialog();
                                         ((MainActivity)getActivity()).dismissLoadingBar();
+                                        isLoading = false;
                                     }
                                 });
                             }

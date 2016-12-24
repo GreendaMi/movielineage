@@ -3,17 +3,17 @@ package top.greendami.movielineage;
 
 import android.app.Activity;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
+import android.view.animation.AnticipateOvershootInterpolator;
 import android.view.animation.ScaleAnimation;
 import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
@@ -30,6 +30,8 @@ import model.DAOManager;
 import model.DownLoadManager;
 import tool.BlurBitmapUtil;
 import tool.DensityUtil;
+import tool.NetworkType;
+import tool.NetworkTypeInfo;
 import tool.UI;
 import ui.IconFontTextView;
 
@@ -80,24 +82,10 @@ public class FilmInfo extends Activity implements View.OnTouchListener {
     @Bind(R.id.bf_icon)
     IconFontTextView mBfIcon;
 
-    //状态栏高度
-    int statusBarHeight = -1;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        requestWindowFeature(Window.FEATURE_NO_TITLE);//隐藏标题
-        if (Build.VERSION.SDK_INT >= 21) {
-            View decorView = getWindow().getDecorView();
-            //设置让应用主题内容占据状态栏和导航栏
-            int option = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
-            decorView.setSystemUiVisibility(option);
-            //设置状态栏和导航栏颜色为透明
-            getWindow().setStatusBarColor(Color.TRANSPARENT);
-            getWindow().setNavigationBarColor(Color.TRANSPARENT);
-        }
-
-
+        requestWindowFeature(Window.FEATURE_NO_TITLE);//隐藏标题
         setContentView(R.layout.activity_filminfo);
         ButterKnife.bind(this);
         mFilmBean = (filmBean) getData();
@@ -129,6 +117,10 @@ public class FilmInfo extends Activity implements View.OnTouchListener {
         mSc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(NetworkTypeInfo.getNetworkType(FilmInfo.this) == NetworkType.NoNetwork){
+                    UI.Toast("请链接网络！");
+                    return;
+                }
                 if (UI.get("Me") != null && !UI.get("Me").toString().isEmpty()) {
                     likefilmbean lfb = new likefilmbean();
                     lfb.setName(mFilmBean.getName());
@@ -144,12 +136,21 @@ public class FilmInfo extends Activity implements View.OnTouchListener {
 
                         DAOManager.getInstance(FilmInfo.this).insertLikeFilm(lfb);
                         mSc.setText(getResources().getString(R.string.收藏2));
+                        ScaleAnimation mScaleAnimation = new ScaleAnimation(1.8f, 1.0f, 1.8f, 1.0f,
+                                Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+                        AnimationSet mAnimatorSet = new AnimationSet(true);
+                        mAnimatorSet.addAnimation(mScaleAnimation);
+                        mAnimatorSet.setDuration(1500);
+                        mAnimatorSet.setInterpolator(new AnticipateOvershootInterpolator());
+//                        mSc.bringToFront();
+                        mSc.startAnimation(mAnimatorSet);
                     } else {
                         lfb = DAOManager.getInstance(FilmInfo.this).queryLikeFilmList(mFilmBean.getUrl()).get(0);
                         DAOManager.getInstance(FilmInfo.this).deleteLikeFilm(lfb);
                         mSc.setText(getResources().getString(R.string.收藏1));
                     }
-                }else{
+
+                } else {
                     UI.push(LoginActivity.class);
                 }
             }
@@ -159,13 +160,6 @@ public class FilmInfo extends Activity implements View.OnTouchListener {
 
 
     private void InitView() {
-
-        //获取status_bar_height资源的ID
-        int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
-        if (resourceId > 0) {
-            //根据资源ID获取响应的尺寸值
-            statusBarHeight = getResources().getDimensionPixelSize(resourceId);
-        }
 
         mLay1.setImageBitmap((Bitmap) (getData(1)));
         mImg1.setImageBitmap((Bitmap) (getData(1)));
@@ -183,6 +177,7 @@ public class FilmInfo extends Activity implements View.OnTouchListener {
         }
 
         starAnim();
+
     }
 
 
@@ -192,7 +187,7 @@ public class FilmInfo extends Activity implements View.OnTouchListener {
         AnimationSet animationSet;
         animationSet = new AnimationSet(true);
         //加上一个55，标题栏的高度
-        TranslateAnimation translateAnimation = new TranslateAnimation(0, 0, (int) (getData(2)) + DensityUtil.dip2px(FilmInfo.this, 55) + statusBarHeight, 0);
+        TranslateAnimation translateAnimation = new TranslateAnimation(0, 0, (int) (getData(2)) + DensityUtil.dip2px(FilmInfo.this, 55), 0);
         //设置动画执行的时间
         translateAnimation.setDuration(400);
         animationSet.addAnimation(translateAnimation);
@@ -244,7 +239,7 @@ public class FilmInfo extends Activity implements View.OnTouchListener {
         AnimationSet animationSet;
         animationSet = new AnimationSet(true);
         //加上一个55，标题栏的高度
-        TranslateAnimation translateAnimation = new TranslateAnimation(0, 0, 0, (int) (topPo) + DensityUtil.dip2px(FilmInfo.this, 55) + statusBarHeight);
+        TranslateAnimation translateAnimation = new TranslateAnimation(0, 0, 0, (int) (topPo) + DensityUtil.dip2px(FilmInfo.this, 55));
         //设置动画执行的时间
         translateAnimation.setDuration(400);
         animationSet.addAnimation(translateAnimation);

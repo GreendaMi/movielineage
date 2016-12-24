@@ -6,6 +6,8 @@ import android.os.Handler;
 import android.view.Window;
 import android.view.WindowManager;
 
+import tool.NetworkType;
+import tool.NetworkTypeInfo;
 import tool.UI;
 
 /**
@@ -29,13 +31,20 @@ public class WelcomeActivity extends Activity {
     protected void onResume() {
         super.onResume();
         UI.enter(this);
+
     }
 
     private void initData() {
         mHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                UI.push(MainActivity.class);
+
+                if(NetworkTypeInfo.getNetworkType(WelcomeActivity.this) == NetworkType.NoNetwork){
+                    UI.push(DownLoadActivity.class);
+                }else{
+                    UI.push(MainActivity.class);
+                }
+                WelcomeActivity.this.finish();
             }
         },0);
     }

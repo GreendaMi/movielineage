@@ -4,18 +4,19 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:textFloatingActionButton="http://schemas.android.com/apk/res-auto"
-
+    android:focusableInTouchMode="false"
     android:id="@+id/img2"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/transparent"
     >
-
+<requestFocus/>
     <ImageView
         android:id="@+id/lay1"
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:scaleType="centerCrop"
+        android:focusable="false"
         />
 
     <android.support.design.widget.AppBarLayout
@@ -91,7 +92,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:paddingLeft="20dp"
-                            android:paddingRight="20dp"
+                            android:paddingRight="60dp"
                             android:paddingTop="10dp"
                             android:shadowColor="@color/DarkFontColor"
                             android:shadowDx="5"
@@ -222,7 +223,6 @@
 
                 </RelativeLayout>
             </android.support.v4.widget.NestedScrollView >
-
         </RelativeLayout>
     </android.support.design.widget.AppBarLayout>
     <RelativeLayout
@@ -233,7 +233,6 @@
         android:layout_height="wrap_content"
         android:paddingTop="5dp"
         >
-        <requestFocus/>
         <ui.IconFontTextView
             android:id="@+id/bf_icon"
             android:shadowColor="@color/DarkFontColor"
@@ -265,8 +264,8 @@
             android:text="134"/>
 
         <ui.IconFontTextView
-            android:clickable="true"
             android:focusable="true"
+            android:focusableInTouchMode="false"
             android:shadowColor="@color/DarkFontColor"
             android:shadowDx="5"
             android:shadowDy="5"
@@ -280,8 +279,9 @@
             android:textColor="@color/FontColor"
             android:text="@string/收藏1"/>
         <ui.IconFontTextView
-            android:clickable="true"
             android:focusable="true"
+            android:focusableInTouchMode="false"
+            android:clickable="true"
             android:shadowColor="@color/DarkFontColor"
             android:shadowDx="5"
             android:shadowDy="5"
@@ -298,6 +298,8 @@
             android:text="@string/下载"/>
     </RelativeLayout>
     <ui.TextFloatingActionButton
+        android:focusable="true"
+        android:focusableInTouchMode="false"
         android:id="@+id/play"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -311,5 +313,6 @@
         app:rippleColor="#33728dff"
         textFloatingActionButton:textFloatingActionButtonText="@string/播放"
         textFloatingActionButton:textFloatingActionButtonTextColor="@color/FontColor"
-        />
+        >
+    </ui.TextFloatingActionButton>
 </android.support.design.widget.CoordinatorLayout>

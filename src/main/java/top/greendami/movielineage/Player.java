@@ -31,6 +31,8 @@ import io.vov.vitamio.MediaPlayer;
 import io.vov.vitamio.Vitamio;
 import model.DAOManager;
 import model.DownLoadManager;
+import tool.NetworkType;
+import tool.NetworkTypeInfo;
 import tool.ScreenInfo;
 import tool.UI;
 import tool.formatTime;
@@ -102,6 +104,7 @@ public class Player extends Activity implements View.OnTouchListener, MediaPlaye
 
     int isControllingTime = 0;
     int x, y;
+    AudioManager mAudioManager ;//音量控制
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -135,13 +138,15 @@ public class Player extends Activity implements View.OnTouchListener, MediaPlaye
         mAnimationIn = AnimationUtils.loadAnimation(this, R.anim.slide_bottom_in);
         mAnimationOut = AnimationUtils.loadAnimation(this, R.anim.slide_bottom_out);
 
+        mAudioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);//音量控制,初始化定义
+
 
     }
 
     private void initView() {
-        if(DAOManager.getInstance(Player.this).queryLikeFilmList(mFilmBean.getUrl()).size() != 0){
+        if (DAOManager.getInstance(Player.this).queryLikeFilmList(mFilmBean.getUrl()).size() != 0) {
             mLike.setText(getResources().getString(R.string.收藏2));
-        }else{
+        } else {
             mLike.setText(getResources().getString(R.string.收藏1));
         }
 
@@ -220,6 +225,10 @@ public class Player extends Activity implements View.OnTouchListener, MediaPlaye
         mLike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(NetworkTypeInfo.getNetworkType(Player.this) == NetworkType.NoNetwork){
+                    UI.Toast("请链接网络！");
+                    return;
+                }
                 if (UI.get("Me") != null && !UI.get("Me").toString().isEmpty()) {
                     likefilmbean lfb = new likefilmbean();
                     lfb.setName(mFilmBean.getName());
@@ -240,7 +249,7 @@ public class Player extends Activity implements View.OnTouchListener, MediaPlaye
                         DAOManager.getInstance(Player.this).deleteLikeFilm(lfb);
                         mLike.setText(getResources().getString(R.string.收藏1));
                     }
-                }else{
+                } else {
                     UI.push(LoginActivity.class);
                 }
             }
@@ -569,40 +578,72 @@ public class Player extends Activity implements View.OnTouchListener, MediaPlaye
         Log.d(TAG, "MoveDistance:" + MoveDistance);
         //水平滑动
         if (upx - x > MoveDistance) {
-            long moveto = mMediaPlayer.getCurrentPosition() + (mMediaPlayer.getDuration()/100) * (upx - x) / (MoveDistance/2);
-            moveto = moveto > mMediaPlayer.getDuration() ? mMediaPlayer.getDuration() - 5000 : mMediaPlayer.getCurrentPosition() + (mMediaPlayer.getDuration()/100) * (upx - x) / (MoveDistance/2);
+            long moveto = mMediaPlayer.getCurrentPosition() + (mMediaPlayer.getDuration() / 100) * (upx - x) / (MoveDistance / 2);
+            moveto = moveto > mMediaPlayer.getDuration() ? mMediaPlayer.getDuration() - 5000 : mMediaPlayer.getCurrentPosition() + (mMediaPlayer.getDuration() / 100) * (upx - x) / (MoveDistance / 2);
             UI.Toast(formatTime.formatTime(moveto));
             mMediaPlayer.seekTo(moveto);
             flg = true;
         } else if (x - upx > MoveDistance) {
-            long moveto = mMediaPlayer.getCurrentPosition() - (mMediaPlayer.getDuration()/100) * (x - upx) / (MoveDistance/2);
-            moveto = moveto < 0 ? 0 : mMediaPlayer.getCurrentPosition() - (mMediaPlayer.getDuration()/100) * (x - upx) / (MoveDistance/2);
+            long moveto = mMediaPlayer.getCurrentPosition() - (mMediaPlayer.getDuration() / 100) * (x - upx) / (MoveDistance / 2);
+            moveto = moveto < 0 ? 0 : mMediaPlayer.getCurrentPosition() - (mMediaPlayer.getDuration() / 100) * (x - upx) / (MoveDistance / 2);
             UI.Toast(formatTime.formatTime(moveto));
             mMediaPlayer.seekTo(moveto);
             flg = true;
         } else if (upy - y > MoveDistance) {
-            int light = 255;
-            if (upy < ScreenInfo.get().heightPixel * 0.2) {
-                light = 0;
-            } else if (upy >= ScreenInfo.get().heightPixel * 0.2 && upy <= ScreenInfo.get().heightPixel * 0.8) {
+            if (x < ScreenInfo.get().widthPixel / 2) {
+                //左边，亮度调节
+                int light = 255;
+                if (upy < ScreenInfo.get().heightPixel * 0.2) {
+                    light = 0;
+                } else if (upy >= ScreenInfo.get().heightPixel * 0.2 && upy <= ScreenInfo.get().heightPixel * 0.8) {
 
-                light = (int) ((upy - ScreenInfo.get().heightPixel * 0.2) / (ScreenInfo.get().heightPixel * 0.6) * 255);
+                    light = (int) ((upy - ScreenInfo.get().heightPixel * 0.2) / (ScreenInfo.get().heightPixel * 0.6) * 255);
+                }
+                Log.d(TAG, "light:" + light);
+                setLight(light);
+                UI.Toast("亮度调节：" + light * 100 / 255 + "%");
+            } else {
+
+                int maxVolume = mAudioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);//最大音量
+                int tempVolume = 0;
+                if (upy < ScreenInfo.get().heightPixel * 0.2) {
+                    tempVolume = 0;
+                } else if (upy >= ScreenInfo.get().heightPixel * 0.2 && upy <= ScreenInfo.get().heightPixel * 0.8) {
+
+                    tempVolume = (int) ((upy - ScreenInfo.get().heightPixel * 0.2) / (ScreenInfo.get().heightPixel * 0.6) * maxVolume);
+                }
+                Log.d(TAG, "tempVolume:" + tempVolume);
+                mAudioManager.setStreamVolume(AudioManager.STREAM_MUSIC, tempVolume, 0); //tempVolume:音量
+                UI.Toast("音量调节：" + tempVolume * 100 / maxVolume + "%");
             }
-            Log.d(TAG, "light:" + light);
-            setLight(light);
-            UI.Toast("亮度调节：" + light * 100 / 255 + "%");
+
             flg = true;
         } else if (y - upy > MoveDistance) {
-            int light = 255;
-            if (upy < ScreenInfo.get().heightPixel * 0.2) {
-                light = 0;
-            } else if (upy >= ScreenInfo.get().heightPixel * 0.2 && upy <= ScreenInfo.get().heightPixel * 0.8) {
+            if (x < ScreenInfo.get().widthPixel / 2) {
+                int light = 255;
+                if (upy < ScreenInfo.get().heightPixel * 0.2) {
+                    light = 0;
+                } else if (upy >= ScreenInfo.get().heightPixel * 0.2 && upy <= ScreenInfo.get().heightPixel * 0.8) {
 
-                light = (int) ((upy - ScreenInfo.get().heightPixel * 0.2) / (ScreenInfo.get().heightPixel * 0.6) * 255);
+                    light = (int) ((upy - ScreenInfo.get().heightPixel * 0.2) / (ScreenInfo.get().heightPixel * 0.6) * 255);
+                }
+                Log.d(TAG, "light:" + light);
+                setLight(light);
+                UI.Toast("亮度调节：" + light * 100 / 255 + "%");
+            }else{
+                int maxVolume = mAudioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);//最大音量
+                int tempVolume = 0;
+                if (upy < ScreenInfo.get().heightPixel * 0.2) {
+                    tempVolume = 0;
+                } else if (upy >= ScreenInfo.get().heightPixel * 0.2 && upy <= ScreenInfo.get().heightPixel * 0.8) {
+
+                    tempVolume = (int) ((upy - ScreenInfo.get().heightPixel * 0.2) / (ScreenInfo.get().heightPixel * 0.6) * maxVolume);
+                }
+                Log.d(TAG, "maxVolume:" + tempVolume);
+                mAudioManager.setStreamVolume(AudioManager.STREAM_MUSIC, tempVolume, 0); //tempVolume:音量
+                UI.Toast("音量调节：" + tempVolume * 100 / maxVolume + "%");
             }
-            Log.d(TAG, "light:" + light);
-            setLight(light);
-            UI.Toast("亮度调节：" + light * 100 / 255 + "%");
+
             flg = true;
         }
         return flg;
@@ -615,4 +656,5 @@ public class Player extends Activity implements View.OnTouchListener, MediaPlaye
         getWindow().setAttributes(lp);
 
     }
+
 }

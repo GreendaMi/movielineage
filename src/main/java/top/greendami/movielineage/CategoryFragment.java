@@ -1,9 +1,9 @@
 package top.greendami.movielineage;
 
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
@@ -19,7 +19,7 @@ import tool.UI;
  * Created by GreendaMi on 2016/12/1.
  */
 
-public class CategoryFragment extends Fragment implements View.OnClickListener,View.OnTouchListener {
+public class CategoryFragment extends Fragment implements View.OnClickListener {
     @Bind(R.id.A1)
     RelativeLayout mA1;
     @Bind(R.id.A2)
@@ -46,12 +46,14 @@ public class CategoryFragment extends Fragment implements View.OnClickListener,V
     RelativeLayout mD3;
 
     List<RelativeLayout> ViewsList = new ArrayList<>();
+    Handler mHandler;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_tag, container, false);
         ButterKnife.bind(this, view);
         initViews();
         InitEvent();
+        mHandler = new Handler();
         return view;
     }
 
@@ -74,7 +76,6 @@ public class CategoryFragment extends Fragment implements View.OnClickListener,V
     private void InitEvent() {
         for (RelativeLayout rl:ViewsList) {
             rl.setOnClickListener(this);
-            rl.setOnTouchListener(this);
         }
     }
 
@@ -89,66 +90,53 @@ public class CategoryFragment extends Fragment implements View.OnClickListener,V
         switch (v.getId()){
             case R.id.A1:
                 UI.push(CategoryActivity.class,"剧情短片","http://www.xinpianchang.com/channel/index/id-1/sort-like/page-");
-                UI.TopActivity.overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
                 break;
             case R.id.A2:
                 UI.push(CategoryActivity.class,"网络电影","http://www.xinpianchang.com/channel/index/id-121/sort-like/page-");
-                UI.TopActivity.overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
                 break;
             case R.id.A3:
                 UI.push(CategoryActivity.class,"广告/宣传片","http://www.xinpianchang.com/channel/index/id-2/sort-like/page-");
-                UI.TopActivity.overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
                 break;
             case R.id.B1:
                 UI.push(CategoryActivity.class,"创意实验","http://www.xinpianchang.com/channel/index/id-13/sort-like/page-");
-                UI.TopActivity.overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
                 break;
             case R.id.B2:
                 UI.push(CategoryActivity.class,"纪录片","http://www.xinpianchang.com/channel/index/id-11/sort-like/page-");
-                UI.TopActivity.overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
                 break;
             case R.id.B3:
                 UI.push(CategoryActivity.class,"MV","http://www.xinpianchang.com/channel/index/id-3/sort-like/page-");
-                UI.TopActivity.overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
                 break;
             case R.id.C1:
                 UI.push(CategoryActivity.class,"混剪/配音","http://www.xinpianchang.com/channel/index/id-10/sort-like/page-");
-                UI.TopActivity.overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
                 break;
             case R.id.C2:
                 UI.push(CategoryActivity.class,"特殊摄影","http://www.xinpianchang.com/channel/index/id-12/sort-like/page-");
-                UI.TopActivity.overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
                 break;
             case R.id.C3:
                 UI.push(CategoryActivity.class,"栏目/网剧","http://www.xinpianchang.com/channel/index/id-7/sort-like/page-");
-                UI.TopActivity.overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
                 break;
             case R.id.D1:
                 UI.push(CategoryActivity.class,"动画","http://www.xinpianchang.com/channel/index/id-5/sort-like/page-");
-                UI.TopActivity.overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
                 break;
             case R.id.D2:
                 UI.push(CategoryActivity.class,"预告片/花絮","http://www.xinpianchang.com/channel/index/id-9/sort-like/page-");
-                UI.TopActivity.overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
                 break;
             case R.id.D3:
                 UI.push(CategoryActivity.class,"OTHERS","http://www.xinpianchang.com/channel/index/type-newera/sort-like/page-");
-                UI.TopActivity.overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
                 break;
 
         }
+        setAnim(v);
+        UI.TopActivity.overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
     }
 
-    @Override
-    public boolean onTouch(View v, MotionEvent event) {
-        if (event.getAction() == MotionEvent.ACTION_DOWN) {
-            v.setScaleX(0.95f);
-            v.setScaleY(0.95f);
-        }
-        if (event.getAction() == MotionEvent.ACTION_UP) {
-            v.setScaleX(1f);
-            v.setScaleY(1f);
-        }
-        return false;
+    public void setAnim(final View v){
+        v.setAlpha(0.5f);
+        mHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                v.setAlpha(1);
+            }
+        },300);
     }
 }

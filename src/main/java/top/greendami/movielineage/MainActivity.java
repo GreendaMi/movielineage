@@ -274,9 +274,13 @@ public class MainActivity extends FragmentActivity {
     }
 
     public void showLoadingBar(){
-        mDotsPreloader.setVisibility(View.VISIBLE);
+        if(mDotsPreloader.getVisibility() == View.INVISIBLE){
+            mDotsPreloader.setVisibility(View.VISIBLE);
+        }
     }
     public void dismissLoadingBar(){
-        mDotsPreloader.setVisibility(View.INVISIBLE);
+        if(mDotsPreloader.getVisibility() == View.VISIBLE){
+            mDotsPreloader.setVisibility(View.INVISIBLE);
+        }
     }
 }

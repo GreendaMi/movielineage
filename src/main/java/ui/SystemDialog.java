@@ -141,7 +141,7 @@ public class SystemDialog extends LinearLayout implements OnClickListener {
                                          OnKeyListenerForBack listener) {
         onKeyListenerForBack = listener;
         dismissLoadingDialog();
-        view = new NetworkView(context);
+        NetworkView view = new NetworkView(context);
         loadingdialog = new AlertDialog.Builder(context).setCancelable(
                 cancelable).create();
         loadingdialog.setCanceledOnTouchOutside(cancelable);
@@ -207,6 +207,9 @@ public class SystemDialog extends LinearLayout implements OnClickListener {
                 view.stop();
             }
             loadingdialog.dismiss();
+            if(loadingdialog != null){
+                loadingdialog = null;
+            }
         }
     }
 

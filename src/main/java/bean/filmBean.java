@@ -1,10 +1,12 @@
 package bean;
 
+import java.io.Serializable;
+
 /**
  * Created by GreendaMi on 2016/11/29.
  */
 
-public class filmBean extends baseBean {
+public class filmBean extends baseBean implements Serializable{
     String name;
     String from;
     String url;

@@ -53,6 +53,7 @@
 
 
         <ui.IconFontTextView
+            android:visibility="invisible"
             android:focusable="true"
             android:id="@+id/share"
             android:layout_width="wrap_content"
@@ -62,7 +63,7 @@
             android:paddingRight="15dp"
             android:paddingTop="10dp"
             android:text="@string/分享"
-            android:textColor="@color/FontColor"
+            android:textColor="@color/DarkFontColor"
             android:textSize="20dp"/>
 
         <ui.IconFontTextView

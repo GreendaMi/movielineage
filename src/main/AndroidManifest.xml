@@ -26,8 +26,10 @@
 
         <activity
             android:name=".MainActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme"/>
         <activity
+            android:process=":vitamio"
             android:name=".Player"
             android:keepScreenOn="true"
             android:screenOrientation="landscape"
@@ -35,10 +37,12 @@
 
         <activity
             android:name=".FilmInfo"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme"/>
 
         <activity
             android:name=".DownLoadActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme"/>
         <activity android:name=".WelcomeActivity">
             <intent-filter>
@@ -49,12 +53,15 @@
         </activity>
         <activity
             android:name=".LikeActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme"/>
         <activity
             android:name=".LoginActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppThemeWithAnim"/>
         <activity
             android:theme="@style/AppTheme"
+            android:screenOrientation="portrait"
             android:name=".CategoryActivity"/>
     </application>
 

@@ -41,9 +41,15 @@ public class getFilm {
 
             String date =doc.getElementsByClass("inline-mid").text();
 
-            String introduce = doc.getElementsByClass("clearfix film_intro").first().select("a").get(1).text();
+            String introduce = null;
+            if(doc.getElementsByClass("clearfix film_intro").first().select("a").get(1) != null){
+                introduce =doc.getElementsByClass("clearfix film_intro").first().select("a").get(1).text();
+            }
 
-            String comment = doc.getElementsByClass("intro_119 clearfix").select("p").text();
+            String comment = null;
+            if(doc.getElementsByClass("intro_119 clearfix").select("p") != null){
+                comment = doc.getElementsByClass("intro_119 clearfix").select("p").text();
+            }
 
             f.setImg(img.replace("@960w.jpg",""));
             f.setName(name);

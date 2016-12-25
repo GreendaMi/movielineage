@@ -12,7 +12,7 @@
         <item name="android:windowAnimationStyle">@null</item>
 
     </style>
-    <style name="AppThemeWithAnim" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppThemeWithAnim" parent="Theme.AppCompat.Light.DarkActionBar" >
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/MainColor</item>
         <item name="colorPrimaryDark">@color/MainColor</item>

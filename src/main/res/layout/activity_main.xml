@@ -167,8 +167,8 @@
             android:paddingRight="30dp">
 
             <ui.ChTextView
+                android:background="@drawable/ripple_bg"
                 android:paddingRight="30dp"
-                android:background="@drawable/rippledrawable"
                 android:clickable="true"
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"
@@ -197,8 +197,8 @@
                 android:background="@color/LowFontColor"
                 android:layout_alignBottom="@+id/like"/>
             <ui.ChTextView
+                android:background="@drawable/ripple_bg"
                 android:paddingRight="30dp"
-                android:background="@drawable/rippledrawable"
                 android:clickable="true"
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"
@@ -213,8 +213,8 @@
                 android:layout_below="@+id/l2"/>
 
             <ui.ChTextView
+                android:background="@drawable/ripple_bg"
                 android:paddingRight="30dp"
-                android:background="@drawable/rippledrawable"
                 android:clickable="true"
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"

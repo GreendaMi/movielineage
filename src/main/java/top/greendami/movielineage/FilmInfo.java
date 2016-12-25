@@ -28,6 +28,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import model.DAOManager;
 import model.DownLoadManager;
+import tool.ACache;
 import tool.BlurBitmapUtil;
 import tool.DensityUtil;
 import tool.NetworkType;
@@ -109,7 +110,9 @@ public class FilmInfo extends Activity implements View.OnTouchListener {
         mPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                UI.push(Player.class, mFilmBean);
+                UI.push(Player.class);
+                ACache mCache = ACache.get(FilmInfo.this);
+                mCache.put("PlayFilm", mFilmBean);
             }
         });
         mPlay.setOnTouchListener(this);

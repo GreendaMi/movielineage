@@ -31,6 +31,7 @@ import io.vov.vitamio.MediaPlayer;
 import io.vov.vitamio.Vitamio;
 import model.DAOManager;
 import model.DownLoadManager;
+import tool.ACache;
 import tool.NetworkType;
 import tool.NetworkTypeInfo;
 import tool.ScreenInfo;
@@ -118,8 +119,12 @@ public class Player extends Activity implements View.OnTouchListener, MediaPlaye
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
         mWakeLock = pm.newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK, "My Tag");
-        mFilmBean = (filmBean) UI.getData();
+        //因为使用了子线程，不共享内存，所以使用文件系统传递数据
 
+        ACache mCache = ACache.get(Player.this);
+        mFilmBean = (filmBean) mCache.getAsObject("PlayFilm");
+
+        Log.d(TAG, "mFilmBean:" + mFilmBean.getUrl());
         Vitamio.isInitialized(this);
         LibsChecker.checkVitamioLibs(this);
 
@@ -156,7 +161,8 @@ public class Player extends Activity implements View.OnTouchListener, MediaPlaye
         mBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                UI.pop();
+//                finish();
+                System.exit(0);
             }
         });
         mBack.setOnTouchListener(this);
@@ -454,11 +460,12 @@ public class Player extends Activity implements View.OnTouchListener, MediaPlaye
         Log.d(TAG, "surfaceCreated called");
 
         //判断视频是否下载
-        if (FileDownloader.getDownloadFile(mFilmBean.getUrl()) == null) {
-            playVideo(mFilmBean.getUrl());
-        } else {
+        if (FileDownloader.getDownloadFile(mFilmBean.getUrl()) != null &&
+                FileDownloader.getDownloadFile(mFilmBean.getUrl()).getDownloadedSizeLong() == FileDownloader.getDownloadFile(mFilmBean.getUrl()).getFileSizeLong()) {
             //播放本地视频文件
             playVideo(FileDownloader.getDownloadFile(mFilmBean.getUrl()).getFilePath());
+        } else {
+            playVideo(mFilmBean.getUrl());
         }
 
 

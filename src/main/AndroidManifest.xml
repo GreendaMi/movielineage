@@ -38,7 +38,7 @@
         <activity
             android:name=".FilmInfo"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme"/>
+            android:theme="@android:style/Theme.Translucent"/>
 
         <activity
             android:name=".DownLoadActivity"

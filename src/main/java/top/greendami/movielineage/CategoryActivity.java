@@ -154,7 +154,7 @@ public class CategoryActivity extends Activity {
             return;
         }
         if(NetworkTypeInfo.getNetworkType(CategoryActivity.this) == NetworkType.NoNetwork){
-            UI.Toast("请链接网络！");
+            UI.Toast("请连接网络！");
             return;
         }
         new Thread(new Runnable() {

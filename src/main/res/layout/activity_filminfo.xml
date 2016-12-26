@@ -1,16 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<android.support.design.widget.CoordinatorLayout
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:textFloatingActionButton="http://schemas.android.com/apk/res-auto"
     android:focusableInTouchMode="false"
     android:id="@+id/img2"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/transparent"
     >
-<requestFocus/>
     <ImageView
         android:id="@+id/lay1"
         android:layout_width="match_parent"
@@ -19,62 +16,64 @@
         android:focusable="false"
         />
 
-    <android.support.design.widget.AppBarLayout
-        android:id="@+id/lay2"
+    <RelativeLayout
+        android:id="@+id/top"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/transparent"
-        app:layout_behavior="ui.FilmInfoBehavior">
-
+        android:layout_height="match_parent">
 
         <RelativeLayout
-            android:id="@+id/top"
+            android:id="@+id/topR"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="350dp">
+
+            <ImageView
+                android:id="@+id/img1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/MainColor"
+                android:scaleType="centerCrop"
+                />
+
+            <ui.IconFontTextView
+                android:layout_centerInParent="true"
+                android:id="@+id/play"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="50dp"
+                android:textColor="@color/FontColor"
+                android:text="@string/播放2"
+                android:shadowColor="@color/DarkFontColor"
+                android:shadowDx="5"
+                android:shadowDy="5"
+                android:clickable="true"/>
+            <ui.IconFontTextView
+                android:id="@+id/backBt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:shadowColor="@color/DarkFontColor"
+                android:shadowDx="5"
+                android:shadowDy="5"
+                android:shadowRadius="10"
+                android:text="@string/返回"
+                android:textColor="@color/FontColor"
+                android:textSize="20dp"/>
+        </RelativeLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/topR"
+            android:background="@color/transparent"
+            android:paddingTop="10dp"
+            android:layout_marginBottom="40dp"
+            >
 
             <RelativeLayout
-                android:id="@+id/topR"
-                android:layout_width="match_parent"
-                android:layout_height="350dp">
-
-                <ImageView
-                    android:id="@+id/img1"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@color/MainColor"
-                    android:scaleType="centerCrop"
-                    />
-
-                <View
-                    android:id="@+id/cover"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:alpha="0"
-                    android:background="@color/MainColor"/>
-
-                <ui.IconFontTextView
-                    android:id="@+id/backBt"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="30dp"
-                    android:paddingLeft="20dp"
-                    android:paddingRight="20dp"
-                    android:shadowColor="@color/DarkFontColor"
-                    android:shadowDx="5"
-                    android:shadowDy="5"
-                    android:shadowRadius="10"
-                    android:text="@string/返回"
-                    android:textColor="@color/FontColor"
-                    android:textSize="20dp"/>
-            </RelativeLayout>
-
-            <android.support.v4.widget.NestedScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/topR"
-                android:background="@color/transparent"
-                android:paddingTop="10dp"
-                android:layout_marginBottom="40dp"
                 >
 
                 <RelativeLayout
@@ -82,149 +81,143 @@
                     android:layout_height="wrap_content"
                     >
 
-                    <RelativeLayout
-                        android:layout_width="match_parent"
+                    <TextView
+                        android:id="@+id/name"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        >
+                        android:paddingLeft="20dp"
+                        android:paddingRight="60dp"
+                        android:paddingTop="10dp"
+                        android:shadowColor="@color/DarkFontColor"
+                        android:shadowDx="5"
+                        android:shadowDy="5"
+                        android:shadowRadius="10"
+                        android:textColor="@color/FontColor"
+                        android:textSize="16sp"
+                        android:textStyle="bold"/>
 
-                        <TextView
-                            android:id="@+id/name"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:paddingLeft="20dp"
-                            android:paddingRight="60dp"
-                            android:paddingTop="10dp"
-                            android:shadowColor="@color/DarkFontColor"
-                            android:shadowDx="5"
-                            android:shadowDy="5"
-                            android:shadowRadius="10"
-                            android:textColor="@color/FontColor"
-                            android:textSize="16sp"
-                            android:textStyle="bold"/>
+                    <View
+                        android:id="@+id/v"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_below="@+id/name"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@color/FontColor"/>
 
-                        <View
-                            android:id="@+id/v"
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:layout_below="@+id/name"
-                            android:layout_marginLeft="20dp"
-                            android:layout_marginTop="10dp"
-                            android:background="@color/FontColor"/>
+                    <ui.EnTextView
+                        android:id="@+id/f"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/v"
+                        android:paddingLeft="20dp"
+                        android:paddingTop="10dp"
+                        android:shadowColor="@color/DarkFontColor"
+                        android:shadowDx="5"
+                        android:shadowDy="5"
+                        android:shadowRadius="10"
+                        android:text="FROM:"
+                        android:textColor="@color/FontColor"
+                        android:textSize="18dp"
+                        />
 
-                        <ui.EnTextView
-                            android:id="@+id/f"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/v"
-                            android:paddingLeft="20dp"
-                            android:paddingTop="10dp"
-                            android:shadowColor="@color/DarkFontColor"
-                            android:shadowDx="5"
-                            android:shadowDy="5"
-                            android:shadowRadius="10"
-                            android:text="FROM:"
-                            android:textColor="@color/FontColor"
-                            android:textSize="18dp"
-                            />
+                    <TextView
+                        android:id="@+id/from"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBaseline="@+id/f"
+                        android:layout_toRightOf="@+id/f"
+                        android:paddingLeft="20dp"
+                        android:shadowColor="@color/DarkFontColor"
+                        android:shadowDx="5"
+                        android:shadowDy="5"
+                        android:shadowRadius="10"
+                        android:text="Mike"
+                        android:textColor="@color/FontColor"
+                        android:textSize="12sp"
+                        />
 
-                        <TextView
-                            android:id="@+id/from"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignBaseline="@+id/f"
-                            android:layout_toRightOf="@+id/f"
-                            android:paddingLeft="20dp"
-                            android:shadowColor="@color/DarkFontColor"
-                            android:shadowDx="5"
-                            android:shadowDy="5"
-                            android:shadowRadius="10"
-                            android:text="Mike"
-                            android:textColor="@color/FontColor"
-                            android:textSize="12sp"
-                            />
+                    <ui.EnTextView
+                        android:id="@+id/t"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/f"
+                        android:paddingLeft="20dp"
+                        android:shadowColor="@color/DarkFontColor"
+                        android:shadowDx="5"
+                        android:shadowDy="5"
+                        android:shadowRadius="10"
+                        android:text="TAG:"
+                        android:textColor="@color/FontColor"
+                        android:textSize="18dp"
+                        />
 
-                        <ui.EnTextView
-                            android:id="@+id/t"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/f"
-                            android:paddingLeft="20dp"
-                            android:shadowColor="@color/DarkFontColor"
-                            android:shadowDx="5"
-                            android:shadowDy="5"
-                            android:shadowRadius="10"
-                            android:text="TAG:"
-                            android:textColor="@color/FontColor"
-                            android:textSize="18dp"
-                            />
+                    <TextView
+                        android:id="@+id/tag"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBaseline="@+id/t"
+                        android:layout_toRightOf="@+id/f"
+                        android:paddingLeft="20dp"
+                        android:shadowColor="@color/DarkFontColor"
+                        android:shadowDx="5"
+                        android:shadowDy="5"
+                        android:shadowRadius="10"
+                        android:text="Mike"
+                        android:textColor="@color/FontColor"
+                        android:textSize="12sp"/>
 
-                        <TextView
-                            android:id="@+id/tag"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignBaseline="@+id/t"
-                            android:layout_toRightOf="@+id/f"
-                            android:paddingLeft="20dp"
-                            android:shadowColor="@color/DarkFontColor"
-                            android:shadowDx="5"
-                            android:shadowDy="5"
-                            android:shadowRadius="10"
-                            android:text="Mike"
-                            android:textColor="@color/FontColor"
-                            android:textSize="12sp"/>
+                    <ui.EnTextView
+                        android:id="@+id/d"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/t"
+                        android:paddingLeft="20dp"
+                        android:shadowColor="@color/DarkFontColor"
+                        android:shadowDx="5"
+                        android:shadowDy="5"
+                        android:shadowRadius="10"
+                        android:text="DATE:"
+                        android:textColor="@color/FontColor"
+                        android:textSize="18dp"
+                        />
 
-                        <ui.EnTextView
-                            android:id="@+id/d"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/t"
-                            android:paddingLeft="20dp"
-                            android:shadowColor="@color/DarkFontColor"
-                            android:shadowDx="5"
-                            android:shadowDy="5"
-                            android:shadowRadius="10"
-                            android:text="DATE:"
-                            android:textColor="@color/FontColor"
-                            android:textSize="18dp"
-                            />
+                    <TextView
+                        android:id="@+id/date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBaseline="@+id/d"
+                        android:layout_toRightOf="@+id/f"
+                        android:paddingLeft="20dp"
+                        android:shadowColor="@color/DarkFontColor"
+                        android:shadowDx="5"
+                        android:shadowDy="5"
+                        android:shadowRadius="10"
+                        android:text="Mike"
+                        android:textColor="@color/FontColor"
+                        android:textSize="12sp"/>
 
-                        <TextView
-                            android:id="@+id/date"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignBaseline="@+id/d"
-                            android:layout_toRightOf="@+id/f"
-                            android:paddingLeft="20dp"
-                            android:shadowColor="@color/DarkFontColor"
-                            android:shadowDx="5"
-                            android:shadowDy="5"
-                            android:shadowRadius="10"
-                            android:text="Mike"
-                            android:textColor="@color/FontColor"
-                            android:textSize="12sp"/>
-
-                        <TextView
-                            android:id="@+id/comment"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/d"
-                            android:layout_marginBottom="10dp"
-                            android:layout_marginTop="20dp"
-                            android:paddingLeft="20dp"
-                            android:paddingRight="20dp"
-                            android:shadowColor="@color/DarkFontColor"
-                            android:shadowDx="5"
-                            android:shadowDy="5"
-                            android:shadowRadius="10"
-                            android:textColor="@color/FontColor"
-                            android:textSize="12sp"
-                            />
-                    </RelativeLayout>
-
+                    <TextView
+                        android:id="@+id/comment"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/d"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginTop="20dp"
+                        android:paddingLeft="20dp"
+                        android:paddingRight="20dp"
+                        android:shadowColor="@color/DarkFontColor"
+                        android:shadowDx="5"
+                        android:shadowDy="5"
+                        android:shadowRadius="10"
+                        android:textColor="@color/FontColor"
+                        android:textSize="12sp"
+                        />
                 </RelativeLayout>
-            </android.support.v4.widget.NestedScrollView >
-        </RelativeLayout>
-    </android.support.design.widget.AppBarLayout>
+
+            </RelativeLayout>
+        </ScrollView >
+    </RelativeLayout>
     <RelativeLayout
         android:id="@+id/bottom"
         android:layout_gravity="bottom"
@@ -297,22 +290,5 @@
             android:textColor="@color/FontColor"
             android:text="@string/下载"/>
     </RelativeLayout>
-    <ui.TextFloatingActionButton
-        android:focusable="true"
-        android:focusableInTouchMode="false"
-        android:id="@+id/play"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:clickable="true"
-        app:backgroundTint="@color/DarkFontColor"
-        app:elevation="6dp"
-        app:layout_anchor="@id/img1"
-        app:layout_anchorGravity="bottom|right"
-        app:pressedTranslationZ="12dp"
-        app:rippleColor="#33728dff"
-        textFloatingActionButton:textFloatingActionButtonText="@string/播放"
-        textFloatingActionButton:textFloatingActionButtonTextColor="@color/FontColor"
-        >
-    </ui.TextFloatingActionButton>
-</android.support.design.widget.CoordinatorLayout>
+
+</FrameLayout>

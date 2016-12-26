@@ -20,6 +20,12 @@ import top.greendami.movielineage.R;
 
 public class TextFloatingActionButton extends FloatingActionButton {
     Typeface mtypeface;
+
+    public void setText(String text) {
+        this.text = text;
+        invalidate();
+    }
+
     String text;
     int textcolor;
 
@@ -31,6 +37,7 @@ public class TextFloatingActionButton extends FloatingActionButton {
         a.recycle();
         mtypeface = Typeface.createFromAsset(context.getAssets(), "iconfont/iconfont.ttf");
     }
+
 
 
     @Override

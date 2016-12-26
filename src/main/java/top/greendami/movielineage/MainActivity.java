@@ -15,6 +15,9 @@ import java.util.ArrayList;
 import adapter.MyFragmentPagerAdapter;
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import model.DownLoadManager;
+import tool.NetworkType;
+import tool.NetworkTypeInfo;
 import tool.UI;
 import ui.ChTextView;
 import ui.DotsPreloader;
@@ -68,6 +71,10 @@ public class MainActivity extends FragmentActivity {
         UI.enter(this);
         Hot.callOnClick();
         mHandler = new Handler();
+
+        if(NetworkTypeInfo.getNetworkType(this) == NetworkType.Wifi){
+            DownLoadManager.startAll(this);
+        }
     }
 
     private void initView() {

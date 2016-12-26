@@ -29,17 +29,29 @@ public class getFilm {
 
             Document doc = Jsoup.parse(new String( response.body().bytes()));
 
-            String from = doc.getElementsByClass("useer-name").select("a").first().text();
+            String from = null;
+            if(doc.getElementsByClass("useer-name").select("a").first() != null){
+                from = doc.getElementsByClass("useer-name").select("a").first().text();
+            }
 
-            String tag = doc.getElementsByClass("clearfix film_intro").select("a").first().text();
+            String tag = null;
+            if(doc.getElementsByClass("clearfix film_intro").select("a").first() != null){
+                tag = doc.getElementsByClass("clearfix film_intro").select("a").first().text();
+            }
 
-            String name = doc.getElementsByClass("active").text();
+            String name = null;
+            if(doc.getElementsByClass("active").text() != null){
+                name = doc.getElementsByClass("active").text();
+            }
 
             String filmurl = doc.getElementsByClass("video-js").attr("abs:src");
 
             String img = doc.getElementsByClass("video-js").attr("abs:poster");
 
-            String date =doc.getElementsByClass("inline-mid").text();
+            String date = null;
+            if(doc.getElementsByClass("inline-mid") != null){
+                date =doc.getElementsByClass("inline-mid").text();
+            }
 
             String introduce = null;
             if(doc.getElementsByClass("clearfix film_intro").first().select("a").get(1) != null){

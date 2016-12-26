@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -26,6 +27,8 @@ import java.util.Map;
 import bean.daoBean.localfilmBean;
 import bean.filmBean;
 import model.DownLoadManager;
+import tool.NetworkType;
+import tool.NetworkTypeInfo;
 import tool.UI;
 import top.greendami.loadingimageview.LoadingImageView;
 import top.greendami.movielineage.FilmInfo;
@@ -92,7 +95,7 @@ public class DownLoadFilmListAdapter extends RecyclerView.Adapter implements OnR
             if (TextUtils.isEmpty(url)) {
                 mConvertViews.remove(url);
             }
-            if(Type == 0){
+            if(Type == 0 && NetworkTypeInfo.getNetworkType(mContext) == NetworkType.Wifi){
                 DownLoadManager.startDownLoad(mData);
             }else{
                 DownLoadManager.pause(mData.getUrl());
@@ -281,10 +284,10 @@ public class DownLoadFilmListAdapter extends RecyclerView.Adapter implements OnR
             // 下载failUrl时出现url错误
         } else if (FileDownloadStatusFailReason.TYPE_STORAGE_SPACE_IS_FULL.equals(failType)) {
             // 下载failUrl时出现本地存储空间不足
-            UI.Toast("存储空间不足");
+            Toast.makeText(UI.TopActivity,"存储空间不足",Toast.LENGTH_SHORT).show();
         } else if (FileDownloadStatusFailReason.TYPE_NETWORK_DENIED.equals(failType)) {
             // 下载failUrl时出现无法访问网络
-            UI.Toast("无法访问网络");
+            Toast.makeText(UI.TopActivity,"无法访问网络",Toast.LENGTH_SHORT).show();
         } else if (FileDownloadStatusFailReason.TYPE_NETWORK_TIMEOUT.equals(failType)) {
             // 下载failUrl时出现连接超时
         } else {

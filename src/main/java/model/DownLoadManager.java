@@ -30,7 +30,7 @@ public class DownLoadManager {
 
     static Context mContext;
 
-    public static void initDownLoadManager(Context context){
+    public static void initDownLoadManager(Context context) {
         mContext = context;
 
         // 1、创建Builder
@@ -53,7 +53,7 @@ public class DownLoadManager {
         FileDownloader.init(configuration);
     }
 
-    public static void startDownLoad(filmBean f){
+    public static void startDownLoad(filmBean f) {
         final localfilmBean lf = new localfilmBean();
 
         lf.setComment(f.getComment());
@@ -77,15 +77,17 @@ public class DownLoadManager {
             @Override
             public void onDetectNewDownloadFile(String url, String fileName, String saveDir, long fileSize) {
                 // 如果有必要，可以改变文件名称fileName和下载保存的目录saveDir
-                FileDownloader.createAndStart(url, DIR + File.separatorChar + "IMG" , lf.getID());
+                FileDownloader.createAndStart(url, DIR + File.separatorChar + "IMG", lf.getID());
                 lf.setImg(DIR + File.separatorChar + "IMG" + File.separatorChar + lf.getID());
                 Log.d("DownLoadManager", (DIR + File.separatorChar + "IMG" + File.separatorChar + lf.getID()));
             }
+
             @Override
             public void onDetectUrlFileExist(String url) {
                 // 继续下载，自动会断点续传（如果服务器无法支持断点续传将从头开始下载）
                 FileDownloader.start(url);
             }
+
             @Override
             public void onDetectUrlFileFailed(String url, DetectBigUrlFileFailReason failReason) {
                 // 探测一个网络文件失败了，具体查看failReason
@@ -97,22 +99,24 @@ public class DownLoadManager {
             @Override
             public void onDetectNewDownloadFile(String url, String fileName, String saveDir, long fileSize) {
                 // 如果有必要，可以改变文件名称fileName和下载保存的目录saveDir
-                FileDownloader.createAndStart(url, DIR , lf.getID().toString());
+                FileDownloader.createAndStart(url, DIR, lf.getID().toString());
                 isDownLoading.add(url);
             }
+
             @Override
             public void onDetectUrlFileExist(String url) {
                 // 继续下载，自动会断点续传（如果服务器无法支持断点续传将从头开始下载）
                 FileDownloader.start(url);
                 isDownLoading.add(url);
             }
+
             @Override
             public void onDetectUrlFileFailed(String url, DetectBigUrlFileFailReason failReason) {
                 // 探测一个网络文件失败了，具体查看failReason
             }
         });
 
-        if(DAOManager.getInstance(mContext).queryDownLoadFilmList(lf.getID()).size() == 0){
+        if (DAOManager.getInstance(mContext).queryDownLoadFilmList(lf.getID()).size() == 0) {
             DAOManager.getInstance(mContext).insertDownLoadFilm(lf);
         }
 
@@ -120,17 +124,17 @@ public class DownLoadManager {
 
 
     //下载状态转换
-    public static void toggle(filmBean f){
-        if(isDownLoading.contains(f.getUrl())){
+    public static void toggle(filmBean f) {
+        if (isDownLoading.contains(f.getUrl())) {
             FileDownloader.pause(f.getUrl());
             isDownLoading.remove(f.getUrl());
-        }else{
+        } else {
             FileDownloader.start(f.getUrl());
             isDownLoading.add(f.getUrl());
         }
     }
 
-    public static void pause(String s){
+    public static void pause(String s) {
         FileDownloader.pause(s);
         isDownLoading.remove(s);
     }
@@ -151,6 +155,14 @@ public class DownLoadManager {
             return String.format(f > 100 ? "%.0f KB" : "%.1f KB", f);
         } else
             return String.format("%d B", size);
+    }
+
+
+    public static void startAll(Context context) {
+        for (localfilmBean lfb :
+                DAOManager.getInstance(context).queryFilmList()) {
+            FileDownloader.start(lfb.getUrl());
+        }
     }
 
 }

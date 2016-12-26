@@ -126,7 +126,7 @@ public class FilmFragment extends Fragment {
             return;
         }
         if(NetworkTypeInfo.getNetworkType(getActivity()) == NetworkType.NoNetwork){
-            UI.Toast("请链接网络！");
+            UI.Toast("请连接网络！");
             return;
         }
 

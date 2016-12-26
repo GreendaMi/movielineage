@@ -232,7 +232,7 @@ public class Player extends Activity implements View.OnTouchListener, MediaPlaye
             @Override
             public void onClick(View v) {
                 if(NetworkTypeInfo.getNetworkType(Player.this) == NetworkType.NoNetwork){
-                    UI.Toast("请链接网络！");
+                    UI.Toast("请网络！");
                     return;
                 }
                 if (UI.get("Me") != null && !UI.get("Me").toString().isEmpty()) {

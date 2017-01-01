@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -25,7 +26,7 @@ import ui.DynamicWave;
 import ui.RoundLayout;
 
 
-public class MainActivity extends FragmentActivity {
+public class MainActivity extends FragmentActivity implements View.OnTouchListener{
 
     @Bind(R.id.v1)
     View mV1;
@@ -215,7 +216,9 @@ public class MainActivity extends FragmentActivity {
                 }
             }
         });
-
+        mDl.setOnTouchListener(this);
+        mLike.setOnTouchListener(this);
+        mSh.setOnTouchListener(this);
         mDl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -289,5 +292,18 @@ public class MainActivity extends FragmentActivity {
         if(mDotsPreloader.getVisibility() == View.VISIBLE){
             mDotsPreloader.setVisibility(View.INVISIBLE);
         }
+    }
+
+    @Override
+    public boolean onTouch(View view, MotionEvent motionEvent) {
+        if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+            view.setScaleX(0.95f);
+            view.setScaleY(0.95f);
+        }
+        if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+            view.setScaleX(1f);
+            view.setScaleY(1f);
+        }
+        return false;
     }
 }

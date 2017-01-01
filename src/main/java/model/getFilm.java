@@ -16,7 +16,7 @@ import okhttp3.Response;
 
 public class getFilm {
 
-    public filmBean Doget(String url){
+    public filmBean Doget(String url) {
         final filmBean f = new filmBean();
         OkHttpClient mOkHttpClient = new OkHttpClient();
 //创建一个Request
@@ -27,20 +27,20 @@ public class getFilm {
         try {
             Response response = mOkHttpClient.newCall(request).execute();
 
-            Document doc = Jsoup.parse(new String( response.body().bytes()));
+            Document doc = Jsoup.parse(new String(response.body().bytes()));
 
             String from = null;
-            if(doc.getElementsByClass("useer-name").select("a").first() != null){
+            if (doc.getElementsByClass("useer-name") != null && doc.getElementsByClass("useer-name").select("a") != null && doc.getElementsByClass("useer-name").select("a").first() != null) {
                 from = doc.getElementsByClass("useer-name").select("a").first().text();
             }
 
             String tag = null;
-            if(doc.getElementsByClass("clearfix film_intro").select("a").first() != null){
+            if (doc.getElementsByClass("clearfix film_intro") != null && doc.getElementsByClass("clearfix film_intro").select("a") != null && doc.getElementsByClass("clearfix film_intro").select("a").first() != null) {
                 tag = doc.getElementsByClass("clearfix film_intro").select("a").first().text();
             }
 
             String name = null;
-            if(doc.getElementsByClass("active").text() != null){
+            if (doc.getElementsByClass("active") != null && doc.getElementsByClass("active").text() != null) {
                 name = doc.getElementsByClass("active").text();
             }
 
@@ -49,21 +49,21 @@ public class getFilm {
             String img = doc.getElementsByClass("video-js").attr("abs:poster");
 
             String date = null;
-            if(doc.getElementsByClass("inline-mid") != null){
-                date =doc.getElementsByClass("inline-mid").text();
+            if (doc.getElementsByClass("inline-mid") != null) {
+                date = doc.getElementsByClass("inline-mid").text();
             }
 
             String introduce = null;
-            if(doc.getElementsByClass("clearfix film_intro").first().select("a").get(1) != null){
-                introduce =doc.getElementsByClass("clearfix film_intro").first().select("a").get(1).text();
+            if (doc.getElementsByClass("clearfix film_intro") != null && doc.getElementsByClass("clearfix film_intro").first() != null && doc.getElementsByClass("clearfix film_intro").first().select("a") != null && doc.getElementsByClass("clearfix film_intro").first().select("a").get(1) != null) {
+                introduce = doc.getElementsByClass("clearfix film_intro").first().select("a").get(1).text();
             }
 
             String comment = null;
-            if(doc.getElementsByClass("intro_119 clearfix").select("p") != null){
+            if (doc.getElementsByClass("intro_119 clearfix") != null && doc.getElementsByClass("intro_119 clearfix").select("p") != null) {
                 comment = doc.getElementsByClass("intro_119 clearfix").select("p").text();
             }
 
-            f.setImg(img.replace("@960w.jpg",""));
+            f.setImg(img.replace("@960w.jpg", ""));
             f.setName(name);
             f.setFrom(from);
             f.setTag(tag);

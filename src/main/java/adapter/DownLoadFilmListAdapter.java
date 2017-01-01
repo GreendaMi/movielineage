@@ -30,7 +30,7 @@ import model.DownLoadManager;
 import tool.NetworkType;
 import tool.NetworkTypeInfo;
 import tool.UI;
-import top.greendami.loadingimageview.LoadingImageView;
+import ui.LoadingImageView;
 import top.greendami.movielineage.FilmInfo;
 import top.greendami.movielineage.R;
 import ui.IconFontTextView;

@@ -133,7 +133,12 @@ public class CategoryActivity extends Activity {
 
     private void InitView() {
         mHandler = new Handler();
-        mTitleText.setText(UI.getData(0).toString());
+        if(UI.getData(0) != null){
+            mTitleText.setText(UI.getData(0).toString());
+        }else{
+            mTitleText.setText("9点片场");
+        }
+
         mDatas = new ArrayList<>();
         SystemDialog.showLoadingDialog(CategoryActivity.this, false);
         mAdapter = new FilmListAdapter(this, mDatas);

@@ -55,14 +55,14 @@ public class LikeActivity extends Activity implements View.OnTouchListener{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_download_like);
         ButterKnife.bind(this);
-        initViews();
-        initEvent();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         UI.enter(this);
+        initViews();
+        initEvent();
     }
 
     private void initEvent() {

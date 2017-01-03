@@ -17,6 +17,8 @@ import java.util.List;
 
 import bean.daoBean.likefilmbean;
 import bean.filmBean;
+import tool.ACache;
+import tool.UI;
 import top.greendami.movielineage.Player;
 import top.greendami.movielineage.R;
 import ui.IconFontTextView;
@@ -73,7 +75,9 @@ public class LikeFilmListAdapter extends RecyclerView.Adapter {
                         f.setTag(mData.getTag());
                         f.setComment(mData.getComment());
                         //如果下载完成，点击播放
-                        tool.UI.push(Player.class, f);
+                        ACache mCache = ACache.get(mContext);
+                        mCache.put("PlayFilm", f);
+                        UI.push(Player.class);
 
                         mHandler.postDelayed(new Runnable() {
                             @Override

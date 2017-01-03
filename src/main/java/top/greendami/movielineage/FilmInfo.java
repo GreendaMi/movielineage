@@ -109,9 +109,9 @@ public class FilmInfo extends Activity implements View.OnTouchListener {
         mPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                UI.push(Player.class);
                 ACache mCache = ACache.get(FilmInfo.this);
                 mCache.put("PlayFilm", mFilmBean);
+                UI.push(Player.class);
             }
         });
         mPlay.setOnTouchListener(this);

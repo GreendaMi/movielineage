@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="55dp"
+    android:layout_weight="0"
+    android:layout_x="0dp"
+    android:layout_y="0dp"
+    android:background="@color/MainColor"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    >
+
+    <ui.IconFontTextView
+        android:textColor="@color/DarkFontColor"
+        android:gravity="center"
+        android:visibility="visible"
+        android:id="@+id/search_button"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp"
+        android:layout_width="40dp"
+        android:layout_centerVertical="true"
+        android:layout_height="40dp"
+        android:text="@string/查找"
+        android:textSize="22dp"/>
+    <EditText
+        android:textCursorDrawable="@drawable/color_cursor"
+        android:lines="1"
+        android:paddingLeft="10dp"
+        android:background="@color/MainColor"
+        android:textColor="@color/FontColor"
+        android:id="@+id/edit"
+        android:textSize="20sp"
+        android:hint="搜索"
+        android:textColorHint="@color/DarkFontColor"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@id/search_button"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</RelativeLayout>

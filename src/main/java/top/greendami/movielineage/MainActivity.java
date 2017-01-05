@@ -8,6 +8,8 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.ScaleAnimation;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -23,10 +25,12 @@ import tool.UI;
 import ui.ChTextView;
 import ui.DotsPreloader;
 import ui.DynamicWave;
+import ui.IconFontTextView;
 import ui.RoundLayout;
+import ui.SearchDialog;
 
 
-public class MainActivity extends FragmentActivity implements View.OnTouchListener{
+public class MainActivity extends FragmentActivity implements View.OnTouchListener {
 
     @Bind(R.id.v1)
     View mV1;
@@ -52,6 +56,10 @@ public class MainActivity extends FragmentActivity implements View.OnTouchListen
     ChTextView mId;
     @Bind(R.id.DotsPreloader)
     DotsPreloader mDotsPreloader;
+    @Bind(R.id.search_button)
+    IconFontTextView searchButton;
+    @Bind(R.id.circle_bg)
+    View circleBg;
     private Fragment NEW, HOT, COM;
 
     TextView New, Hot, Com;
@@ -73,7 +81,7 @@ public class MainActivity extends FragmentActivity implements View.OnTouchListen
         Hot.callOnClick();
         mHandler = new Handler();
 
-        if(NetworkTypeInfo.getNetworkType(this) == NetworkType.Wifi){
+        if (NetworkTypeInfo.getNetworkType(this) == NetworkType.Wifi) {
             DownLoadManager.startAll(this);
         }
     }
@@ -263,6 +271,40 @@ public class MainActivity extends FragmentActivity implements View.OnTouchListen
                 }
             }
         });
+
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final ScaleAnimation animation =new ScaleAnimation(0.0f, 16f, 0.0f, 16f,
+                        Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+                animation.setDuration(500);
+                animation.setAnimationListener(new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationStart(Animation animation) {
+                        circleBg.setVisibility(View.VISIBLE);
+                        mHandler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                SearchDialog.Show(MainActivity.this);
+                            }
+                        },400);
+
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+                        circleBg.setVisibility(View.INVISIBLE);
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
+
+                    }
+                });
+
+                circleBg.startAnimation(animation);
+            }
+        });
     }
 
     @Override
@@ -283,14 +325,17 @@ public class MainActivity extends FragmentActivity implements View.OnTouchListen
 
     }
 
-    public void showLoadingBar(){
-        if(mDotsPreloader.getVisibility() == View.INVISIBLE){
+    public void showLoadingBar() {
+        if (mDotsPreloader.getVisibility() == View.INVISIBLE) {
             mDotsPreloader.setVisibility(View.VISIBLE);
+            searchButton.setVisibility(View.INVISIBLE);
         }
     }
-    public void dismissLoadingBar(){
-        if(mDotsPreloader.getVisibility() == View.VISIBLE){
+
+    public void dismissLoadingBar() {
+        if (mDotsPreloader.getVisibility() == View.VISIBLE) {
             mDotsPreloader.setVisibility(View.INVISIBLE);
+            searchButton.setVisibility(View.VISIBLE);
         }
     }
 

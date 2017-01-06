@@ -1,430 +1,590 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
     <LinearLayout
-        android:paddingLeft="3dp"
-        android:paddingRight="3dp"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:paddingLeft="3dp"
+        android:paddingRight="3dp">
+
         <RelativeLayout
             android:id="@+id/A1"
-            android:layout_margin="3dp"
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_margin="3dp"
             android:layout_weight="1"
             android:background="@color/DarkFontColor">
+
             <RelativeLayout
-                android:layout_margin="2dp"
-                android:layout_above="@+id/ida1"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_above="@+id/ida1"
+                android:layout_margin="2dp"
                 android:background="@color/FontColor">
+
+                <ImageView
+                    android:id="@+id/image_A1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop" />
+
                 <ui.IconFontTextView
-                    android:layout_centerInParent="true"
+                    android:shadowColor="@color/DarkFontColor"
+                    android:shadowDx="5"
+                    android:shadowDy="5"
+                    android:shadowRadius="10"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/DarkFontColor"
-                    android:textSize="40dp"
-                    android:text="@string/剧情"/>
+                    android:layout_centerInParent="true"
+                    android:text="@string/剧情"
+                    android:textColor="@color/FontColor"
+                    android:textSize="40dp" />
             </RelativeLayout>
 
             <ui.ChTextView
                 android:id="@+id/ida1"
-                android:paddingBottom="5dp"
-                android:paddingTop="5dp"
-                android:layout_alignParentBottom="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
-                android:textColor="@color/FontColor"
-                android:text="剧情短片"/>
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp"
+                android:text="剧情短片"
+                android:textColor="@color/FontColor" />
         </RelativeLayout>
+
         <RelativeLayout
             android:id="@+id/A2"
-            android:layout_margin="3dp"
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_margin="3dp"
             android:layout_weight="1"
             android:background="@color/DarkFontColor">
+
             <RelativeLayout
-                android:layout_margin="2dp"
-                android:layout_above="@+id/ida2"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_above="@+id/ida2"
+                android:layout_margin="2dp"
                 android:background="@color/FontColor">
+
+                <ImageView
+                    android:id="@+id/image_A2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop" />
+
                 <ui.IconFontTextView
-                    android:layout_centerInParent="true"
+                    android:shadowColor="@color/DarkFontColor"
+                    android:shadowDx="5"
+                    android:shadowDy="5"
+                    android:shadowRadius="10"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/DarkFontColor"
-                    android:textSize="48dp"
-                    android:text="@string/网络"/>
+                    android:layout_centerInParent="true"
+                    android:text="@string/网络"
+                    android:textColor="@color/FontColor"
+                    android:textSize="48dp" />
             </RelativeLayout>
 
             <ui.ChTextView
                 android:id="@+id/ida2"
-                android:paddingBottom="5dp"
-                android:paddingTop="5dp"
-                android:layout_alignParentBottom="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
-                android:textColor="@color/FontColor"
-                android:text="网络电影"/>
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp"
+                android:text="网络电影"
+                android:textColor="@color/FontColor" />
         </RelativeLayout>
+
         <RelativeLayout
             android:id="@+id/A3"
-            android:layout_margin="3dp"
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_margin="3dp"
             android:layout_weight="1"
             android:background="@color/DarkFontColor">
+
             <RelativeLayout
-                android:layout_margin="2dp"
-                android:layout_above="@+id/ida3"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_above="@+id/ida3"
+                android:layout_margin="2dp"
                 android:background="@color/FontColor">
+
+                <ImageView
+                    android:id="@+id/image_A3"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop" />
+
                 <ui.IconFontTextView
-                    android:layout_centerInParent="true"
+                    android:shadowColor="@color/DarkFontColor"
+                    android:shadowDx="5"
+                    android:shadowDy="5"
+                    android:shadowRadius="10"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/DarkFontColor"
-                    android:textSize="40dp"
-                    android:text="@string/广告"/>
+                    android:layout_centerInParent="true"
+                    android:text="@string/广告"
+                    android:textColor="@color/FontColor"
+                    android:textSize="40dp" />
             </RelativeLayout>
 
             <ui.ChTextView
                 android:id="@+id/ida3"
-                android:paddingBottom="5dp"
-                android:paddingTop="5dp"
-                android:layout_alignParentBottom="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
-                android:textColor="@color/FontColor"
-                android:text="广告/宣传片"/>
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp"
+                android:text="广告/宣传片"
+                android:textColor="@color/FontColor" />
         </RelativeLayout>
     </LinearLayout>
+
     <LinearLayout
-        android:paddingLeft="3dp"
-        android:paddingRight="3dp"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:paddingLeft="3dp"
+        android:paddingRight="3dp">
+
         <RelativeLayout
             android:id="@+id/B1"
-            android:layout_margin="3dp"
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_margin="3dp"
             android:layout_weight="1"
             android:background="@color/DarkFontColor">
+
             <RelativeLayout
-                android:layout_margin="2dp"
-                android:layout_above="@+id/idb1"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_above="@+id/idb1"
+                android:layout_margin="2dp"
                 android:background="@color/FontColor">
+
+                <ImageView
+                    android:id="@+id/image_B1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop" />
+
                 <ui.IconFontTextView
-                    android:layout_centerInParent="true"
+                    android:shadowColor="@color/DarkFontColor"
+                    android:shadowDx="5"
+                    android:shadowDy="5"
+                    android:shadowRadius="10"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/DarkFontColor"
-                    android:textSize="40dp"
-                    android:text="@string/创意"/>
+                    android:layout_centerInParent="true"
+                    android:text="@string/创意"
+                    android:textColor="@color/FontColor"
+                    android:textSize="40dp" />
             </RelativeLayout>
 
             <ui.ChTextView
                 android:id="@+id/idb1"
-                android:paddingBottom="5dp"
-                android:paddingTop="5dp"
-                android:layout_alignParentBottom="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
-                android:textColor="@color/FontColor"
-                android:text="创意实验"/>
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp"
+                android:text="创意实验"
+                android:textColor="@color/FontColor" />
         </RelativeLayout>
+
         <RelativeLayout
             android:id="@+id/B2"
-            android:layout_margin="3dp"
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_margin="3dp"
             android:layout_weight="1"
             android:background="@color/DarkFontColor">
+
             <RelativeLayout
-                android:layout_margin="2dp"
-                android:layout_above="@+id/idb2"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_above="@+id/idb2"
+                android:layout_margin="2dp"
                 android:background="@color/FontColor">
+
+                <ImageView
+                    android:id="@+id/image_B2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop" />
+
                 <ui.IconFontTextView
-                    android:layout_centerInParent="true"
+                    android:shadowColor="@color/DarkFontColor"
+                    android:shadowDx="5"
+                    android:shadowDy="5"
+                    android:shadowRadius="10"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/DarkFontColor"
-                    android:textSize="48dp"
-                    android:text="@string/纪录片"/>
+                    android:layout_centerInParent="true"
+                    android:text="@string/纪录片"
+                    android:textColor="@color/FontColor"
+                    android:textSize="48dp" />
             </RelativeLayout>
 
             <ui.ChTextView
                 android:id="@+id/idb2"
-                android:paddingBottom="5dp"
-                android:paddingTop="5dp"
-                android:layout_alignParentBottom="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
-                android:textColor="@color/FontColor"
-                android:text="纪录片"/>
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp"
+                android:text="纪录片"
+                android:textColor="@color/FontColor" />
         </RelativeLayout>
+
         <RelativeLayout
             android:id="@+id/B3"
-            android:layout_margin="3dp"
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_margin="3dp"
             android:layout_weight="1"
             android:background="@color/DarkFontColor">
+
             <RelativeLayout
-                android:layout_margin="2dp"
-                android:layout_above="@+id/idb3"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_above="@+id/idb3"
+                android:layout_margin="2dp"
                 android:background="@color/FontColor">
+
+                <ImageView
+                    android:id="@+id/image_B3"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop" />
+
                 <ui.IconFontTextView
-                    android:layout_centerInParent="true"
+                    android:shadowColor="@color/DarkFontColor"
+                    android:shadowDx="5"
+                    android:shadowDy="5"
+                    android:shadowRadius="10"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/DarkFontColor"
-                    android:textSize="40dp"
-                    android:text="@string/MV"/>
+                    android:layout_centerInParent="true"
+                    android:text="@string/MV"
+                    android:textColor="@color/FontColor"
+                    android:textSize="40dp" />
             </RelativeLayout>
 
             <ui.ChTextView
                 android:id="@+id/idb3"
-                android:paddingBottom="5dp"
-                android:paddingTop="5dp"
-                android:layout_alignParentBottom="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
-                android:textColor="@color/FontColor"
-                android:text="MV"/>
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp"
+                android:text="MV"
+                android:textColor="@color/FontColor" />
         </RelativeLayout>
     </LinearLayout>
+
     <LinearLayout
-        android:paddingLeft="3dp"
-        android:paddingRight="3dp"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:paddingLeft="3dp"
+        android:paddingRight="3dp">
+
         <RelativeLayout
             android:id="@+id/C1"
-            android:layout_margin="3dp"
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_margin="3dp"
             android:layout_weight="1"
             android:background="@color/DarkFontColor">
+
             <RelativeLayout
-                android:layout_margin="2dp"
-                android:layout_above="@+id/idc1"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_above="@+id/idc1"
+                android:layout_margin="2dp"
                 android:background="@color/FontColor">
+
+                <ImageView
+                    android:id="@+id/image_C1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop" />
+
                 <ui.IconFontTextView
-                    android:layout_centerInParent="true"
+                    android:shadowColor="@color/DarkFontColor"
+                    android:shadowDx="5"
+                    android:shadowDy="5"
+                    android:shadowRadius="10"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/DarkFontColor"
-                    android:textSize="40dp"
-                    android:text="@string/混剪"/>
+                    android:layout_centerInParent="true"
+                    android:text="@string/混剪"
+                    android:textColor="@color/FontColor"
+                    android:textSize="40dp" />
             </RelativeLayout>
 
             <ui.ChTextView
                 android:id="@+id/idc1"
-                android:paddingBottom="5dp"
-                android:paddingTop="5dp"
-                android:layout_alignParentBottom="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
-                android:textColor="@color/FontColor"
-                android:text="混剪配音"/>
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp"
+                android:text="混剪配音"
+                android:textColor="@color/FontColor" />
         </RelativeLayout>
+
         <RelativeLayout
             android:id="@+id/C2"
-            android:layout_margin="3dp"
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_margin="3dp"
             android:layout_weight="1"
             android:background="@color/DarkFontColor">
+
             <RelativeLayout
-                android:layout_margin="2dp"
-                android:layout_above="@+id/idc2"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_above="@+id/idc2"
+                android:layout_margin="2dp"
                 android:background="@color/FontColor">
+
+                <ImageView
+                    android:id="@+id/image_C2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop" />
+
                 <ui.IconFontTextView
-                    android:layout_centerInParent="true"
+                    android:shadowColor="@color/DarkFontColor"
+                    android:shadowDx="5"
+                    android:shadowDy="5"
+                    android:shadowRadius="10"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/DarkFontColor"
-                    android:textSize="48dp"
-                    android:text="@string/特殊"/>
+                    android:layout_centerInParent="true"
+                    android:text="@string/特殊"
+                    android:textColor="@color/FontColor"
+                    android:textSize="48dp" />
             </RelativeLayout>
 
             <ui.ChTextView
                 android:id="@+id/idc2"
-                android:paddingBottom="5dp"
-                android:paddingTop="5dp"
-                android:layout_alignParentBottom="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
-                android:textColor="@color/FontColor"
-                android:text="特殊摄影"/>
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp"
+                android:text="特殊摄影"
+                android:textColor="@color/FontColor" />
         </RelativeLayout>
+
         <RelativeLayout
             android:id="@+id/C3"
-            android:layout_margin="3dp"
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_margin="3dp"
             android:layout_weight="1"
             android:background="@color/DarkFontColor">
+
             <RelativeLayout
-                android:layout_margin="2dp"
-                android:layout_above="@+id/idc3"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_above="@+id/idc3"
+                android:layout_margin="2dp"
                 android:background="@color/FontColor">
+
+                <ImageView
+                    android:id="@+id/image_C3"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop" />
+
                 <ui.IconFontTextView
-                    android:layout_centerInParent="true"
+                    android:shadowColor="@color/DarkFontColor"
+                    android:shadowDx="5"
+                    android:shadowDy="5"
+                    android:shadowRadius="10"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/DarkFontColor"
-                    android:textSize="40dp"
-                    android:text="@string/栏目"/>
+                    android:layout_centerInParent="true"
+                    android:text="@string/栏目"
+                    android:textColor="@color/FontColor"
+                    android:textSize="40dp" />
             </RelativeLayout>
 
             <ui.ChTextView
                 android:id="@+id/idc3"
-                android:paddingBottom="5dp"
-                android:paddingTop="5dp"
-                android:layout_alignParentBottom="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
-                android:textColor="@color/FontColor"
-                android:text="栏目/网剧"/>
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp"
+                android:text="栏目/网剧"
+                android:textColor="@color/FontColor" />
         </RelativeLayout>
     </LinearLayout>
+
     <LinearLayout
-        android:paddingLeft="3dp"
-        android:paddingRight="3dp"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:paddingLeft="3dp"
+        android:paddingRight="3dp">
+
         <RelativeLayout
             android:id="@+id/D1"
-            android:layout_margin="3dp"
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_margin="3dp"
             android:layout_weight="1"
             android:background="@color/DarkFontColor">
+
             <RelativeLayout
-                android:layout_margin="2dp"
-                android:layout_above="@+id/idd1"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_above="@+id/idd1"
+                android:layout_margin="2dp"
                 android:background="@color/FontColor">
+
+                <ImageView
+                    android:id="@+id/image_D1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop" />
+
                 <ui.IconFontTextView
-                    android:layout_centerInParent="true"
+                    android:shadowColor="@color/DarkFontColor"
+                    android:shadowDx="5"
+                    android:shadowDy="5"
+                    android:shadowRadius="10"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/DarkFontColor"
-                    android:textSize="40dp"
-                    android:text="@string/动画"/>
+                    android:layout_centerInParent="true"
+                    android:text="@string/动画"
+                    android:textColor="@color/FontColor"
+                    android:textSize="40dp" />
             </RelativeLayout>
 
             <ui.ChTextView
                 android:id="@+id/idd1"
-                android:paddingBottom="5dp"
-                android:paddingTop="5dp"
-                android:layout_alignParentBottom="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
-                android:textColor="@color/FontColor"
-                android:text="动画"/>
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp"
+                android:text="动画"
+                android:textColor="@color/FontColor" />
         </RelativeLayout>
+
         <RelativeLayout
             android:id="@+id/D2"
-            android:layout_margin="3dp"
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_margin="3dp"
             android:layout_weight="1"
             android:background="@color/DarkFontColor">
+
             <RelativeLayout
-                android:layout_margin="2dp"
-                android:layout_above="@+id/idd2"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_above="@+id/idd2"
+                android:layout_margin="2dp"
                 android:background="@color/FontColor">
+
+                <ImageView
+                    android:id="@+id/image_D2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop" />
+
                 <ui.IconFontTextView
-                    android:layout_centerInParent="true"
+                    android:shadowColor="@color/DarkFontColor"
+                    android:shadowDx="5"
+                    android:shadowDy="5"
+                    android:shadowRadius="10"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/DarkFontColor"
-                    android:textSize="48dp"
-                    android:text="@string/预告"/>
+                    android:layout_centerInParent="true"
+                    android:text="@string/预告"
+                    android:textColor="@color/FontColor"
+                    android:textSize="48dp" />
             </RelativeLayout>
 
             <ui.ChTextView
                 android:id="@+id/idd2"
-                android:paddingBottom="5dp"
-                android:paddingTop="5dp"
-                android:layout_alignParentBottom="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
-                android:textColor="@color/FontColor"
-                android:text="预告片/花絮"/>
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp"
+                android:text="预告片/花絮"
+                android:textColor="@color/FontColor" />
         </RelativeLayout>
+
         <RelativeLayout
             android:id="@+id/D3"
-            android:layout_margin="3dp"
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_margin="3dp"
             android:layout_weight="1"
             android:background="@color/DarkFontColor">
+
             <RelativeLayout
-                android:layout_margin="2dp"
-                android:layout_above="@+id/idd3"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_above="@+id/idd3"
+                android:layout_margin="2dp"
                 android:background="@color/FontColor">
+
+                <ImageView
+                    android:id="@+id/image_D3"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop" />
+
                 <ui.IconFontTextView
-                    android:layout_centerInParent="true"
+                    android:shadowColor="@color/DarkFontColor"
+                    android:shadowDx="5"
+                    android:shadowDy="5"
+                    android:shadowRadius="10"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/DarkFontColor"
-                    android:textSize="40dp"
-                    android:text="@string/VR"/>
+                    android:layout_centerInParent="true"
+                    android:text="@string/VR"
+                    android:textColor="@color/FontColor"
+                    android:textSize="40dp" />
             </RelativeLayout>
 
             <ui.ChTextView
                 android:id="@+id/idd3"
-                android:paddingBottom="5dp"
-                android:paddingTop="5dp"
-                android:layout_alignParentBottom="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
-                android:textColor="@color/FontColor"
-                android:text="OTHERS"/>
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp"
+                android:text="OTHERS"
+                android:textColor="@color/FontColor" />
         </RelativeLayout>
     </LinearLayout>
 

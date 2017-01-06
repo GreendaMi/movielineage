@@ -57,6 +57,7 @@ public class FilmFragment extends Fragment {
         return view;
     }
 
+
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
@@ -127,6 +128,7 @@ public class FilmFragment extends Fragment {
         }
         if(NetworkTypeInfo.getNetworkType(getActivity()) == NetworkType.NoNetwork){
             UI.Toast("请连接网络！");
+            SystemDialog.dismissLoadingDialog();
             return;
         }
 
@@ -135,7 +137,13 @@ public class FilmFragment extends Fragment {
             public void run() {
                 isLoading = true;
                 List<String> urls = new getPageList().Doget(type , page+"");
-
+                if(urls.size() == 0){
+                    UI.Toast("没有了^_^");
+                    SystemDialog.dismissLoadingDialog();
+                    ((MainActivity)getActivity()).dismissLoadingBar();
+                    isLoading = false;
+                    return;
+                }
                 for (final String url :urls) {
                     new Thread(new Runnable() {
                         @Override
@@ -160,55 +168,17 @@ public class FilmFragment extends Fragment {
 
                 }
 
-
-//                Observable.from(new getPageList().Doget(type , page+""))
-//                        .map(new Func1<String, filmBean>() {
-//
-//                            @Override
-//                            public filmBean call(String s) {
-//                                return new getFilm().Doget(s);
-//                            }
-//                        })
-//                        .filter(new Func1<filmBean, Boolean>() {
-//                            @Override
-//                            public Boolean call(filmBean filmBean) {
-//                                return (null != filmBean.getUrl() && null != filmBean.getImg() && !filmBean.getUrl().isEmpty() && !filmBean.getImg().isEmpty());
-//                            }
-//                        })
-//                        .subscribe(new Observer<filmBean>() {
-//                            @Override
-//                            public void onCompleted() {
-//
-//                            }
-//
-//                            @Override
-//                            public void onError(Throwable e) {
-//
-//                            }
-//
-//                            @Override
-//                            public void onNext(filmBean filmBean) {
-//                                filmBean.setType(2);
-//                                mDatas.add(filmBean);
-//
-//                                mHandler.post(new Runnable() {
-//                                    @Override
-//                                    public void run() {
-//                                        mAdapter.notifyDataSetChanged();
-//                                        SystemDialog.dismissLoadingDialog();
-//                                    }
-//                                });
-//                            }
-//                        });
-
             }
         }).start();
     }
 
     private void initData() {
-        mDatas = new ArrayList<>();
-        SystemDialog.showLoadingDialog(getActivity(),false);
-        LoadData(PAGE);
+        if(mDatas == null){
+            mDatas = new ArrayList<>();
+            LoadData(PAGE);
+            SystemDialog.showLoadingDialog(getActivity(),false);
+        }
+
     }
 
 

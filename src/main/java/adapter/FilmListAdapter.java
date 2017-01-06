@@ -66,6 +66,8 @@ public class FilmListAdapter extends RecyclerView.Adapter {
         final filmBean mData = mDatas.get(position);
         RecyclerView.ViewHolder mHolder;
         final FilmViewHolder mFilmViewHolder = (FilmViewHolder)holder;
+
+        //当图片加载完毕，再绑定点击事件
         Glide.with(mContext).load(mData.getImg()).into(new GlideDrawableImageViewTarget(mFilmViewHolder.bg){
             @Override
             public void onResourceReady(GlideDrawable resource, GlideAnimation<? super GlideDrawable> animation) {

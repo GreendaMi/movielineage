@@ -44,14 +44,14 @@ public class CategoryActivity extends Activity {
     @Bind(R.id.Refresh_layout)
     RefreshLayout mRefreshLayout;
 
-    List<filmBean> mDatas;
-    FilmListAdapter mAdapter;
-    int PAGE = 1;
-    Handler mHandler;
-    LinearLayoutManager layoutManager;
+    public List<filmBean> mDatas;
+    public FilmListAdapter mAdapter;
+    public int PAGE = 1;
+    public Handler mHandler;
+    public LinearLayoutManager layoutManager;
     @Bind(R.id.DotsPreloader)
-    DotsPreloader mDotsPreloader;
-    boolean isLoading = false;
+    public DotsPreloader mDotsPreloader;
+    public boolean isLoading = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -131,7 +131,7 @@ public class CategoryActivity extends Activity {
         });
     }
 
-    private void InitView() {
+    public void InitView() {
         mHandler = new Handler();
         if(UI.getData(0) != null){
             mTitleText.setText(UI.getData(0).toString());
@@ -160,6 +160,7 @@ public class CategoryActivity extends Activity {
         }
         if(NetworkTypeInfo.getNetworkType(CategoryActivity.this) == NetworkType.NoNetwork){
             UI.Toast("请连接网络！");
+            SystemDialog.dismissLoadingDialog();
             return;
         }
         new Thread(new Runnable() {
@@ -173,7 +174,20 @@ public class CategoryActivity extends Activity {
                 String baseurl = (String) (UI.getData(1));
                 isLoading = true;
                 List<String> urls = new getPageList().DogetByurl(baseurl, page + "");
-
+                if(urls.size() == 0){
+                    UI.Toast("没有了^_^");
+                    SystemDialog.dismissLoadingDialog();
+                    mHandler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            if(mDotsPreloader.getVisibility() == View.VISIBLE){
+                                mDotsPreloader.setVisibility(View.INVISIBLE);
+                            }
+                        }
+                    });
+                    isLoading = false;
+                    return;
+                }
                 for (final String url : urls) {
                     new Thread(new Runnable() {
                         @Override
@@ -198,48 +212,6 @@ public class CategoryActivity extends Activity {
                     }).start();
 
                 }
-
-
-//                Observable.from(new getPageList().DogetByurl((String)(UI.getData(1)), page + ""))
-//                        .map(new Func1<String, filmBean>() {
-//
-//                            @Override
-//                            public filmBean call(String s) {
-//                                return new getFilm().Doget(s);
-//                            }
-//                        })
-//                        .filter(new Func1<filmBean, Boolean>() {
-//                            @Override
-//                            public Boolean call(filmBean filmBean) {
-//                                return (null != filmBean.getUrl() && null != filmBean.getImg() && !filmBean.getUrl().isEmpty() && !filmBean.getImg().isEmpty());
-//                            }
-//                        })
-//                        .subscribe(new Observer<filmBean>() {
-//                            @Override
-//                            public void onCompleted() {
-//
-//                            }
-//
-//                            @Override
-//                            public void onError(Throwable e) {
-//
-//                            }
-//
-//                            @Override
-//                            public void onNext(final filmBean filmBean) {
-//
-//                                mHandler.post(new Runnable() {
-//                                    @Override
-//                                    public void run() {
-//                                        Log.d("CategoryActivity", "System.currentTimeMillis(next):" + System.currentTimeMillis());
-//                                        mDatas.add(filmBean);
-//                                        mAdapter.notifyItemChanged(mDatas.size() - 1);
-//                                        SystemDialog.dismissLoadingDialog();
-//                                    }
-//                                });
-//                            }
-//                        });
-
             }
         }).start();
     }
@@ -256,7 +228,6 @@ public class CategoryActivity extends Activity {
         UI.pop();
         overridePendingTransition(R.anim.slide_left_in, R.anim.slide_right_out);
     }
-
     @Override
     protected void onResume() {
         super.onResume();

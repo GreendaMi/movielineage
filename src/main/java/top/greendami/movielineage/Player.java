@@ -22,6 +22,8 @@ import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import com.umeng.analytics.MobclickAgent;
+
 import org.wlf.filedownloader.FileDownloader;
 
 import bean.daoBean.likefilmbean;
@@ -320,6 +322,8 @@ public class Player extends Activity implements View.OnTouchListener, MediaPlaye
         super.onResume();
         mWakeLock.acquire();
         UI.enter(this);
+        MobclickAgent.onPageStart("Player");
+        MobclickAgent.onResume(this);
     }
 
 
@@ -478,6 +482,8 @@ public class Player extends Activity implements View.OnTouchListener, MediaPlaye
         releaseMediaPlayer();
         doCleanUp();
         mWakeLock.release();
+        MobclickAgent.onPageEnd("Player");
+        MobclickAgent.onPause(this);
     }
 
     @Override
@@ -582,7 +588,6 @@ public class Player extends Activity implements View.OnTouchListener, MediaPlaye
     private boolean drawTouch(int upx, int upy) {
         boolean flg = false;
         int MoveDistance = ViewConfiguration.get(Player.this).getScaledDoubleTapSlop() / 2;
-        Log.d(TAG, "MoveDistance:" + MoveDistance);
         //水平滑动
         if (upx - x > MoveDistance) {
             long moveto = mMediaPlayer.getCurrentPosition() + (mMediaPlayer.getDuration() / 100) * (upx - x) / (MoveDistance / 2);

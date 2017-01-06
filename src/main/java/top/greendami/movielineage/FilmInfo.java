@@ -20,6 +20,8 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.umeng.analytics.MobclickAgent;
+
 import org.wlf.filedownloader.FileDownloader;
 
 import bean.daoBean.likefilmbean;
@@ -323,5 +325,12 @@ public class FilmInfo extends Activity implements View.OnTouchListener {
         } else {
             mXz.setTextColor(getResources().getColor(R.color.DarkFontColor));
         }
+        MobclickAgent.onResume(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
     }
 }

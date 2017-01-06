@@ -13,6 +13,8 @@ import android.view.animation.ScaleAnimation;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.umeng.analytics.MobclickAgent;
+
 import java.util.ArrayList;
 
 import adapter.MyFragmentPagerAdapter;
@@ -60,7 +62,8 @@ public class MainActivity extends FragmentActivity implements View.OnTouchListen
     IconFontTextView searchButton;
     @Bind(R.id.circle_bg)
     View circleBg;
-    private Fragment NEW, HOT, COM;
+    private Fragment NEW, HOT;
+    CategoryFragment COM;
 
     TextView New, Hot, Com;
 
@@ -134,6 +137,7 @@ public class MainActivity extends FragmentActivity implements View.OnTouchListen
                 Com.setScaleY(1.2f);
                 Com.setTextColor(getResources().getColor(R.color.FontColor));
                 mV2.setAlpha(1f);
+                COM.SetBagrounds();
                 break;
 
         }
@@ -305,6 +309,8 @@ public class MainActivity extends FragmentActivity implements View.OnTouchListen
                 circleBg.startAnimation(animation);
             }
         });
+
+        searchButton.setOnTouchListener(this);
     }
 
     @Override
@@ -322,7 +328,14 @@ public class MainActivity extends FragmentActivity implements View.OnTouchListen
             mId.setText("");
         }
 
+        MobclickAgent.onResume(this);
 
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
     }
 
     public void showLoadingBar() {

@@ -8,12 +8,14 @@ import android.media.AudioManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.PowerManager;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewConfiguration;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.Animation;
@@ -109,6 +111,8 @@ public class Player extends Activity implements View.OnTouchListener, MediaPlaye
     int x, y;
     AudioManager mAudioManager ;//音量控制
 
+    boolean isFullScreen = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -126,7 +130,6 @@ public class Player extends Activity implements View.OnTouchListener, MediaPlaye
         ACache mCache = ACache.get(Player.this);
         mFilmBean = (filmBean) mCache.getAsObject("PlayFilm");
 
-        Log.d(TAG, "mFilmBean:" + mFilmBean.getUrl());
         Vitamio.isInitialized(this);
         LibsChecker.checkVitamioLibs(this);
 
@@ -367,13 +370,51 @@ public class Player extends Activity implements View.OnTouchListener, MediaPlaye
         mIsVideoSizeKnown = true;
         mVideoWidth = width;
         mVideoHeight = height;
+
+//        setVideoSize()；
+
         if (mIsVideoReadyToBePlayed && mIsVideoSizeKnown) {
             startVideoPlayback();
         }
     }
 
+    //视频尺寸缩放到全屏
+    private void setVideoSize() {
+
+        //视频尺寸
+        int VW = mPreview.getWidth();
+        int VH = mPreview.getHeight();
+
+        DisplayMetrics dm = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(dm);
+        //屏幕尺寸
+        int SW = dm.widthPixels;
+        int SH = dm.heightPixels;
+
+        //横向填满，计算纵向高度
+        int H = VH * SW/VW;
+        int W = 0;
+        //横向填满后，计算出到纵向高度不超过屏幕高度，则计算成功，否则按纵向填满，缩小横向尺寸
+        if(H <= SH){
+            W = SW;
+        }else{
+            W = VW * SH/VH;
+            H = SH;
+        }
+//        Log.d(TAG, "VW:" + VW + ",VH:" + VH + ",SW:" + SW + ",SH:" + SH + ",H:" + H + ",W:" + W );
+
+        if(VW < W){
+            ViewGroup.LayoutParams lp = mPreview.getLayoutParams();
+            lp.width = W;
+            lp.height = H;
+            mPreview.setLayoutParams(lp);
+        }
+        isFullScreen = true;
+    }
+
     public void onPrepared(MediaPlayer mediaplayer) {
         Log.d(TAG, "onPrepared called");
+
         mIsVideoReadyToBePlayed = true;
         if (mIsVideoReadyToBePlayed && mIsVideoSizeKnown) {
             startVideoPlayback();
@@ -476,6 +517,7 @@ public class Player extends Activity implements View.OnTouchListener, MediaPlaye
         mName.setText(mFilmBean.getName());
     }
 
+
     @Override
     protected void onPause() {
         super.onPause();
@@ -536,6 +578,9 @@ public class Player extends Activity implements View.OnTouchListener, MediaPlaye
                 }
                 break;
             case MediaPlayer.MEDIA_INFO_BUFFERING_END:
+                if(!isFullScreen){
+                    setVideoSize();
+                }
                 //缓存完成，继续播放
                 if (needResume) {
                     mDotView.setVisibility(View.INVISIBLE);

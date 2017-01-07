@@ -25,7 +25,9 @@
         android:supportsRtl="true">
 
         <meta-data android:value="586f348e6e27a479490022d8" android:name="UMENG_APPKEY"/>
-        <meta-data android:value="Baidu" android:name="UMENG_CHANNEL"/>
+        <meta-data
+            android:name="UMENG_CHANNEL"
+            android:value="${UMENG_CHANNEL_VALUE}" />
 
         <activity
             android:name=".MainActivity"

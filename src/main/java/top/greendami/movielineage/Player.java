@@ -112,6 +112,7 @@ public class Player extends Activity implements View.OnTouchListener, MediaPlaye
     AudioManager mAudioManager ;//音量控制
 
     boolean isFullScreen = false;
+    boolean isLocal = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -371,9 +372,11 @@ public class Player extends Activity implements View.OnTouchListener, MediaPlaye
         mVideoWidth = width;
         mVideoHeight = height;
 
-//        setVideoSize()；
 
         if (mIsVideoReadyToBePlayed && mIsVideoSizeKnown) {
+            if(isLocal){
+                setVideoSize();
+            }
             startVideoPlayback();
         }
     }
@@ -507,9 +510,12 @@ public class Player extends Activity implements View.OnTouchListener, MediaPlaye
         //判断视频是否下载
         if (FileDownloader.getDownloadFile(mFilmBean.getUrl()) != null &&
                 FileDownloader.getDownloadFile(mFilmBean.getUrl()).getDownloadedSizeLong() == FileDownloader.getDownloadFile(mFilmBean.getUrl()).getFileSizeLong()) {
+            isLocal = true;
             //播放本地视频文件
             playVideo(FileDownloader.getDownloadFile(mFilmBean.getUrl()).getFilePath());
+
         } else {
+            isLocal = false;
             playVideo(mFilmBean.getUrl());
         }
 

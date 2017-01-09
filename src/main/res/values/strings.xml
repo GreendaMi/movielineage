@@ -30,5 +30,8 @@
     <string name="VR">&#xe601;</string>;
     <string name="动画">&#xe718;</string>;
 
+    <string name="亮度">&#xe6f7;</string>;
+    <string name="音量">&#xe60a;</string>;
+
 
 </resources>

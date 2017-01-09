@@ -133,6 +133,8 @@
             android:text="00:00"/>
 
         <SeekBar
+            android:progressDrawable="@drawable/po_seekbar"
+            android:thumb="@drawable/seekbar_thumb"
             android:id="@+id/timeline"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -142,9 +144,10 @@
             android:focusable="true"
             android:maxHeight="4dp"
             android:minHeight="4dp"
-            android:paddingBottom="5dp"
+            android:paddingBottom="10dp"
             android:paddingLeft="16dp"
-            android:paddingRight="16dp"/>
+            android:paddingRight="16dp"
+            style="@null" />
 
     </RelativeLayout>
 

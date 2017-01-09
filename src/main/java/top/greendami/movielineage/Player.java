@@ -8,6 +8,7 @@ import android.media.AudioManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.PowerManager;
+import android.provider.Settings;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -30,6 +31,8 @@ import org.wlf.filedownloader.FileDownloader;
 
 import bean.daoBean.likefilmbean;
 import bean.filmBean;
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import io.vov.vitamio.LibsChecker;
 import io.vov.vitamio.MediaPlayer;
 import io.vov.vitamio.Vitamio;
@@ -38,11 +41,11 @@ import model.DownLoadManager;
 import tool.ACache;
 import tool.NetworkType;
 import tool.NetworkTypeInfo;
-import tool.ScreenInfo;
 import tool.UI;
 import tool.formatTime;
 import ui.DotsPreloader;
 import ui.IconFontTextView;
+import ui.VerticalSeekBar;
 
 /**
  * Created by GreendaMi on 2016/11/29.
@@ -50,28 +53,32 @@ import ui.IconFontTextView;
 
 public class Player extends Activity implements View.OnTouchListener, MediaPlayer.OnSeekCompleteListener, MediaPlayer.OnInfoListener, MediaPlayer.OnBufferingUpdateListener, MediaPlayer.OnCompletionListener, MediaPlayer.OnPreparedListener, MediaPlayer.OnVideoSizeChangedListener, SurfaceHolder.Callback {
     private static final String TAG = "Player";
-    @butterknife.Bind(R.id.dotView)
+    @Bind(R.id.dotView)
     DotsPreloader mDotView;
-    @butterknife.Bind(R.id.back)
+    @Bind(R.id.back)
     IconFontTextView mBack;
-    @butterknife.Bind(R.id.p)
+    @Bind(R.id.p)
     IconFontTextView mP;
-    @butterknife.Bind(R.id.share)
+    @Bind(R.id.share)
     IconFontTextView mShare;
-    @butterknife.Bind(R.id.download)
+    @Bind(R.id.download)
     IconFontTextView mDownload;
-    @butterknife.Bind(R.id.like)
+    @Bind(R.id.like)
     IconFontTextView mLike;
-    @butterknife.Bind(R.id.name)
+    @Bind(R.id.name)
     TextView mName;
-    @butterknife.Bind(R.id.current)
+    @Bind(R.id.current)
     TextView mCurrent;
-    @butterknife.Bind(R.id.length)
+    @Bind(R.id.length)
     TextView mLength;
-    @butterknife.Bind(R.id.timeline)
+    @Bind(R.id.timeline)
     SeekBar mTimeline;
-    @butterknife.Bind(R.id.playcontrol)
+    @Bind(R.id.playcontrol)
     RelativeLayout mPlaycontrol;
+    @Bind(R.id.voice_contrller)
+    VerticalSeekBar voiceContrller;
+    @Bind(R.id.light_contrller)
+    VerticalSeekBar lightContrller;
 
     private int mVideoWidth;
     private int mVideoHeight;
@@ -109,7 +116,7 @@ public class Player extends Activity implements View.OnTouchListener, MediaPlaye
 
     int isControllingTime = 0;
     int x, y;
-    AudioManager mAudioManager ;//音量控制
+    AudioManager mAudioManager;//音量控制
 
     boolean isFullScreen = false;
     boolean isLocal = false;
@@ -121,7 +128,7 @@ public class Player extends Activity implements View.OnTouchListener, MediaPlaye
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.player_layout);
-        butterknife.ButterKnife.bind(this);
+        ButterKnife.bind(this);
         mDotView.setVisibility(View.VISIBLE);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
@@ -140,16 +147,20 @@ public class Player extends Activity implements View.OnTouchListener, MediaPlaye
         holder.setFormat(PixelFormat.RGBA_8888);
         extras = getIntent().getExtras();
 
+
+        mAudioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);//音量控制,初始化定义
+        mAnimationIn = AnimationUtils.loadAnimation(this, R.anim.slide_bottom_in);
+        mAnimationOut = AnimationUtils.loadAnimation(this, R.anim.slide_bottom_out);
+
         mHandler = new Handler();
         initEvent();
         initView();
 
         /**加载透明动画**/
 
-        mAnimationIn = AnimationUtils.loadAnimation(this, R.anim.slide_bottom_in);
-        mAnimationOut = AnimationUtils.loadAnimation(this, R.anim.slide_bottom_out);
 
-        mAudioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);//音量控制,初始化定义
+
+
 
 
     }
@@ -160,6 +171,13 @@ public class Player extends Activity implements View.OnTouchListener, MediaPlaye
         } else {
             mLike.setText(getResources().getString(R.string.收藏1));
         }
+
+        lightContrller.setMax(255);
+        lightContrller.setProgress(getLight());
+
+        voiceContrller.setMax(mAudioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC));
+        Log.d(TAG, "mAudioManager.getStreamVolume(AudioManager.STREAM_MUSIC)i:" + mAudioManager.getStreamVolume(AudioManager.STREAM_MUSIC));
+        voiceContrller.setProgress(mAudioManager.getStreamVolume(AudioManager.STREAM_MUSIC));
 
     }
 
@@ -237,7 +255,7 @@ public class Player extends Activity implements View.OnTouchListener, MediaPlaye
         mLike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(NetworkTypeInfo.getNetworkType(Player.this) == NetworkType.NoNetwork){
+                if (NetworkTypeInfo.getNetworkType(Player.this) == NetworkType.NoNetwork) {
                     UI.Toast("请网络！");
                     return;
                 }
@@ -264,6 +282,45 @@ public class Player extends Activity implements View.OnTouchListener, MediaPlaye
                 } else {
                     UI.push(LoginActivity.class);
                 }
+            }
+        });
+
+        lightContrller.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+                if(b){
+                    setLight(i);
+                }
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+
+        voiceContrller.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int i, boolean isFromUser) {
+                Log.d(TAG, "i:" + i);
+                if(isFromUser){
+                    mAudioManager.setStreamVolume(AudioManager.STREAM_MUSIC, i , 0 );
+                }
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
             }
         });
     }
@@ -304,6 +361,7 @@ public class Player extends Activity implements View.OnTouchListener, MediaPlaye
 
                 @Override
                 public void onAnimationEnd(Animation animation) {
+                    voiceContrller.setProgress(mAudioManager.getStreamVolume(AudioManager.STREAM_MUSIC));
                     mPlaycontrol.setVisibility(View.VISIBLE);
                     isControlling = true;
                     isControllingTime = 0;
@@ -374,7 +432,7 @@ public class Player extends Activity implements View.OnTouchListener, MediaPlaye
 
 
         if (mIsVideoReadyToBePlayed && mIsVideoSizeKnown) {
-            if(isLocal){
+            if (isLocal) {
                 setVideoSize();
             }
             startVideoPlayback();
@@ -395,18 +453,18 @@ public class Player extends Activity implements View.OnTouchListener, MediaPlaye
         int SH = dm.heightPixels;
 
         //横向填满，计算纵向高度
-        int H = VH * SW/VW;
+        int H = VH * SW / VW;
         int W = 0;
         //横向填满后，计算出到纵向高度不超过屏幕高度，则计算成功，否则按纵向填满，缩小横向尺寸
-        if(H <= SH){
+        if (H <= SH) {
             W = SW;
-        }else{
-            W = VW * SH/VH;
+        } else {
+            W = VW * SH / VH;
             H = SH;
         }
 //        Log.d(TAG, "VW:" + VW + ",VH:" + VH + ",SW:" + SW + ",SH:" + SH + ",H:" + H + ",W:" + W );
 
-        if(VW < W){
+        if (VW < W) {
             ViewGroup.LayoutParams lp = mPreview.getLayoutParams();
             lp.width = W;
             lp.height = H;
@@ -584,7 +642,7 @@ public class Player extends Activity implements View.OnTouchListener, MediaPlaye
                 }
                 break;
             case MediaPlayer.MEDIA_INFO_BUFFERING_END:
-                if(!isFullScreen){
+                if (!isFullScreen) {
                     setVideoSize();
                 }
                 //缓存完成，继续播放
@@ -652,72 +710,31 @@ public class Player extends Activity implements View.OnTouchListener, MediaPlaye
             UI.Toast(formatTime.formatTime(moveto));
             mMediaPlayer.seekTo(moveto);
             flg = true;
-        } else if (upy - y > MoveDistance) {
-            if (x < ScreenInfo.get().widthPixel / 2) {
-                //左边，亮度调节
-                int light = 255;
-                if (upy < ScreenInfo.get().heightPixel * 0.2) {
-                    light = 0;
-                } else if (upy >= ScreenInfo.get().heightPixel * 0.2 && upy <= ScreenInfo.get().heightPixel * 0.8) {
-
-                    light = (int) ((upy - ScreenInfo.get().heightPixel * 0.2) / (ScreenInfo.get().heightPixel * 0.6) * 255);
-                }
-                Log.d(TAG, "light:" + light);
-                setLight(light);
-                UI.Toast("亮度调节：" + light * 100 / 255 + "%");
-            } else {
-
-                int maxVolume = mAudioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);//最大音量
-                int tempVolume = 0;
-                if (upy < ScreenInfo.get().heightPixel * 0.2) {
-                    tempVolume = 0;
-                } else if (upy >= ScreenInfo.get().heightPixel * 0.2 && upy <= ScreenInfo.get().heightPixel * 0.8) {
-
-                    tempVolume = (int) ((upy - ScreenInfo.get().heightPixel * 0.2) / (ScreenInfo.get().heightPixel * 0.6) * maxVolume);
-                }
-                Log.d(TAG, "tempVolume:" + tempVolume);
-                mAudioManager.setStreamVolume(AudioManager.STREAM_MUSIC, tempVolume, 0); //tempVolume:音量
-                UI.Toast("音量调节：" + tempVolume * 100 / maxVolume + "%");
-            }
-
-            flg = true;
-        } else if (y - upy > MoveDistance) {
-            if (x < ScreenInfo.get().widthPixel / 2) {
-                int light = 255;
-                if (upy < ScreenInfo.get().heightPixel * 0.2) {
-                    light = 0;
-                } else if (upy >= ScreenInfo.get().heightPixel * 0.2 && upy <= ScreenInfo.get().heightPixel * 0.8) {
-
-                    light = (int) ((upy - ScreenInfo.get().heightPixel * 0.2) / (ScreenInfo.get().heightPixel * 0.6) * 255);
-                }
-                Log.d(TAG, "light:" + light);
-                setLight(light);
-                UI.Toast("亮度调节：" + light * 100 / 255 + "%");
-            }else{
-                int maxVolume = mAudioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);//最大音量
-                int tempVolume = 0;
-                if (upy < ScreenInfo.get().heightPixel * 0.2) {
-                    tempVolume = 0;
-                } else if (upy >= ScreenInfo.get().heightPixel * 0.2 && upy <= ScreenInfo.get().heightPixel * 0.8) {
-
-                    tempVolume = (int) ((upy - ScreenInfo.get().heightPixel * 0.2) / (ScreenInfo.get().heightPixel * 0.6) * maxVolume);
-                }
-                Log.d(TAG, "maxVolume:" + tempVolume);
-                mAudioManager.setStreamVolume(AudioManager.STREAM_MUSIC, tempVolume, 0); //tempVolume:音量
-                UI.Toast("音量调节：" + tempVolume * 100 / maxVolume + "%");
-            }
-
-            flg = true;
         }
         return flg;
     }
 
     //屏幕亮度调节
     private void setLight(int brightness) {
-        WindowManager.LayoutParams lp = getWindow().getAttributes();
-        lp.screenBrightness = Float.valueOf(brightness) * (1f / 255f);
-        getWindow().setAttributes(lp);
+        Window window = this.getWindow();
+        WindowManager.LayoutParams lp = window.getAttributes();
+        if (brightness == -1) {
+            lp.screenBrightness = WindowManager.LayoutParams.BRIGHTNESS_OVERRIDE_NONE;
+        } else {
+            lp.screenBrightness = (brightness <= 0 ? 1 : brightness) / 255f;
+        }
+        window.setAttributes(lp);
 
+    }
+
+    private int getLight() {
+        int systemBrightness = 0;
+        try {
+            systemBrightness = Settings.System.getInt(getContentResolver(), Settings.System.SCREEN_BRIGHTNESS);
+        } catch (Settings.SettingNotFoundException e) {
+            e.printStackTrace();
+        }
+        return systemBrightness;
     }
 
 }

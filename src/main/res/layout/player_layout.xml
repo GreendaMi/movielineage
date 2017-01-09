@@ -149,6 +149,48 @@
             android:paddingRight="16dp"
             style="@null" />
 
+        <ui.VerticalSeekBar
+            android:id="@+id/voice_contrller"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:progressDrawable="@drawable/po_seekbar"
+            android:thumb="@drawable/seekbar_thumb"
+            android:layout_width="wrap_content"
+            android:layout_height="200dp"
+            android:layout_marginLeft="10dp"
+            android:maxHeight="4dp"
+            android:minHeight="4dp"/>
+        <ui.VerticalSeekBar
+            android:id="@+id/light_contrller"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:progressDrawable="@drawable/po_seekbar"
+            android:thumb="@drawable/seekbar_thumb"
+            android:layout_width="wrap_content"
+            android:layout_height="200dp"
+            android:layout_marginRight="10dp"
+            android:maxHeight="4dp"
+            android:minHeight="4dp"/>
+
+        <ui.IconFontTextView
+            android:textSize="20dp"
+            android:layout_above="@id/voice_contrller"
+            android:layout_alignParentLeft="true"
+            android:textColor="@color/FontColor"
+            android:text="@string/音量"
+            android:layout_marginLeft="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <ui.IconFontTextView
+            android:textSize="20dp"
+            android:layout_above="@id/light_contrller"
+            android:layout_alignParentRight="true"
+            android:textColor="@color/FontColor"
+            android:text="@string/亮度"
+            android:layout_marginRight="6dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
     </RelativeLayout>
 
     <RelativeLayout

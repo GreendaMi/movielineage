@@ -35,17 +35,31 @@ public class WelcomeActivity extends Activity {
     }
 
     private void initData() {
-        mHandler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-
-                if(NetworkTypeInfo.getNetworkType(WelcomeActivity.this) == NetworkType.NoNetwork){
-                    UI.push(DownLoadActivity.class);
-                }else{
+        if(NetworkTypeInfo.getNetworkType(WelcomeActivity.this) == NetworkType.NoNetwork){
+            UI.push(DownLoadActivity.class);
+            WelcomeActivity.this.finish();
+        }else{
+//            new Thread(){
+//                @Override
+//                public void run() {
+//                    DataController.getDatasByPage(0,1);
+//                }
+//            }.start();
+//            new Thread(){
+//                @Override
+//                public void run() {
+//                    DataController.getDatasByPage(1,1);
+//                }
+//            }.start();
+            mHandler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
                     UI.push(MainActivity.class);
+                    WelcomeActivity.this.finish();
                 }
-                WelcomeActivity.this.finish();
-            }
-        },0);
+            },0);
+
+        }
+
     }
 }

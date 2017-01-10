@@ -23,13 +23,22 @@
             android:layout_x="0dp"
             android:layout_y="0dp"
             android:background="@color/MainColor">
-
+            <ui.IconFontTextView
+                android:id="@+id/menu_button"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:textColor="@color/DarkFontColor"
+                android:textSize="24dp"
+                android:text="@string/菜单2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:orientation="horizontal">
+
 
                 <ui.ChTextView
                     android:id="@+id/New"

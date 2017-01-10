@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.view.MotionEvent;
@@ -62,6 +63,8 @@ public class MainActivity extends FragmentActivity implements View.OnTouchListen
     IconFontTextView searchButton;
     @Bind(R.id.circle_bg)
     View circleBg;
+    @Bind(R.id.menu_button)
+    IconFontTextView menuButton;
     private Fragment NEW, HOT;
     CategoryFragment COM;
 
@@ -279,7 +282,7 @@ public class MainActivity extends FragmentActivity implements View.OnTouchListen
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final ScaleAnimation animation =new ScaleAnimation(0.0f, 16f, 0.0f, 16f,
+                final ScaleAnimation animation = new ScaleAnimation(0.0f, 16f, 0.0f, 16f,
                         Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
                 animation.setDuration(500);
                 animation.setAnimationListener(new Animation.AnimationListener() {
@@ -291,7 +294,7 @@ public class MainActivity extends FragmentActivity implements View.OnTouchListen
                             public void run() {
                                 SearchDialog.Show(MainActivity.this);
                             }
-                        },400);
+                        }, 400);
 
                     }
 
@@ -311,6 +314,17 @@ public class MainActivity extends FragmentActivity implements View.OnTouchListen
         });
 
         searchButton.setOnTouchListener(this);
+        menuButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(!mDrawerLayout.isDrawerOpen(GravityCompat.START)){
+                    mDrawerLayout.openDrawer(GravityCompat.START);
+                }else{
+                    mDrawerLayout.closeDrawer(GravityCompat.START);
+                }
+            }
+        });
+        menuButton.setOnTouchListener(this);
     }
 
     @Override

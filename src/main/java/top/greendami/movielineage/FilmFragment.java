@@ -132,6 +132,37 @@ public class FilmFragment extends Fragment {
             return;
         }
 
+//        new Thread(){
+//            @Override
+//            public void run() {
+//                mDatas.addAll(DataController.getDatasByPage(type,page));
+//                mHandler.post(new Runnable() {
+//                                    @Override
+//                                    public void run() {
+//                                        mAdapter.notifyDataSetChanged();
+//                                        SystemDialog.dismissLoadingDialog();
+//                                        ((MainActivity)getActivity()).dismissLoadingBar();
+//                                        isLoading = false;
+//                                    }
+//                                });
+//
+//            }
+//        }.start();
+
+//        if(DataController.getDatasByPage(type,page) != null){
+//            mDatas.addAll(DataController.getDatasByPage(type,page));
+//            mHandler.post(new Runnable() {
+//                @Override
+//                public void run() {
+//                    mAdapter.notifyDataSetChanged();
+//                    SystemDialog.dismissLoadingDialog();
+//                    ((MainActivity)getActivity()).dismissLoadingBar();
+//                    isLoading = false;
+//                }
+//            });
+//            return;
+//        }
+
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -150,7 +181,7 @@ public class FilmFragment extends Fragment {
                         public void run() {
                             filmBean f = new getFilm().Doget(url);
                             if(f.getImg()!=null && !f.getImg().isEmpty() && f.getUrl()!=null && !f.getUrl().isEmpty()){
-                                mDatas.add(new getFilm().Doget(url));
+                                mDatas.add(f);
 
                                 mHandler.post(new Runnable() {
                                     @Override

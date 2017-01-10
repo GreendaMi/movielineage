@@ -7,8 +7,8 @@ android {
         applicationId "top.greendami.movielineage"
         minSdkVersion 19
         targetSdkVersion 15
-        versionCode 4
-        versionName "1.0.6"
+        versionCode 7
+        versionName "1.0.9"
     }
     buildTypes {
         release {
@@ -26,6 +26,12 @@ android {
 
     }
     productFlavors {
+        baidu {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "Baidu"]
+        }
+        kuan {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "KuAn"]
+        }
     }
 }
 

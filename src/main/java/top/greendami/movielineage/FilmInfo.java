@@ -2,10 +2,12 @@ package top.greendami.movielineage;
 
 
 import android.app.Activity;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
@@ -15,28 +17,43 @@ import android.view.animation.AnimationSet;
 import android.view.animation.AnticipateOvershootInterpolator;
 import android.view.animation.ScaleAnimation;
 import android.view.animation.TranslateAnimation;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.umeng.analytics.MobclickAgent;
 
 import org.wlf.filedownloader.FileDownloader;
 
+import bean.apiBean.base_E;
+import bean.apiBean.getPinglun_E;
+import bean.apiBean.postPinglun_E;
 import bean.daoBean.likefilmbean;
+import bean.daoBean.pinglunBean;
 import bean.filmBean;
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import model.Api.Api;
 import model.DAOManager;
 import model.DownLoadManager;
+import rx.Observable;
+import rx.Subscriber;
+import rx.functions.Action1;
+import rx.schedulers.Schedulers;
 import tool.ACache;
 import tool.BlurBitmapUtil;
+import tool.CheckPinglun;
 import tool.DensityUtil;
 import tool.NetworkType;
 import tool.NetworkTypeInfo;
 import tool.UI;
 import ui.IconFontTextView;
+import ui.XCFlowLayout;
 
 import static tool.UI.getData;
 import static top.greendami.movielineage.R.id.comment;
@@ -70,8 +87,6 @@ public class FilmInfo extends Activity implements View.OnTouchListener {
     IconFontTextView mPlay;
     @Bind(R.id.lay1)
     ImageView mLay1;
-//    @Bind(R.id.lay2)
-//    AppBarLayout mLay2;
     @Bind(R.id.top)
     RelativeLayout mTop;
 
@@ -86,6 +101,14 @@ public class FilmInfo extends Activity implements View.OnTouchListener {
     IconFontTextView mBfIcon;
 
     Handler mHandler;
+    @Bind(R.id.PingLunArea)
+    XCFlowLayout PingLunArea;
+    @Bind(R.id.send)
+    TextView send;
+    @Bind(R.id.input)
+    EditText input;
+    @Bind(R.id.scrollView)
+    ScrollView scrollView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,7 +121,70 @@ public class FilmInfo extends Activity implements View.OnTouchListener {
         mHandler = new Handler();
         InitView();
         InitEvent();
+        AddPingLun();
     }
+
+    /**
+     * 展示评论
+     */
+    private void AddPingLun() {
+        Log.d("FilmInfo", mFilmBean.getUrl());
+
+        Observable<pinglunBean> Observable = Api.apiService.getPinglun(new getPinglun_E(mFilmBean.getUrl()).toString());
+        Observable.subscribeOn(Schedulers.io())
+                .unsubscribeOn(Schedulers.io())
+                .observeOn(Schedulers.io())
+                .doOnError(new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+                        throwable.printStackTrace();
+                    }
+                })
+                .subscribe(new Subscriber<pinglunBean>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(pinglunBean pinglunBean) {
+                        for (final pinglunBean.ResultsBean rb : pinglunBean.getResults()) {
+                            mHandler.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    if (rb.getIsVisiable() == null || !"0".equals(rb.getIsVisiable()))
+                                        getPingLunTextView(rb.getContent());
+                                }
+                            });
+
+                        }
+
+                    }
+                });
+
+
+    }
+
+    private TextView getPingLunTextView(String content) {
+        LinearLayout.LayoutParams lp1 =
+                new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        lp1.setMargins(5, 10, 5, 10);
+        TextView text1 = new TextView(this);
+        text1.setBackground(getResources().getDrawable(R.drawable.pinglun_text_bg));
+        text1.setTextColor(getResources().getColor(R.color.FontColor));
+        text1.setText(content);
+        text1.setPadding(20, 2, 20, 2);
+        text1.setLayoutParams(lp1);
+
+        PingLunArea.addView(text1);
+        return text1;
+    }
+
 
     private void InitEvent() {
         mBack.setOnClickListener(new View.OnClickListener() {
@@ -121,7 +207,7 @@ public class FilmInfo extends Activity implements View.OnTouchListener {
         mSc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(NetworkTypeInfo.getNetworkType(FilmInfo.this) == NetworkType.NoNetwork){
+                if (NetworkTypeInfo.getNetworkType(FilmInfo.this) == NetworkType.NoNetwork) {
                     UI.Toast("请链接网络！");
                     return;
                 }
@@ -156,6 +242,72 @@ public class FilmInfo extends Activity implements View.OnTouchListener {
 
                 } else {
                     UI.push(LoginActivity.class);
+                }
+            }
+        });
+
+        /**
+         * 发送评论
+         */
+        send.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (input.getText().toString().trim().length() > 16) {
+                    UI.Toast("最多16个字！");
+                    return;
+                }
+                if(!CheckPinglun.isOk(input.getText().toString().trim())){
+                    UI.Toast("包含敏感字！");
+                    return;
+                }
+                if (!input.getText().toString().trim().isEmpty()) {
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(input.getWindowToken(), 0);
+                    Observable<base_E> Observable = Api.apiService.postPinglun(new postPinglun_E(input.getText().toString().trim(), mFilmBean.getUrl(), UI.get("Me")));
+                    Observable.subscribeOn(Schedulers.io())
+                            .unsubscribeOn(Schedulers.io())
+                            .observeOn(Schedulers.io())
+                            .doOnError(new Action1<Throwable>() {
+                                @Override
+                                public void call(Throwable throwable) {
+                                    throwable.printStackTrace();
+                                }
+                            })
+                            .subscribe(new Subscriber<base_E>() {
+                                @Override
+                                public void onCompleted() {
+
+                                }
+
+                                @Override
+                                public void onError(Throwable e) {
+
+                                }
+
+                                @Override
+                                public void onNext(base_E base_e) {
+                                    UI.Toast("发送成功");
+                                    mHandler.post(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            getPingLunTextView(input.getText().toString().trim());
+                                            input.setText("");
+                                            scrollView.fullScroll(ScrollView.FOCUS_DOWN);
+                                        }
+                                    });
+                                }
+                            });
+                }
+            }
+        });
+
+        input.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (UI.get("Me") == null || UI.get("Me").toString().isEmpty()) {
+                    UI.push(LoginActivity.class);
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(input.getWindowToken(), 0);
                 }
             }
         });

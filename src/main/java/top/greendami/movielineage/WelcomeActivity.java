@@ -24,14 +24,14 @@ public class WelcomeActivity extends Activity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_welcome);
         mHandler = new Handler();
-        initData();
+
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         UI.enter(this);
-
+        initData();
     }
 
     private void initData() {

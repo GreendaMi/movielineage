@@ -3,7 +3,9 @@ package model.Api;
 import bean.apiBean.base_E;
 import bean.apiBean.likebean_E;
 import bean.apiBean.login_E;
+import bean.apiBean.postPinglun_E;
 import bean.apiBean.whetherRejist_E;
+import bean.daoBean.pinglunBean;
 import bean.likebean;
 import bean.userbean;
 import retrofit2.http.Body;
@@ -49,4 +51,14 @@ public interface APIService {
     @Headers({"X-Bmob-Application-Id:e4352240f63c88f8a3a2e552a6ecfb73","X-Bmob-REST-API-Key:5239a5c0f814f3954bb5d43f9bb3a57e","Content-Type:application/json"})
     @POST("filmlike")
     Observable<base_E> insertLike(@Body likebean_E likebean_e);
+
+    //获取评论列表
+    @Headers({"X-Bmob-Application-Id:e4352240f63c88f8a3a2e552a6ecfb73","X-Bmob-REST-API-Key:5239a5c0f814f3954bb5d43f9bb3a57e","Content-Type:application/json"})
+    @GET("Pinglun")
+    Observable<pinglunBean> getPinglun(@Query("where") String sort);
+
+    //发表评论
+    @Headers({"X-Bmob-Application-Id:e4352240f63c88f8a3a2e552a6ecfb73","X-Bmob-REST-API-Key:5239a5c0f814f3954bb5d43f9bb3a57e","Content-Type:application/json"})
+    @POST("Pinglun")
+    Observable<base_E> postPinglun(@Body postPinglun_E postPinglun_e);
 }

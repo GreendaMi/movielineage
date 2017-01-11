@@ -1,20 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:focusableInTouchMode="false"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/img2"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/transparent"
-    >
+    android:focusableInTouchMode="false">
+
     <ImageView
         android:id="@+id/lay1"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:scaleType="centerCrop"
         android:focusable="false"
-        />
+        android:scaleType="centerCrop" />
 
     <RelativeLayout
         android:id="@+id/top"
@@ -31,21 +29,21 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/MainColor"
-                android:scaleType="centerCrop"
-                />
+                android:scaleType="centerCrop" />
 
             <ui.IconFontTextView
-                android:layout_centerInParent="true"
                 android:id="@+id/play"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="50dp"
-                android:textColor="@color/FontColor"
-                android:text="@string/播放2"
+                android:layout_centerInParent="true"
+                android:clickable="true"
                 android:shadowColor="@color/DarkFontColor"
                 android:shadowDx="5"
                 android:shadowDy="5"
-                android:clickable="true"/>
+                android:text="@string/播放2"
+                android:textColor="@color/FontColor"
+                android:textSize="50dp" />
+
             <ui.IconFontTextView
                 android:id="@+id/backBt"
                 android:layout_width="wrap_content"
@@ -59,27 +57,25 @@
                 android:shadowRadius="10"
                 android:text="@string/返回"
                 android:textColor="@color/FontColor"
-                android:textSize="20dp"/>
+                android:textSize="20dp" />
         </RelativeLayout>
 
         <ScrollView
+            android:id="@+id/scrollView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/topR"
-            android:background="@color/transparent"
-            android:paddingTop="10dp"
             android:layout_marginBottom="40dp"
-            >
+            android:background="@color/transparent"
+            android:paddingTop="10dp">
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                >
+                android:layout_height="wrap_content">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    >
+                    android:layout_height="wrap_content">
 
                     <TextView
                         android:id="@+id/name"
@@ -94,7 +90,7 @@
                         android:shadowRadius="10"
                         android:textColor="@color/FontColor"
                         android:textSize="16sp"
-                        android:textStyle="bold"/>
+                        android:textStyle="bold" />
 
                     <View
                         android:id="@+id/v"
@@ -103,7 +99,7 @@
                         android:layout_below="@+id/name"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="10dp"
-                        android:background="@color/FontColor"/>
+                        android:background="@color/FontColor" />
 
                     <ui.EnTextView
                         android:id="@+id/f"
@@ -118,8 +114,7 @@
                         android:shadowRadius="10"
                         android:text="FROM:"
                         android:textColor="@color/FontColor"
-                        android:textSize="18dp"
-                        />
+                        android:textSize="18dp" />
 
                     <TextView
                         android:id="@+id/from"
@@ -134,8 +129,7 @@
                         android:shadowRadius="10"
                         android:text="Mike"
                         android:textColor="@color/FontColor"
-                        android:textSize="12sp"
-                        />
+                        android:textSize="12sp" />
 
                     <ui.EnTextView
                         android:id="@+id/t"
@@ -149,8 +143,7 @@
                         android:shadowRadius="10"
                         android:text="TAG:"
                         android:textColor="@color/FontColor"
-                        android:textSize="18dp"
-                        />
+                        android:textSize="18dp" />
 
                     <TextView
                         android:id="@+id/tag"
@@ -165,7 +158,7 @@
                         android:shadowRadius="10"
                         android:text="Mike"
                         android:textColor="@color/FontColor"
-                        android:textSize="12sp"/>
+                        android:textSize="12sp" />
 
                     <ui.EnTextView
                         android:id="@+id/d"
@@ -179,8 +172,7 @@
                         android:shadowRadius="10"
                         android:text="DATE:"
                         android:textColor="@color/FontColor"
-                        android:textSize="18dp"
-                        />
+                        android:textSize="18dp" />
 
                     <TextView
                         android:id="@+id/date"
@@ -195,7 +187,7 @@
                         android:shadowRadius="10"
                         android:text="Mike"
                         android:textColor="@color/FontColor"
-                        android:textSize="12sp"/>
+                        android:textSize="12sp" />
 
                     <TextView
                         android:id="@+id/comment"
@@ -211,84 +203,132 @@
                         android:shadowDy="5"
                         android:shadowRadius="10"
                         android:textColor="@color/FontColor"
-                        android:textSize="12sp"
-                        />
+                        android:textSize="12sp" />
+                    <ui.XCFlowLayout
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
+                        android:layout_below="@+id/comment"
+                        android:id="@+id/PingLunArea"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/transparent"
+                        ></ui.XCFlowLayout>
                 </RelativeLayout>
 
             </RelativeLayout>
-        </ScrollView >
+        </ScrollView>
     </RelativeLayout>
+
     <RelativeLayout
         android:id="@+id/bottom"
-        android:layout_gravity="bottom"
-        android:layout_alignParentBottom="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingTop="5dp"
-        >
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom"
+        android:paddingTop="5dp">
+
         <ui.IconFontTextView
             android:id="@+id/bf_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/bf"
+            android:paddingBottom="5dp"
+            android:paddingRight="2dp"
+            android:paddingTop="10dp"
             android:shadowColor="@color/DarkFontColor"
             android:shadowDx="5"
             android:shadowDy="5"
-            android:textSize="16sp"
-            android:paddingTop="10dp"
-            android:paddingBottom="5dp"
-            android:paddingRight="2dp"
-            android:layout_toLeftOf="@+id/bf"
+            android:text="@string/播放"
+            android:textColor="@color/FontColor"
+            android:textSize="16sp" />
+
+        <ui.IconFontTextView
+            android:id="@+id/bf"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/FontColor"
-            android:text="@string/播放"/>
-        <ui.IconFontTextView
-            android:paddingTop="11dp"
+            android:layout_toLeftOf="@+id/sc"
             android:paddingBottom="6dp"
             android:paddingLeft="2dp"
             android:paddingRight="2dp"
+            android:paddingTop="11dp"
             android:shadowColor="@color/DarkFontColor"
             android:shadowDx="5"
             android:shadowDy="5"
-            android:layout_toLeftOf="@+id/sc"
-            android:id="@+id/bf"
+            android:text="134"
             android:textColor="@color/FontColor"
-            android:textSize="14sp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="134"/>
+            android:textSize="14sp" />
 
         <ui.IconFontTextView
-            android:focusable="true"
-            android:focusableInTouchMode="false"
-            android:shadowColor="@color/DarkFontColor"
-            android:shadowDx="5"
-            android:shadowDy="5"
-            android:textSize="16sp"
-            android:layout_toLeftOf="@+id/xz"
             android:id="@+id/sc"
-            android:padding="10dp"
-            android:paddingBottom="5dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/FontColor"
-            android:text="@string/收藏1"/>
-        <ui.IconFontTextView
+            android:layout_toLeftOf="@+id/xz"
             android:focusable="true"
             android:focusableInTouchMode="false"
-            android:clickable="true"
+            android:padding="10dp"
+            android:paddingBottom="5dp"
             android:shadowColor="@color/DarkFontColor"
             android:shadowDx="5"
             android:shadowDy="5"
-            android:textSize="16sp"
-            android:layout_alignParentRight="true"
+            android:text="@string/收藏1"
+            android:textColor="@color/FontColor"
+            android:textSize="16sp" />
+
+        <ui.IconFontTextView
             android:id="@+id/xz"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
             android:layout_marginRight="15dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:focusableInTouchMode="false"
             android:padding="10dp"
             android:paddingBottom="5dp"
             android:paddingRight="20dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:shadowColor="@color/DarkFontColor"
+            android:shadowDx="5"
+            android:shadowDy="5"
+            android:text="@string/下载"
             android:textColor="@color/FontColor"
-            android:text="@string/下载"/>
+            android:textSize="16sp" />
+
+        <RelativeLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="24dp"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_toLeftOf="@+id/bf_icon"
+            android:background="@drawable/input_bg">
+            <ui.ChTextView
+                android:id="@+id/send"
+                android:layout_width="wrap_content"
+                android:layout_height="24dp"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/sendbutton_bg"
+                android:gravity="center"
+                android:paddingRight="10dp"
+                android:paddingLeft="5dp"
+                android:text="发送"
+                android:textColor="#e0000000" />
+
+            <EditText
+                android:layout_toLeftOf="@id/send"
+                android:id="@+id/input"
+                android:layout_width="match_parent"
+                android:layout_height="24dp"
+                android:background="@null"
+                android:maxLines="1"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:textColor="@color/FontColor"
+                android:textSize="14sp" />
+
+        </RelativeLayout>
+
     </RelativeLayout>
 
 </FrameLayout>
